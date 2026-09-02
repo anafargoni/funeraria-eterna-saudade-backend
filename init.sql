@@ -1,9 +1,7 @@
 DROP DATABASE IF EXISTS funerariaEternaSaudade;
-CREATE DATABASE funerariaEternaSaudade;
-USE funerariaEternaSaudade;
+CREATE DATABASE funerariaEternaSaudade; 
 
-CREATE TABLE IF NOT EXISTS cliente{
-
+CREATE TABLE IF NOT EXISTS cliente(
     cpf VARCHAR(14) PRIMARY KEY,
 
     nome_primeiro VARCHAR(20) NOT NULL,
@@ -23,16 +21,15 @@ CREATE TABLE IF NOT EXISTS cliente{
     CONSTRAINT chk_cliente_cpf
         CHECK (cpf ~ '^[0-9]{11}$'),
 
-    CONSTRAINT chk_cliente_celular
-        CHECK ( celular IS NULL OR celular ~ '^[0-9]{10,11}$' ),
+    CONSTRAINT chk_cliente_contato_telefone
+        CHECK ( contato_telefone IS NULL OR contato_telefone ~ '^[0-9]{10,11}$' ),
 
-    CONSTRAINT chk_cliente_data_nasc
-        CHECK (data_nasc >= DATE '1900-01-01')
-}
+    CONSTRAINT chk_cliente_data_nascimento
+        CHECK (data_nascimento >= DATE '1900-01-01')
+);
 
-CREATE TABLE IF NOT EXISTS funeral{
-
-    id SERIAL INTEGER PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS funeral(
+    id SERIAL PRIMARY KEY,
     duracao INTEGER,
     data_evento DATE NOT NULL,
     local VARCHAR(60) NOT NULL,
@@ -62,19 +59,17 @@ CREATE TABLE IF NOT EXISTS funeral{
 
     CONSTRAINT chk_data_morte_falecido
         CHECK (data_morte_falecido >= DATE '1900-01-01')
-    
-}
+);
 
-CREATE TABLE IF NOT EXISTS servico {
-    
-    id SERIAL INTEGER PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS servico (
+    id SERIAL PRIMARY KEY,
     valor DECIMAL(8,2) NOT NULL,
     descricao VARCHAR(100),
-    nome VARCHAR(35) NOT NULL,
+    nome VARCHAR(35) NOT NULL
+);
+    
 
-}
-
-CREATE TABLE IF NOT EXISTS servico_funeral{
+CREATE TABLE IF NOT EXISTS servico_funeral (
     id_funeral INTEGER,
     id_servico INTEGER,
 
@@ -85,6 +80,4 @@ CREATE TABLE IF NOT EXISTS servico_funeral{
 
     CONSTRAINT fk_id_servico FOREIGN KEY (id_servico)
         REFERENCES servico(id)
-
-}
-
+);
