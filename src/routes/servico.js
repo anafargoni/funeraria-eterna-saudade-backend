@@ -89,7 +89,7 @@ router.put("/:id", async (req, res, next) => {
         if (!nome) {
             throw new Error("Nome do serviço é obrigatório!");
         } else {
-            const servicoEncontrado = await db.query("SELECT * FROM servico WHERE LOWER(nome) = LOWER($1)", [nome]);
+            const servicoEncontrado = await db.query("SELECT * FROM servico WHERE LOWER(nome) = LOWER($1) AND id != $2", [nome, req.params.id]);
             if(servicoEncontrado.rowCount) {
                 throw new Error("Nome do serviço já existe");
             }
