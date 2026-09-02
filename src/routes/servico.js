@@ -66,5 +66,20 @@ router.post("/", async (req, res, next) => {
     }
 });
 
+// DELETE 
+router.delete("/:id", async (req, res, next) => {
+    try {
+        const r = await db.query("DELETE FROM servico WHERE id = $1", [req.params.id]);
+        if (!r.rowCount){
+            return res.status(400).json({ msg : "Serviço não econtrado!" });
+        }
+        
+        return res.status(200).json({ msg : "Serviço deletado", data: r.rows[0]});
+    } catch (error) {
+        return res.status(400).json({ msg : error.message });
+    }
+});
+
+
 
 module.exports = router;
