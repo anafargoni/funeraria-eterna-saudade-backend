@@ -1,20 +1,22 @@
- const express = require("express");
- const router = express.Router();
- const db = require("../db");
+const express = require("express");
+const router = express.Router();
+const db = require("../db");
 
- router.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const r = await db.queru("SELECT * FROM cliente");
         return res.status(200).json(r.rows);
     } catch (error) {
         return res.status(400).json({ msg: error.message })
     }
- });
+});
 
- router.post("/", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         const { cpf, data_nasc, nome, contato } = req.body || {};
+    } catch (error) {
 
-        if 
     }
- })
+})
+
+module.exports = router;
