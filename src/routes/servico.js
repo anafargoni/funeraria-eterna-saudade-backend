@@ -7,24 +7,69 @@ router.get("/", async (req, res, next) => {
     try {
         const r = await db.query("SELECT * FROM servico");
         if (!r.rowCount) {
-            return res.status(400).json({ msg : "Não foi encontrado nenhum serviço!" });
+            return res.status(400).json({ msg: "Não foi encontrado nenhum serviço!" });
         }
         return res.status(200).json(r.rows);
     } catch (error) {
-        return res.status(400).json({ msg : error });
+        return res.status(400).json({ msg: error });
+    }
+});
+
+// Operação Exclusiva - Calcular o valor total de um funeral
+router.get("/valor-total/:id", async (req, res, next) => {
+    try {
+        const r = await db.query(
+
+            `SELECT 
+                f.nome_falecido,
+                c.nome_primeiro,
+                c.nome_sobrenome,
+                s.nome AS nome_servico,
+                s.valor
+                SUM(s.valor) AS valor_total
+            FROM funeral f
+
+            JOIN cliente c
+                ON f.cpf_cliente = c.cpf
+
+            JOIN servico_funeral sf
+                ON f.id = sf.id_funeral
+
+            JOIN servico s
+                ON sf.id_servico = s.id
+
+            WHERE f.id = $1
+
+            GROUP BY  
+                f.nome_falecido,
+                c.nome_primeiro,
+                c.nome_sobrenome`, 
+
+            [req.params.id]
+        );
+
+
+        if (!r.rowCount) {
+            throw new Error("Funeral não encontrado ou não possui serviços!");
+        }
+
+        return res.status(200).json(r.rows);
+
+    } catch (error) {
+        return res.status(200).json({ msg: error.message });
     }
 });
 
 // GET pelo ID
 router.get("/:id", async (req, res, next) => {
-    try{
+    try {
         const r = await db.query("SELECT * FROM servico WHERE id = $1", [req.params.id]);
-        if (!r.rowCount){
-            return res.status(400).json({ msg : "Serviço não econtrado!" });
+        if (!r.rowCount) {
+            return res.status(400).json({ msg: "Serviço não econtrado!" });
         }
         return res.status(200).json(r.rows[0]);
     } catch (error) {
-        return res.status(400).json({ msg : error.message });
+        return res.status(400).json({ msg: error.message });
     }
 });
 
@@ -38,7 +83,7 @@ router.post("/", async (req, res, next) => {
             throw new Error("Nome do serviço é obrigatório!");
         } else {
             const servicoEncontrado = await db.query("SELECT * FROM servico WHERE LOWER(nome) = LOWER($1)", [nome]);
-            if(servicoEncontrado.rowCount) {
+            if (servicoEncontrado.rowCount) {
                 throw new Error("Nome do serviço já existe");
             }
         }
@@ -60,9 +105,9 @@ router.post("/", async (req, res, next) => {
         }
 
         return res.status(201).json({ msg: "Serviço adicionado", data: r.rows[0] });
-        
+
     } catch (error) {
-        return res.status(400).json({ msg : error.message });
+        return res.status(400).json({ msg: error.message });
     }
 });
 
@@ -70,13 +115,13 @@ router.post("/", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
     try {
         const r = await db.query("DELETE FROM servico WHERE id = $1", [req.params.id]);
-        if (!r.rowCount){
-            return res.status(400).json({ msg : "Serviço não econtrado!" });
+        if (!r.rowCount) {
+            return res.status(400).json({ msg: "Serviço não econtrado!" });
         }
-        
-        return res.status(200).json({ msg : "Serviço deletado", data: r.rows[0]});
+
+        return res.status(200).json({ msg: "Serviço deletado", data: r.rows[0] });
     } catch (error) {
-        return res.status(400).json({ msg : error.message });
+        return res.status(400).json({ msg: error.message });
     }
 });
 
@@ -90,7 +135,7 @@ router.put("/:id", async (req, res, next) => {
             throw new Error("Nome do serviço é obrigatório!");
         } else {
             const servicoEncontrado = await db.query("SELECT * FROM servico WHERE LOWER(nome) = LOWER($1) AND id != $2", [nome, req.params.id]);
-            if(servicoEncontrado.rowCount) {
+            if (servicoEncontrado.rowCount) {
                 throw new Error("Nome do serviço já existe");
             }
         }
@@ -106,16 +151,15 @@ router.put("/:id", async (req, res, next) => {
         }
 
         const r = await db.query("UPDATE servico SET valor = $1, descricao = $2, nome = $3 WHERE id = $4 RETURNING*", [valor, descricao, nome, req.params.id]);
-        
+
         if (!r.rowCount) {
             throw new Error("Serviço não foi editado!");
         }
         return res.status(201).json({ msg: "Serviço editado", data: r.rows[0] });
     } catch (error) {
-        return res.status(200).json({ msg: error.message});
+        return res.status(200).json({ msg: error.message });
     }
 })
-
 
 
 module.exports = router;
