@@ -37,13 +37,18 @@ router.get("/valor-total/:id", async (req, res, next) => {
                 c.nome_sobrenome,
                 s.nome AS nome_servico,
                 s.valor
+
             FROM funeral f
+
             JOIN cliente c
                 ON f.cpf_cliente = c.cpf
+
             JOIN servico_funeral sf
                 ON f.id = sf.id_funeral
+
             JOIN servico s
                 ON sf.id_servico = s.id
+
             WHERE f.id = $1`, [id]
         );
 
@@ -54,13 +59,9 @@ router.get("/valor-total/:id", async (req, res, next) => {
             `SELECT SUM(s.valor) AS valor_total
             FROM servico_funeral sf
             JOIN servico s
-                ON sf.id_servico
+                ON sf.id_servico = s.id
+
             WHERE sf.id_funeral = $1`, [id]);
-
-
-        if (!r.rowCount) {
-            throw new Error("Não foi possível calcular o valor do funeral!");
-        }
 
         return res.status(200).json({
             msg: "Valor total calculado com sucesso!",
