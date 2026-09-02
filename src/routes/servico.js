@@ -86,6 +86,11 @@ router.get("/valor-total/:id", async (req, res, next) => {
     }
 });
 
+// Operação Exclusiva - Buscar clientes - Quando não informar nome
+router.get("/cliente", async (req, res) => {
+    return res.status(400).json({ msg: "Informe o nome do serviço!"});
+});
+
 // Operação Exclusiva - Buscar clientes que contrataram determinado serviço através do nome do serviço.
 router.get("/cliente/:nome", async (req, res, next) => {
     try {
@@ -134,11 +139,6 @@ router.get("/cliente/:nome", async (req, res, next) => {
     } catch (error) {
         return res.status(200).json({ msg: error.message });
     }
-});
-
-// Operação Exclusiva - Buscar clientes - Quando não informar nome
-router.get("/cliente", async (req, res) => {
-    return res.status(400).json({ msg: "Informe o nome do serviço!"});
 });
 
 // GET pelo ID
