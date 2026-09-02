@@ -18,6 +18,23 @@ router.get("/", async (req, res, next) => {
 // Operação Exclusiva - Calcular o valor total de um funeral
 router.get("/valor-total/:id", async (req, res, next) => {
     try {
+        const id = Number(req.params.id);
+
+        if (!Number.isInteger(id) || id <= 0) {
+            throw new Error("Informe um ID de funeral válido!");
+        }
+
+        const funeral = await db.query("SELECT * FROM funeral WHERE id = $1", [req.params.id]);
+
+        if (!funeral.rowCount) {
+            throw new Error("Funeral não encontrado!");
+        }
+
+        const servicoFuneral = await db.query("SELECT * FROM servico_funeral WHERE id_funeral = $1", [req.params.id]);
+
+        if (!servicoFuneral.rowCount) {
+            throw new Error("Este funeral não possui serviços associados!");
+        }
         const r = await db.query(
 
             `SELECT 
@@ -48,12 +65,10 @@ router.get("/valor-total/:id", async (req, res, next) => {
             [req.params.id]
         );
 
-
         if (!r.rowCount) {
-            throw new Error("Funeral não encontrado ou não possui serviços!");
+            throw new Error("Não foi possível calcular o valor do funeral!");
         }
-
-        return res.status(200).json(r.rows);
+        return res.status(200).json({ msg: "Valor total calculado com sucesso!", data: r.rows[0]});
 
     } catch (error) {
         return res.status(200).json({ msg: error.message });
