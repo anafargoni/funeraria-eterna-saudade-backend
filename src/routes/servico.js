@@ -39,7 +39,7 @@ router.get("/valor-total/:id", async (req, res, next) => {
                 s.valor
             FROM funeral f
             JOIN cliente c
-                ON f cpf_cliente = c.cpf
+                ON f.cpf_cliente = c.cpf
             JOIN servico_funeral sf
                 ON f.id = sf.id_funeral
             JOIN servico s
