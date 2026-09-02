@@ -166,12 +166,6 @@
         </div>
     </section>
 
-    <!-- PESQUISA -->
-    <div class="container mt-5">
-        <input type="text" id="pesquisa" class="form-control form-control-lg"
-            placeholder="Pesquisar rota...">
-    </div>
-
     <!-- SERVIÇOS -->
     <main class="container mt-5">
 
@@ -349,9 +343,10 @@
                             <strong>Restrições:</strong>
 
                             <ul>
-                                <li>O serviço deve existir.</li>
+                                <li>Nome não pode estar vazio.</li>
                                 <li>Não pode existir outro serviço com o mesmo nome.</li>
                                 <li>Valor deve ser maior que 0.</li>
+                                <li>Valor deve ser numérico.</li>
                             </ul>
 
                             <strong>Exemplo de retorno:</strong>
@@ -416,6 +411,7 @@
 
             <div class="row g-4">
 
+               
                 <!-- VALOR TOTAL -->
                 <div class="col-md-6 rota-card">
                     <div class="card route-card h-100">
@@ -428,10 +424,7 @@
 
                             <h5 class="mt-4">Calcular valor total do funeral</h5>
 
-                            <p>
-                                Mostra os dados do funeral e calcula
-                                o valor total dos serviços contratados.
-                            </p>
+                            <p>Mostra os dados do funeral e calcula o valor total dos serviços contratados.</p>
 
                             <hr>
 
@@ -452,48 +445,84 @@
                                 <li>Deve possuir serviços associados.</li>
                             </ul>
 
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">{
+    "msg": "Valor total calculado com sucesso!",
+    "nome_falecido": "João da Silva",
+    "contratante": "Maria Oliveira",
+    "servicos": [
+        {
+            "nome": "Velório",
+            "valor": "500.00"
+        },
+        {
+            "nome": "Transporte",
+            "valor": "300.00"
+        }
+    ],
+    "valor_total": "800.00"
+}
+            </div>
+
                         </div>
                     </div>
                 </div>
 
+                
                 <!-- CLIENTES POR SERVIÇO -->
                 <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
+                <div class="card route-card h-100">
+                    <div class="card-body">
 
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/servico/clientes/:nome</span>
-                            </div>
-
-                            <h5 class="mt-4">Buscar clientes por serviço</h5>
-
-                            <p>
-                                Busca os clientes que contrataram
-                                determinado serviço.
-                            </p>
-
-                            <hr>
-
-                            <strong>Retorna:</strong>
-
-                            <ul>
-                                <li>Nome do cliente.</li>
-                                <li>Data de nascimento.</li>
-                                <li>Email.</li>
-                                <li>Telefone.</li>
-                            </ul>
-
-                            <strong>Restrição:</strong>
-
-                            <ul>
-                                <li>O serviço deve existir.</li>
-                            </ul>
-
+                        <div class="d-flex justify-content-between">
+                            <span class="metodo get">GET</span>
+                            <span class="rota">/servico/clientes/:nome</span>
                         </div>
+
+                        <h5 class="mt-4">Buscar clientes por serviço</h5>
+
+                        <p>Busca os clientes que contrataram determinado serviço.</p>
+
+                        <hr>
+
+                        <strong>Retorna:</strong>
+
+                        <ul>
+                            <li>Nome do cliente.</li>
+                            <li>Data de nascimento.</li>
+                            <li>Email.</li>
+                            <li>Telefone.</li>
+                        </ul>
+
+                        <strong>Restrição:</strong>
+
+                        <ul>
+                            <li>O serviço deve existir.</li>
+                        </ul>
+
+                        <strong>Exemplo de retorno:</strong>
+
+                        <div class="json mt-2">{
+    "servico": "Velório",
+    "clientes": [
+        {
+            "nome": "Maria Oliveira",
+            "data_nascimento": "1980-05-10",
+            "email": "maria@email.com",
+            "telefone": "16999999999"
+        },
+        {
+            "nome": "Carlos Souza",
+            "data_nascimento": "1975-08-22",
+            "email": "carlos@email.com",
+            "telefone": "16988888888"
+        }
+    ]
+}                       </div>
+
                     </div>
                 </div>
-
             </div>
 
         </section>
@@ -534,30 +563,6 @@
                 top: 0,
                 behavior: "smooth"
             });
-        });
-
-
-        // PESQUISA
-
-        const pesquisa = document.getElementById("pesquisa");
-        const cards = document.querySelectorAll(".rota-card");
-
-        pesquisa.addEventListener("input", () => {
-
-            const texto = pesquisa.value.toLowerCase();
-
-            cards.forEach(card => {
-
-                const conteudo = card.textContent.toLowerCase();
-
-                if (conteudo.includes(texto)) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
-
-            });
-
         });
 
     </script>
