@@ -80,6 +80,41 @@ router.delete("/:id", async (req, res, next) => {
     }
 });
 
+// PUT 
+router.put("/:id", async (req, res, next) => {
+    try {
+        const { nome, valor } = req.body || {};
+        let { descricao } = req.body || {};
+
+        if (!nome) {
+            throw new Error("Nome do serviço é obrigatório!");
+        } else {
+            const servicoEncontrado = await db.query("SELECT * FROM servico WHERE LOWER(nome) = LOWER($1)", [nome]);
+            if(servicoEncontrado.rowCount) {
+                throw new Error("Nome do serviço já existe");
+            }
+        }
+
+        if (!valor) {
+            throw new Error("Valor não encontrado");
+        } else if (isNaN(Number(valor)) || Number(valor) <= 0) {
+            throw new Error("Informe um valor válido maior que 0!");
+        }
+
+        if (!descricao) {
+            descricao = null;
+        }
+
+        const r = await db.query("UPDATE servico SET valor = $1, descricao = $2, nome = $3 WHERE id = $4 RETURNING*", [valor, descricao, nome, req.params.id]);
+        
+        if (!r.rowCount) {
+            throw new Error("Serviço não foi editado!");
+        }
+        return res.status(201).json({ msg: "Serviço editado", data: r.rows[0] });
+    } catch (error) {
+        return res.status(200).json({ msg: error.message});
+    }
+})
 
 
 module.exports = router;
