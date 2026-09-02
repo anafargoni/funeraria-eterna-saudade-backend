@@ -62,7 +62,9 @@ CREATE TABLE IF NOT EXISTS servico (
     id SERIAL PRIMARY KEY,
     valor DECIMAL(8,2) NOT NULL,
     descricao VARCHAR(100),
-    nome VARCHAR(35) NOT NULL
+    nome VARCHAR(35) NOT NULL,
+
+    CONSTRAINT chk_valor_servico CHECK (valor > 0)
 );
     
 

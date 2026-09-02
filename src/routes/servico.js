@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-// GET Serviços 
+// GET 
 router.get("/", async (req, res, next) => {
     try {
         const r = await db.query("SELECT * FROM servico");
@@ -15,7 +15,7 @@ router.get("/", async (req, res, next) => {
     }
 });
 
-// GET Serviços pelo ID
+// GET pelo ID
 router.get("/:id", async (req, res, next) => {
     try{
         const r = await db.query("SELECT * FROM servico WHERE id = $1", [req.params.id]);
@@ -28,7 +28,43 @@ router.get("/:id", async (req, res, next) => {
     }
 });
 
-// 
+// POST
+router.post("/", async (req, res, next) => {
+    try {
+        const { nome, valor } = req.body || {};
+        let { descricao } = req.body || {};
+
+        if (!nome) {
+            throw new Error("Nome do serviço é obrigatório!");
+        } else {
+            const servicoEncontrado = await db.query("SELECT * FROM servico WHERE LOWER(nome) = LOWER($1)", [nome]);
+            if(servicoEncontrado.rowCount) {
+                throw new Error("Nome do serviço já existe");
+            }
+        }
+
+        if (!valor) {
+            throw new Error("Valor não encontrado");
+        } else if (isNaN(Number(valor)) || Number(valor) <= 0) {
+            throw new Error("Informe um valor válido maior que 0!");
+        }
+
+        if (!descricao) {
+            descricao = null;
+        }
+
+        const r = await db.query("INSERT INTO servico (valor, descricao, nome) VALUES ($1, $2, $3) RETURNING *", [valor, descricao, nome]);
+
+        if (!r.rowCount) {
+            throw new Error("Serviço não foi adicionado");
+        }
+
+        return res.status(201).json({ msg: "Serviço adicionado", data: r.rows[0] });
+        
+    } catch (error) {
+        return res.status(400).json({ msg : error.message });
+    }
+});
 
 
 module.exports = router;
