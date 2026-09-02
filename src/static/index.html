@@ -1,14 +1,567 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!doctype html>
+<html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página inicial</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Funerária Eterna Saudade - API</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            background-color: #f4fafa;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: #159b8d;
+        }
+
+        /* CABEÇALHO */
+        .hero {
+            background: linear-gradient(135deg, #159b8d, #55cfc2);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero h1 {
+            font-weight: bold;
+        }
+
+        /* TÍTULOS */
+        .titulo {
+            color: #159b8d;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* CARDS */
+        .route-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .route-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* MÉTODOS */
+        .metodo {
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .get {
+            background-color: #0d6efd;
+        }
+
+        .post {
+            background-color: #198754;
+        }
+
+        .put {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .delete {
+            background-color: #dc3545;
+        }
+
+        /* ROTA */
+        .rota {
+            background-color: #eeeeee;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+
+        /* JSON */
+        .json {
+            background-color: #212529;
+            color: #b8f2e6;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+        }
+
+        /* BOTÃO VOLTAR */
+        #voltarTopo {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #159b8d;
+            color: white;
+            font-size: 20px;
+        }
+
+        #voltarTopo:hover {
+            background-color: #117c71;
+        }
+
+        footer {
+            background-color: #212529;
+            color: white;
+            margin-top: 50px;
+            padding: 25px;
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Bem vindo ao express_template_docker</h1>
-    <p>Teste a rota <a href="/hello">neste link</a></p>
-    <p>Bom desenvolvimento!</p>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-flower1"></i>
+                Eterna Saudade API
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#servicos">Serviços</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#operacoes">Operações Exclusivas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CABEÇALHO -->
+    <section class="hero">
+        <div class="container">
+            <i class="bi bi-flower1 display-1"></i>
+            <h1 class="mt-3">Funerária Eterna Saudade</h1>
+            <p>Documentação da API do sistema.</p>
+        </div>
+    </section>
+
+    <!-- PESQUISA -->
+    <div class="container mt-5">
+        <input type="text" id="pesquisa" class="form-control form-control-lg"
+            placeholder="Pesquisar rota...">
+    </div>
+
+    <!-- SERVIÇOS -->
+    <main class="container mt-5">
+
+        <section id="servicos">
+
+            <h2 class="titulo">
+                <i class="bi bi-briefcase"></i>
+                Serviços
+            </h2>
+
+            <p class="text-muted">
+                Rotas responsáveis pelo gerenciamento dos serviços.
+            </p>
+
+            <div class="row g-4">
+
+                <!-- GET TODOS -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo get">GET</span>
+                                <span class="rota">/servico</span>
+                            </div>
+
+                            <h5 class="mt-4">Listar serviços</h5>
+
+                            <p>Retorna todos os serviços cadastrados.</p>
+
+                            <hr>
+
+                            <strong>Parâmetros:</strong>
+                            <p>Não possui.</p>
+
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">[
+    {
+        "id": 1,
+        "valor": "400.00",
+        "descricao": "Preparação estética",
+        "nome": "Tanatopraxia"
+    }
+]</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GET ID -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo get">GET</span>
+                                <span class="rota">/servico/:id</span>
+                            </div>
+
+                            <h5 class="mt-4">Buscar serviço por ID</h5>
+
+                            <p>Retorna um serviço específico através do ID.</p>
+
+                            <hr>
+
+                            <strong>Parâmetro:</strong>
+
+                            <ul>
+                                <li>ID do serviço.</li>
+                            </ul>
+
+                            <strong>Restrição:</strong>
+
+                            <ul>
+                                <li>O serviço deve existir.</li>
+                            </ul>
+
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">{
+    "id": 1,
+    "valor": "400.00",
+    "descricao": "Preparação estética",
+    "nome": "Tanatopraxia"
+}</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- POST -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo post">POST</span>
+                                <span class="rota">/servico</span>
+                            </div>
+
+                            <h5 class="mt-4">Adicionar serviço</h5>
+
+                            <p>Adiciona um novo serviço ao sistema.</p>
+
+                            <hr>
+
+                            <strong>Campos obrigatórios:</strong>
+
+                            <ul>
+                                <li>nome</li>
+                                <li>valor</li>
+                            </ul>
+
+                            <strong>Campo opcional:</strong>
+
+                            <ul>
+                                <li>descricao</li>
+                            </ul>
+
+                            <strong>Restrições:</strong>
+
+                            <ul>
+                                <li>Nome não pode estar vazio.</li>
+                                <li>Não pode existir outro serviço com o mesmo nome.</li>
+                                <li>Valor deve ser maior que 0.</li>
+                                <li>Valor deve ser numérico.</li>
+                            </ul>
+
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">{
+    "msg": "Serviço adicionado",
+    "data": {
+        "id": 5,
+        "valor": "400.00",
+        "descricao": "Preparação estética",
+        "nome": "Tanatopraxia"
+    }
+}</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PUT -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo put">PUT</span>
+                                <span class="rota">/servico/:id</span>
+                            </div>
+
+                            <h5 class="mt-4">Editar serviço</h5>
+
+                            <p>Altera os dados de um serviço existente.</p>
+
+                            <hr>
+
+                            <strong>Campos obrigatórios:</strong>
+
+                            <ul>
+                                <li>nome</li>
+                                <li>valor</li>
+                            </ul>
+
+                            <strong>Campo opcional:</strong>
+
+                            <ul>
+                                <li>descricao</li>
+                            </ul>
+
+                            <strong>Restrições:</strong>
+
+                            <ul>
+                                <li>O serviço deve existir.</li>
+                                <li>Não pode existir outro serviço com o mesmo nome.</li>
+                                <li>Valor deve ser maior que 0.</li>
+                            </ul>
+
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">{
+    "msg": "Serviço editado",
+    "data": {
+        "id": 1,
+        "valor": "500.00",
+        "descricao": "Preparação completa",
+        "nome": "Tanatopraxia Premium"
+    }
+}</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DELETE -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo delete">DELETE</span>
+                                <span class="rota">/servico/:id</span>
+                            </div>
+
+                            <h5 class="mt-4">Deletar serviço</h5>
+
+                            <p>Remove um serviço através do ID.</p>
+
+                            <hr>
+
+                            <strong>Restrição:</strong>
+
+                            <ul>
+                                <li>O serviço deve existir.</li>
+                            </ul>
+
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">{
+    "msg": "Serviço deletado"
+}</div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- OPERAÇÕES EXCLUSIVAS -->
+        <section id="operacoes" class="mt-5">
+
+            <h2 class="titulo">
+                <i class="bi bi-stars"></i>
+                Operações Exclusivas
+            </h2>
+
+            <div class="row g-4">
+
+                <!-- VALOR TOTAL -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo get">GET</span>
+                                <span class="rota">/servico/valor-total/:id</span>
+                            </div>
+
+                            <h5 class="mt-4">Calcular valor total do funeral</h5>
+
+                            <p>
+                                Mostra os dados do funeral e calcula
+                                o valor total dos serviços contratados.
+                            </p>
+
+                            <hr>
+
+                            <strong>Retorna:</strong>
+
+                            <ul>
+                                <li>Nome do falecido.</li>
+                                <li>Nome do contratante.</li>
+                                <li>Lista de serviços.</li>
+                                <li>Valor total.</li>
+                            </ul>
+
+                            <strong>Restrições:</strong>
+
+                            <ul>
+                                <li>ID deve ser válido.</li>
+                                <li>Funeral deve existir.</li>
+                                <li>Deve possuir serviços associados.</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CLIENTES POR SERVIÇO -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo get">GET</span>
+                                <span class="rota">/servico/clientes/:nome</span>
+                            </div>
+
+                            <h5 class="mt-4">Buscar clientes por serviço</h5>
+
+                            <p>
+                                Busca os clientes que contrataram
+                                determinado serviço.
+                            </p>
+
+                            <hr>
+
+                            <strong>Retorna:</strong>
+
+                            <ul>
+                                <li>Nome do cliente.</li>
+                                <li>Data de nascimento.</li>
+                                <li>Email.</li>
+                                <li>Telefone.</li>
+                            </ul>
+
+                            <strong>Restrição:</strong>
+
+                            <ul>
+                                <li>O serviço deve existir.</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- BOTÃO VOLTAR AO TOPO -->
+    <button id="voltarTopo">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
+    <!-- FOOTER -->
+    <footer>
+        <strong>Funerária Eterna Saudade</strong>
+        <br>
+        Documentação da API RESTful
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        // BOTÃO VOLTAR AO TOPO
+
+        const botaoTopo = document.getElementById("voltarTopo");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                botaoTopo.style.display = "block";
+            } else {
+                botaoTopo.style.display = "none";
+            }
+        });
+
+        botaoTopo.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+
+        // PESQUISA
+
+        const pesquisa = document.getElementById("pesquisa");
+        const cards = document.querySelectorAll(".rota-card");
+
+        pesquisa.addEventListener("input", () => {
+
+            const texto = pesquisa.value.toLowerCase();
+
+            cards.forEach(card => {
+
+                const conteudo = card.textContent.toLowerCase();
+
+                if (conteudo.includes(texto)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+
+            });
+
+        });
+
+    </script>
 
 </body>
+
 </html>
