@@ -15,7 +15,7 @@ router.get("/", async (req, res, next) => {
     }
 });
 
-// Operação Exclusiva - Calcular o valor total de um funeral
+// Operação Exclusiva - Calcular o valor total de um funeral.
 router.get("/valor-total/:id", async (req, res, next) => {
     try {
         const id = Number(req.params.id);
@@ -84,6 +84,61 @@ router.get("/valor-total/:id", async (req, res, next) => {
     } catch (error) {
         return res.status(200).json({ msg: error.message });
     }
+});
+
+// Operação Exclusiva - Buscar clientes que contrataram determinado serviço através do nome do serviço.
+router.get("/cliente/:nome", async (req, res, next) => {
+    try {
+        const nome = req.params.nome;
+
+        if (!nome || !nome.trim() ) {
+            throw new Error("Informe o nome do serviço!");
+        }
+
+        const servico = await db.query("SELECT * FROM servico WHERE LOWER(nome) = LOWER($1)", [nome]);
+        
+        if (!servico.rowCount) {
+            throw new Error("Serviço não encontrado!");
+        }
+        
+        const clientes = await db.query(
+            `SELECT 
+                c.nome_primeiro,
+                c.nome_sobrenome,
+                c.data_nascimento,
+                c.contato_email,
+                c.contato_telefone
+
+            FROM servico s
+
+            JOIN servico_funeral sf
+                ON s.id = sf.id_servico
+
+            JOIN funeral f
+                ON sf.id_funeral = f.id
+
+            JOIN cliente c
+                ON f.cpf_cliente = c.cpf
+
+            WHERE LOWER(s.nome) = LOWER($1)`, [nome]
+        );
+
+        
+        if (!clientes.rowCount) {
+            throw new Error("Nenhum cliente foi encontrado para essse serviço!");
+        }
+
+        return res.status(200).json({ msg : "Clientes encontrados com sucesso!", clientes : clientes.rows});
+
+
+    } catch (error) {
+        return res.status(200).json({ msg: error.message });
+    }
+});
+
+// Operação Exclusiva - Buscar clientes - Quando não informar nome
+router.get("/cliente", async (req, res) => {
+    return res.status(400).json({ msg: "Informe o nome do serviço!"});
 });
 
 // GET pelo ID
@@ -186,49 +241,5 @@ router.put("/:id", async (req, res, next) => {
         return res.status(200).json({ msg: error.message });
     }
 });
-
-// Operação Exclusiva - Buscar clientes que contrataram determinado serviço através do nome do serviço.
-
-router.get("/cliente/:nome", async (req, res, next) => {
-    try {
-        const nome = req.query.nome;
-
-        if (!nome) {
-            throw new Error("Informe o nome do serviço!");
-        }
-
-        const clientes = await db.query(
-            `SELECT 
-                c.nome_primeiro,
-                c.nome_sobrenome,
-                c.data_nascimento,
-                c.contato_email,
-                c.contato_telefone
-
-            FROM servico s
-
-            JOIN servico_funeral sf
-                ON s.id = sf.id_servico
-
-            JOIN funeral f
-                ON sf.id_funeral = f.id
-
-            JOIN cliente c
-                ON f.cpf_cliente = c.cpf
-
-            WHERE LOWER(s.nome) = LOWER($1)`, [nome]
-        );
-
-        if (!clientes.rowCount) {
-            throw new Error("Nenhum cliente foi encontrado para essse serviço!");
-        }
-
-        return res.status(200).json({ msg : "Clientes encontrados com sucesso!", data : clientes.rows});
-
-
-    } catch (error) {
-        return res.status(200).json({ msg: error.message });
-    }
-})
 
 module.exports = router;
