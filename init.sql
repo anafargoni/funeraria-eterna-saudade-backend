@@ -1,6 +1,3 @@
-DROP DATABASE IF EXISTS funerariaEternaSaudade;
-CREATE DATABASE funerariaEternaSaudade; 
-
 CREATE TABLE IF NOT EXISTS cliente(
     cpf VARCHAR(14) PRIMARY KEY,
 
