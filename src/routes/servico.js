@@ -30,45 +30,55 @@ router.get("/valor-total/:id", async (req, res, next) => {
             throw new Error("Funeral não encontrado!");
         }
 
-        const servicoFuneral = await db.query("SELECT * FROM servico_funeral WHERE id_funeral = $1", [req.params.id]);
-
-        if (!servicoFuneral.rowCount) {
-            throw new Error("Este funeral não possui serviços associados!");
-        }
-        const r = await db.query(
-
-            `SELECT 
+        const dadosFuneral = await db.query(
+            `SELECT
                 f.nome_falecido,
                 c.nome_primeiro,
                 c.nome_sobrenome,
                 s.nome AS nome_servico,
                 s.valor
-                SUM(s.valor) AS valor_total
             FROM funeral f
-
             JOIN cliente c
-                ON f.cpf_cliente = c.cpf
-
+                ON f cpf_cliente = c.cpf
             JOIN servico_funeral sf
                 ON f.id = sf.id_funeral
-
             JOIN servico s
                 ON sf.id_servico = s.id
-
-            WHERE f.id = $1
-
-            GROUP BY  
-                f.nome_falecido,
-                c.nome_primeiro,
-                c.nome_sobrenome`, 
-
-            [req.params.id]
+            WHERE f.id = $1`, [req.params.id]
         );
+
+        if (!dadosFuneral.rowCount) {
+            throw new Error("Este funeral não possui serviços associados!");
+        }
+        const valorTotal = await db.query(
+            `SELECT SUM(s.valor) AS valor_total
+            FROM servico_funeral sf
+            JOIN servico s
+                ON sf.id_servico
+            WHERE sf.id_funeral = $1`, [req.params.id]);
+
 
         if (!r.rowCount) {
             throw new Error("Não foi possível calcular o valor do funeral!");
         }
-        return res.status(200).json({ msg: "Valor total calculado com sucesso!", data: r.rows[0]});
+        
+        return res.status(200).json({
+            msg: "Valor total calculado com sucesso!",
+
+            nome_falecido: dadosFuneral.rows[0].nome_falecido,
+
+            contratante:
+                dadosFuneral.rows[0].nome_primeiro +
+                " " +
+                dadosFuneral.rows[0].nome_sobrenome,
+
+            servicos: dadosFuneral.rows.map(servico => ({
+                nome: servico.nome_servico,
+                valor: servico.valor
+            })),
+
+            valor_total: valorTotal.rows[0].valor_total
+        });
 
     } catch (error) {
         return res.status(200).json({ msg: error.message });
