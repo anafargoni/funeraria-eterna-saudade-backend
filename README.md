@@ -1,28 +1,25 @@
-# Template Node + Express + PostgreSQL
+# Funerária Eterna Saudade
 
-> Template usado para o desenvolvimento de backends utilizando Node, Express e PostgreSQL.
+Backend desenvolvido para o Trabalho Prático 3 de Desenvolvimento Web.
 
-## ⚠️ Avisos
+O sistema permite o gerenciamento de clientes, funerais e serviços de uma funerária.
 
-Este sistema foi configurado para ambiente de desenvolvimento. Para implantação em produção, revise as variáveis de ambiente, configurações de CORS, segurança do banco de dados, entre outros.
+## Tecnologias
 
-## 🚀 Como utilizar este template?
+* Node.js
+* Express
+* PostgreSQL
 
-1. Preencha o arquivo `init.sql` com o banco de dados desejado.
-1. Após preenchido, execute o seguinte comando:
-```
-docker compose up --build -d
-```
+## Funcionalidades
 
-Caso queira resetar ou recriar o banco de dados (lembre-se que os dados atuais serão perdidos!), execute o comando:
+* CRUD de Cliente
+* CRUD de Funeral
+* CRUD de Serviço
+* Associação e desassociação entre as entidades
+* Operações exclusivas utilizando JOIN
 
-```
-docker compose down -v
-```
+## Documentação
 
-Após inicializado, o webservice pode ser acessado em `http://localhost:3000/`. A interface gráfica de controle do banco de dados pode ser acessada em `http://localhost:8081`.
+A documentação das rotas está disponível na página inicial do servidor:
 
-
-## Deploy
-
-Configure os detalhes de deploy no arquivo `.env`, seguindo o exemplo presente em `.env.example`.
+`http://localhost:3000/`

@@ -46,13 +46,13 @@
         .route-card {
             border: none;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             transition: 0.3s;
         }
 
         .route-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         /* MÉTODOS */
@@ -150,6 +150,10 @@
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link" href="#clientes">Clientes</a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" href="#operacoes">Operações Exclusivas</a>
                     </li>
                 </ul>
@@ -204,13 +208,13 @@
                             <strong>Exemplo de retorno:</strong>
 
                             <div class="json mt-2">[
-    {
-        "id": 1,
-        "valor": "400.00",
-        "descricao": "Preparação estética",
-        "nome": "Tanatopraxia"
+                                {
+    "id": 1,
+    "valor": "400.00",
+    "descricao": "Preparação estética",
+    "nome": "Tanatopraxia"
     }
-]</div>
+                                ]</div>
 
                         </div>
                     </div>
@@ -251,7 +255,7 @@
     "valor": "400.00",
     "descricao": "Preparação estética",
     "nome": "Tanatopraxia"
-}</div>
+                                }</div>
 
                         </div>
                     </div>
@@ -300,12 +304,12 @@
                             <div class="json mt-2">{
     "msg": "Serviço adicionado",
     "data": {
-        "id": 5,
-        "valor": "400.00",
-        "descricao": "Preparação estética",
-        "nome": "Tanatopraxia"
+    "id": 5,
+    "valor": "400.00",
+    "descricao": "Preparação estética",
+    "nome": "Tanatopraxia"
     }
-}</div>
+                                }</div>
 
                         </div>
                     </div>
@@ -354,12 +358,12 @@
                             <div class="json mt-2">{
     "msg": "Serviço editado",
     "data": {
-        "id": 1,
-        "valor": "500.00",
-        "descricao": "Preparação completa",
-        "nome": "Tanatopraxia Premium"
+    "id": 1,
+    "valor": "500.00",
+    "descricao": "Preparação completa",
+    "nome": "Tanatopraxia Premium"
     }
-}</div>
+                                }</div>
 
                         </div>
                     </div>
@@ -390,8 +394,290 @@
                             <strong>Exemplo de retorno:</strong>
 
                             <div class="json mt-2">{
-    "msg": "Serviço deletado"
-}</div>
+                                "msg": "Serviço deletado"
+                                }</div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CLIENTES -->
+        <section id="clientes" class="mt-5">
+
+            <h2 class="titulo">
+                <i class="bi bi-person"></i>
+                Clientes
+            </h2>
+
+            <p class="text-muted">
+                Rotas responsáveis pelo gerenciamento dos clientes.
+            </p>
+
+            <div class="row g-4">
+
+                <!-- GET TODOS -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo get">GET</span>
+                                <span class="rota">/cliente</span>
+                            </div>
+
+                            <h5 class="mt-4">Listar clientes</h5>
+
+                            <p>Retorna todos os clientes cadastrados.</p>
+
+                            <hr>
+
+                            <strong>Parâmetros:</strong>
+                            <p>Não possui.</p>
+
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">[
+    {
+    "cpf": "12345678901",
+    "nome_primeiro": "João",
+    "nome_sobrenome": "Silva",
+    "endereco_cep": "13560000",
+    "endereco_rua": "Rua das Flores",
+    "endereco_cidade": "São Carlos",
+    "endereco_bairro": "Centro",
+    "endereco_numero": 120,
+    "contato_email": "joao.silva@email.com",
+    "contato_telefone": "16999990001",
+    "data_nascimento": "1985-03-15"
+    }
+                                ]</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GET CPF -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo get">GET</span>
+                                <span class="rota">/cliente/:cpf</span>
+                            </div>
+
+                            <h5 class="mt-4">Buscar cliente por CPF</h5>
+
+                            <p>Retorna um cliente específico através do CPF.</p>
+
+                            <hr>
+
+                            <strong>Parâmetro:</strong>
+
+                            <ul>
+                                <li>CPF do cliente.</li>
+                            </ul>
+
+                            <strong>Restrições:</strong>
+
+                            <ul>
+                                <li>O cliente deve existir.</li>
+                                <li>O CPF deve possuir 11 números.</li>
+                            </ul>
+
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">{
+    "cpf": "12345678901",
+    "nome_primeiro": "João",
+    "nome_sobrenome": "Silva",
+    "endereco_cep": "13560000",
+    "endereco_rua": "Rua das Flores",
+    "endereco_cidade": "São Carlos",
+    "endereco_bairro": "Centro",
+    "endereco_numero": 120,
+    "contato_email": "joao.silva@email.com",
+    "contato_telefone": "16999990001",
+    "data_nascimento": "1985-03-15"
+                                }</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- POST -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo post">POST</span>
+                                <span class="rota">/cliente</span>
+                            </div>
+
+                            <h5 class="mt-4">Adicionar cliente</h5>
+
+                            <p>Adiciona um novo cliente ao sistema.</p>
+
+                            <hr>
+
+                            <strong>Campos obrigatórios:</strong>
+
+                            <ul>
+                                <li>cpf</li>
+                                <li>nome_primeiro</li>
+                                <li>nome_sobrenome</li>
+                                <li>contato_email</li>
+                                <li>contato_telefone</li>
+                            </ul>
+
+                            <strong>Campos opcionais:</strong>
+
+                            <ul>
+                                <li>endereco_CEP</li>
+                                <li>endereco_rua</li>
+                                <li>endereco_cidade</li>
+                                <li>endereco_bairro</li>
+                                <li>endereco_numero</li>
+                                <li>data_nascimento</li>
+                            </ul>
+
+                            <strong>Restrições:</strong>
+
+                            <ul>
+                                <li>CPF deve possuir 11 números.</li>
+                                <li>CPF não pode estar cadastrado.</li>
+                                <li>Telefone deve possuir 10 ou 11 números.</li>
+                                <li>Data de nascimento deve ser igual ou posterior a 01/01/1900.</li>
+                            </ul>
+
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">{
+    "msg": "Cliente adicionado",
+    "data": {
+    "cpf": "11111111111",
+    "nome_primeiro": "Ana",
+    "nome_sobrenome": "Teste",
+    "endereco_cep": "13560000",
+    "endereco_rua": "Rua das Flores",
+    "endereco_cidade": "São Carlos",
+    "endereco_bairro": "Centro",
+    "endereco_numero": 100,
+    "contato_email": "ana.teste@email.com",
+    "contato_telefone": "16999999999",
+    "data_nascimento": "2008-05-10"
+    }
+                                }</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PUT -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo put">PUT</span>
+                                <span class="rota">/cliente/:cpf</span>
+                            </div>
+
+                            <h5 class="mt-4">Editar cliente</h5>
+
+                            <p>Altera os dados de um cliente existente.</p>
+
+                            <hr>
+
+                            <strong>Campos obrigatórios:</strong>
+
+                            <ul>
+                                <li>nome_primeiro</li>
+                                <li>nome_sobrenome</li>
+                                <li>contato_email</li>
+                                <li>contato_telefone</li>
+                            </ul>
+
+                            <strong>Campos opcionais:</strong>
+
+                            <ul>
+                                <li>endereco_CEP</li>
+                                <li>endereco_rua</li>
+                                <li>endereco_cidade</li>
+                                <li>endereco_bairro</li>
+                                <li>endereco_numero</li>
+                                <li>data_nascimento</li>
+                            </ul>
+
+                            <strong>Restrições:</strong>
+
+                            <ul>
+                                <li>O cliente deve existir.</li>
+                                <li>Telefone deve possuir 10 ou 11 números.</li>
+                                <li>Data de nascimento deve ser igual ou posterior a 01/01/1900.</li>
+                            </ul>
+
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">{
+    "msg": "Cliente editado",
+    "data": {
+    "cpf": "11111111111",
+    "nome_primeiro": "Ana",
+    "nome_sobrenome": "Oliveira",
+    "endereco_cep": "13561000",
+    "endereco_rua": "Rua São Paulo",
+    "endereco_cidade": "São Carlos",
+    "endereco_bairro": "Vila Prado",
+    "endereco_numero": 200,
+    "contato_email": "ana.novo@email.com",
+    "contato_telefone": "16988888888",
+    "data_nascimento": "2008-05-10"
+    }
+                                }</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DELETE -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo delete">DELETE</span>
+                                <span class="rota">/cliente/:cpf</span>
+                            </div>
+
+                            <h5 class="mt-4">Deletar cliente</h5>
+
+                            <p>Remove um cliente através do CPF.</p>
+
+                            <hr>
+
+                            <strong>Restrição:</strong>
+
+                            <ul>
+                                <li>O cliente deve existir.</li>
+                            </ul>
+
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">{
+    "msg": "Cliente deletado",
+    "data": {
+    "cpf": "11111111111",
+    "nome_primeiro": "Ana",
+    "nome_sobrenome": "Oliveira"
+    }
+                                }</div>
 
                         </div>
                     </div>
@@ -411,7 +697,133 @@
 
             <div class="row g-4">
 
-               
+
+
+                <!-- FUNERAIS DE UM CLIENTE -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo get">GET</span>
+                                <span class="rota">/cliente/funerais/:cpf</span>
+                            </div>
+
+                            <h5 class="mt-4">Buscar funerais de um cliente</h5>
+
+                            <p>Busca todos os funerais associados a determinado cliente através do CPF.</p>
+
+                            <hr>
+
+                            <strong>Retorna:</strong>
+
+                            <ul>
+                                <li>Nome do cliente.</li>
+                                <li>Lista de funerais associados.</li>
+                                <li>Nome do falecido.</li>
+                                <li>Data e local do funeral.</li>
+                                <li>Duração e pagamento.</li>
+                            </ul>
+
+                            <strong>Restrições:</strong>
+
+                            <ul>
+                                <li>O cliente deve existir.</li>
+                                <li>O cliente deve possuir funerais associados.</li>
+                            </ul>
+
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">{
+    "msg": "Funerais encontrados com sucesso!",
+    "cliente": "João Silva",
+    "funerais": [
+    {
+    "id": 1,
+    "nome_falecido": "José da Silva",
+    "data_evento": "2026-09-10",
+    "local": "Cemitério Nossa Senhora do Carmo",
+    "duracao": 4,
+    "pagamento": "2500.00"
+    }
+    ]
+                                }</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SERVIÇOS DE UM FUNERAL -->
+                <div class="col-md-6 rota-card">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo get">GET</span>
+                                <span class="rota">/cliente/servicos/:id</span>
+                            </div>
+
+                            <h5 class="mt-4">Buscar serviços de um funeral</h5>
+
+                            <p>Busca todos os serviços associados a determinado funeral através do ID.</p>
+
+                            <hr>
+
+                            <strong>Retorna:</strong>
+
+                            <ul>
+                                <li>Nome do falecido.</li>
+                                <li>Lista de serviços.</li>
+                                <li>Nome do serviço.</li>
+                                <li>Descrição.</li>
+                                <li>Valor.</li>
+                            </ul>
+
+                            <strong>Restrições:</strong>
+
+                            <ul>
+                                <li>ID do funeral deve ser válido.</li>
+                                <li>O funeral deve existir.</li>
+                                <li>O funeral deve possuir serviços associados.</li>
+                            </ul>
+
+                            <strong>Exemplo de retorno:</strong>
+
+                            <div class="json mt-2">{
+    "msg": "Serviços encontrados com sucesso!",
+    "funeral": "José da Silva",
+    "servicos": [
+    {
+    "id": 1,
+    "nome": "Tanatopraxia",
+    "descricao": "Preparação e conservação do corpo para o velório.",
+    "valor": "500.00"
+    },
+    {
+    "id": 4,
+    "nome": "Urna funerária",
+    "descricao": "Fornecimento de urna funerária para o sepultamento.",
+    "valor": "1500.00"
+    },
+    {
+    "id": 5,
+    "nome": "Ornamentação",
+    "descricao": "Decoração e ornamentação do ambiente do velório.",
+    "valor": "400.00"
+    },
+    {
+    "id": 7,
+    "nome": "Sala de velório",
+    "descricao": "Locação da sala para realização do velório.",
+    "valor": "350.00"
+    }
+    ]
+                                }</div>
+
+                        </div>
+                    </div>
+                </div>
+
                 <!-- VALOR TOTAL -->
                 <div class="col-md-6 rota-card">
                     <div class="card route-card h-100">
@@ -452,77 +864,79 @@
     "nome_falecido": "João da Silva",
     "contratante": "Maria Oliveira",
     "servicos": [
-        {
-            "nome": "Velório",
-            "valor": "500.00"
-        },
-        {
-            "nome": "Transporte",
-            "valor": "300.00"
-        }
+    {
+    "nome": "Velório",
+    "valor": "500.00"
+    },
+    {
+    "nome": "Transporte",
+    "valor": "300.00"
+    }
     ],
     "valor_total": "800.00"
-}
-            </div>
+                                }
+                            </div>
 
                         </div>
                     </div>
                 </div>
 
-                
+
                 <!-- CLIENTES POR SERVIÇO -->
                 <div class="col-md-6 rota-card">
-                <div class="card route-card h-100">
-                    <div class="card-body">
+                    <div class="card route-card h-100">
+                        <div class="card-body">
 
-                        <div class="d-flex justify-content-between">
-                            <span class="metodo get">GET</span>
-                            <span class="rota">/servico/clientes/:nome</span>
-                        </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="metodo get">GET</span>
+                                <span class="rota">/servico/clientes/:nome</span>
+                            </div>
 
-                        <h5 class="mt-4">Buscar clientes por serviço</h5>
+                            <h5 class="mt-4">Buscar clientes por serviço</h5>
 
-                        <p>Busca os clientes que contrataram determinado serviço.</p>
+                            <p>Busca os clientes que contrataram determinado serviço.</p>
 
-                        <hr>
+                            <hr>
 
-                        <strong>Retorna:</strong>
+                            <strong>Retorna:</strong>
 
-                        <ul>
-                            <li>Nome do cliente.</li>
-                            <li>Data de nascimento.</li>
-                            <li>Email.</li>
-                            <li>Telefone.</li>
-                        </ul>
+                            <ul>
+                                <li>Nome do cliente.</li>
+                                <li>Data de nascimento.</li>
+                                <li>Email.</li>
+                                <li>Telefone.</li>
+                            </ul>
 
-                        <strong>Restrição:</strong>
+                            <strong>Restrição:</strong>
 
-                        <ul>
-                            <li>O serviço deve existir.</li>
-                        </ul>
+                            <ul>
+                                <li>O serviço deve existir.</li>
+                            </ul>
 
-                        <strong>Exemplo de retorno:</strong>
+                            <strong>Exemplo de retorno:</strong>
 
-                        <div class="json mt-2">{
+                            <div class="json mt-2">{
     "servico": "Velório",
     "clientes": [
-        {
-            "nome": "Maria Oliveira",
-            "data_nascimento": "1980-05-10",
-            "email": "maria@email.com",
-            "telefone": "16999999999"
-        },
-        {
-            "nome": "Carlos Souza",
-            "data_nascimento": "1975-08-22",
-            "email": "carlos@email.com",
-            "telefone": "16988888888"
-        }
+    {
+    "nome": "Maria Oliveira",
+    "data_nascimento": "1980-05-10",
+    "email": "maria@email.com",
+    "telefone": "16999999999"
+    },
+    {
+    "nome": "Carlos Souza",
+    "data_nascimento": "1975-08-22",
+    "email": "carlos@email.com",
+    "telefone": "16988888888"
+    }
     ]
-}                       </div>
+                                } </div>
 
+                        </div>
                     </div>
                 </div>
+
             </div>
 
         </section>
