@@ -146,17 +146,18 @@ router.get("/:id", async (req, res, next) => {
     try {
         const id = Number(req.params.id);
 
-        if (!Number.isInteger(id)) {
+        if (!Number.isInteger(id) || id <= 0) {
             return res.status(400).json({ msg: "ID inválido!" });
         }
+
         const r = await db.query("SELECT * FROM servico WHERE id = $1", [id]);
         if (!r.rowCount ) {
-            return res.status(400).json({ msg: "Serviço não econtrado!" });
+            return res.status(404).json({ msg: "Serviço não econtrado!" });
         }
         return res.status(200).json(r.rows[0]);
 
     } catch (error) {
-        return res.status(400).json({ msg: error.message });
+        return res.status(500).json({ msg: error.message });
     }
 });
 
@@ -166,7 +167,7 @@ router.post("/", async (req, res, next) => {
         const { nome, valor } = req.body || {};
         let { descricao } = req.body || {};
 
-        if (!nome) {
+        if (!nome || !nome.trim()) {
             throw new Error("Nome do serviço é obrigatório!");
         } else {
             const servicoEncontrado = await db.query("SELECT * FROM servico WHERE LOWER(nome) = LOWER($1)", [nome]);
@@ -222,13 +223,19 @@ router.delete("/:id", async (req, res, next) => {
 // PUT 
 router.put("/:id", async (req, res, next) => {
     try {
+        const id = Number(req.params.id);
+
+        if (!Number.isInteger(id) || id <= 0) {
+            return res.status(400).json({ msg: "ID inválido!" });
+        }
+
         const { nome, valor } = req.body || {};
         let { descricao } = req.body || {};
 
-        if (!nome) {
+        if (!nome || !nome.trim()) {
             throw new Error("Nome do serviço é obrigatório!");
         } else {
-            const servicoEncontrado = await db.query("SELECT * FROM servico WHERE LOWER(nome) = LOWER($1) AND id != $2", [nome, req.params.id]);
+            const servicoEncontrado = await db.query("SELECT * FROM servico WHERE LOWER(nome) = LOWER($1) AND id != $2", [nome, id]);
             if (servicoEncontrado.rowCount) {
                 throw new Error("Nome do serviço já existe");
             }
@@ -244,7 +251,7 @@ router.put("/:id", async (req, res, next) => {
             descricao = null;
         }
 
-        const r = await db.query("UPDATE servico SET valor = $1, descricao = $2, nome = $3 WHERE id = $4 RETURNING*", [valor, descricao, nome, req.params.id]);
+        const r = await db.query("UPDATE servico SET valor = $1, descricao = $2, nome = $3 WHERE id = $4 RETURNING*", [valor, descricao, nome, id]);
 
         if (!r.rowCount) {
             throw new Error("Serviço não foi editado!");
