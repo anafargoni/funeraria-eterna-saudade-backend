@@ -154,7 +154,7 @@ router.get("/:id", async (req, res, next) => {
             return res.status(400).json({ msg: "Serviço não econtrado!" });
         }
         return res.status(200).json(r.rows[0]);
-        
+
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }
@@ -201,7 +201,14 @@ router.post("/", async (req, res, next) => {
 // DELETE 
 router.delete("/:id", async (req, res, next) => {
     try {
-        const r = await db.query("DELETE FROM servico WHERE id = $1 RETURNING*", [req.params.id]);
+        const id = Number(req.params.id)
+
+        if (!Number.isInteger(id) || id <= 0) {
+            return res.status(400).json({ msg : "ID inválido!"})
+        }
+
+        const r = await db.query("DELETE FROM servico WHERE id = $1 RETURNING*", [id]);
+        
         if (!r.rowCount) {
             return res.status(400).json({ msg: "Serviço não econtrado!" });
         }
