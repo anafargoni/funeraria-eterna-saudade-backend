@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS funeral(
     data_morte_falecido DATE NOT NULL,
     cpf_falecido VARCHAR(14) NOT NULL,
 
-    cpf_cliente VARCHAR(14) NOT NULL,
+    cpf_cliente VARCHAR(14),
     pagamento BOOLEAN NOT NULL,
 
     CONSTRAINT cpf_cliente_fk FOREIGN KEY (cpf_cliente)
