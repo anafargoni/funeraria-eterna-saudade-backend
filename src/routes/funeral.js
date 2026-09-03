@@ -2,8 +2,108 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
+// TABELA SERVICO_FUNERAL
+// GET - Associação de Serviço com Funeral
+router.get("/:id_funeral/servico/:id_servico", async (req, res, next) => {
+    try {
+        const idFuneral = Number(req.params.id_funeral);
+        const idServico = Number(req.params.id_servico);
+
+        if (!Number.isInteger(idFuneral) || idFuneral <= 0) {
+            throw new Error("Informe um ID de funeral válido!");
+        }
+
+        if (!Number.isInteger(idServico) || idServico <= 0) {
+            throw new Error("Informe um ID de serviço válido!");
+        }
+
+        const r = await db.query(`SELECT f.id as id_funeral, f.nome_falecido as defunto, s.id as id_servico, s.nome as nome_servico FROM servico_funeral sf JOIN servico s ON s.id = sf.id_servico JOIN funeral f ON f.id = sf.id_funeral`, [idFuneral, idServico]);
+
+        if (!r.rowCount) {
+            throw new Error("Esta associação não existe!");
+        }
+
+        return res.status(200).json({msg: "Associação encontrada com sucesso!", data: r.rows[0]});
+
+    } catch (error) {
+        return res.status(400).json({ msg: error.message });
+    }
+});
+
+// DELETE - Associação de Serviço com Funeral
+router.delete("/:id_funeral/servico/:id_servico", async (req, res, next) => {
+    try{
+        const idFuneral = Number(req.params.id_funeral);
+        const idServico = Number(req.params.id_servico);
+
+        if (!Number.isInteger(idFuneral) || idFuneral <= 0) {
+            throw new Error("Informe um ID de funeral válido!");
+        }
+
+        if (!Number.isInteger(idServico) || idServico <= 0) {
+            throw new Error("Informe um ID de serviço válido!");
+        }
+
+        const r = await db.query(
+            `DELETE FROM servico_funeral
+             WHERE id_funeral = $1
+             AND id_servico = $2
+             RETURNING *`, [idFuneral, idServico]);
+
+
+        if (!r.rowCount) {
+            throw new Error("Esta associação não existe!");
+        }
+
+        return res.status(200).json({ msg: "Serviço desassociado do funeral com sucesso!", data: r.rows[0]});
+
+    } catch (error) {
+        return res.status(400).json({ msg: error.message });
+    }
+})
+// POST - Associação de Serviço com Funeral
+router.post("/:id_funeral/servico/:id_servico", async (req, res, next) => {
+    try{
+        const idFuneral = req.params.id_funeral;
+        const idServico = req.params.id_servico;
+
+        if (!Number.isInteger(idFuneral) || idFuneral <= 0) {
+            throw new Error("Informe um ID de funeral válido!");
+        }
+
+        if (!Number.isInteger(idServico) || idServico <= 0) {
+            throw new Error("Informe um ID de serviço válido!");
+        }
+
+        const funeral = await db.query("SELECT * FROM funeral WHERE id = $1", [idFuneral]);
+
+        if (!funeral.rowCount) {
+            throw new Error("Funeral não encontrado!");
+        }
+
+        const servico = await db.query("SELECT * FROM servico WHERE id = $1",[idServico]);
+
+        if (!servico.rowCount) {
+            throw new Error("Serviço não encontrado!");
+        }
+
+        const associacao = await db.query(`SELECT * FROM servico_funeral WHERE id_funeral = $1 AND id_servico = $2`,[idFuneral, idServico]);
+
+        if (associacao.rowCount) {
+            throw new Error("Este serviço já está cadastrado a este funeral!");
+        }
+
+        const r = await db.query(`INSERT INTO servico_funeral (id_funeral, id_servico) VALUES ($1, $2)RETURNING *`, [idFuneral, idServico]);
+
+        return res.status(201).json({ msg: "O cadastro de Serviço ao funeral foi efetuado com sucesso!", data: r.rows[0]});
+
+    } catch (error) {
+        return res.status(400).json({ msg: error.message });
+    }
+});
+
 // GET /funeral - Buscar todos os funerais 
-router.get("/funerais", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     try {
         const r = await db.query("SELECT * FROM funeral");
         // Verifica se não foi encontrado nenhum funeral
@@ -15,14 +115,17 @@ router.get("/funerais", async (req, res, next) => {
         return res.status(200).json(r.rows);
 
     } catch (error) {
-        return res.status(400).json({
-            msg: error.message
-        });
+        return res.status(400).json({ msg: error.message });
     }
 });
 
+<<<<<<< HEAD
+// GET /funeral/:id - Buscar funeral por id
+router.get("/:id", async (req, res, next) => {
+=======
 // Operação Exclusiva - Buscar os serviços de um funeral
 router.get("/servicos/:id", async (req, res, next) => {
+>>>>>>> 10b6057ae460a36e386ace3183b0f412486382f2
     try {
         const id = Number(req.params.id);
 
@@ -77,6 +180,8 @@ router.get("/servicos/:id", async (req, res, next) => {
 
 
 
+<<<<<<< HEAD
+=======
 // GET /funeral/:id - Buscar funeral por id
 router.get("/:id", async (req, res, next) => {
     try {
@@ -164,5 +269,6 @@ router.post("/", async (req, res, next) => {
 
 });
 
+>>>>>>> 10b6057ae460a36e386ace3183b0f412486382f2
 
 module.exports = router;
