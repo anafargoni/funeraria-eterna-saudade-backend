@@ -82,7 +82,7 @@ router.get("/valor-total/:id", async (req, res, next) => {
         });
 
     } catch (error) {
-        return res.status(200).json({ msg: error.message });
+        return res.status(400).json({ msg: error.message });
     }
 });
 
@@ -137,7 +137,7 @@ router.get("/cliente/:nome", async (req, res, next) => {
 
 
     } catch (error) {
-        return res.status(200).json({ msg: error.message });
+        return res.status(400).json({ msg: error.message });
     }
 });
 
@@ -236,9 +236,9 @@ router.put("/:id", async (req, res, next) => {
         if (!r.rowCount) {
             throw new Error("Serviço não foi editado!");
         }
-        return res.status(201).json({ msg: "Serviço editado", data: r.rows[0] });
+        return res.status(200).json({ msg: "Serviço editado", data: r.rows[0] });
     } catch (error) {
-        return res.status(200).json({ msg: error.message });
+        return res.status(400).json({ msg: error.message });
     }
 });
 
