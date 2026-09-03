@@ -18,6 +18,109 @@ router.get("/", async (req, res, next) => {
     }
 });
 
+// Operação Exclusiva - Buscar todos os funerais de um cliente
+router.get("/funerais/:cpf", async (req, res, next) => {
+    try {
+        const cpf = req.params.cpf;
+
+        const cliente = await db.query(
+            "SELECT * FROM cliente WHERE cpf = $1",
+            [cpf]
+        );
+
+        if (!cliente.rowCount) {
+            throw new Error("Cliente não encontrado!");
+        }
+
+        const funerais = await db.query(
+            `SELECT
+                f.id,
+                f.nome_falecido,
+                f.data_evento,
+                f.local,
+                f.duracao,
+                f.pagamento
+
+            FROM cliente c
+
+            JOIN funeral f
+                ON c.cpf = f.cpf_cliente
+
+            WHERE c.cpf = $1`,
+            [cpf]
+        );
+
+        if (!funerais.rowCount) {
+            throw new Error("Este cliente não possui funerais associados!");
+        }
+
+        return res.status(200).json({
+            msg: "Funerais encontrados com sucesso!",
+            cliente:
+                cliente.rows[0].nome_primeiro +
+                " " +
+                cliente.rows[0].nome_sobrenome,
+
+            funerais: funerais.rows
+        });
+
+    } catch (error) {
+        return res.status(400).json({ msg: error.message });
+    }
+});
+
+// Operação Exclusiva - Buscar os serviços de um funeral
+router.get("/servicos/:id", async (req, res, next) => {
+    try {
+        const id = Number(req.params.id);
+
+        if (!Number.isInteger(id) || id <= 0) {
+            throw new Error("Informe um ID de funeral válido!");
+        }
+
+        const funeral = await db.query(
+            "SELECT * FROM funeral WHERE id = $1",
+            [id]
+        );
+
+        if (!funeral.rowCount) {
+            throw new Error("Funeral não encontrado!");
+        }
+
+        const servicos = await db.query(
+            `SELECT
+                s.id,
+                s.nome,
+                s.descricao,
+                s.valor
+
+            FROM funeral f
+
+            JOIN servico_funeral sf
+                ON f.id = sf.id_funeral
+
+            JOIN servico s
+                ON sf.id_servico = s.id
+
+            WHERE f.id = $1`,
+            [id]
+        );
+
+        if (!servicos.rowCount) {
+            throw new Error("Este funeral não possui serviços associados!");
+        }
+
+        return res.status(200).json({
+            msg: "Serviços encontrados com sucesso!",
+            funeral: funeral.rows[0].nome_falecido,
+            servicos: servicos.rows
+        });
+
+    } catch (error) {
+        return res.status(400).json({ msg: error.message });
+    }
+});
+
 // GET pelo CPF
 router.get("/:cpf", async (req, res, next) => {
     try {
