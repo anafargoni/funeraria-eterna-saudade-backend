@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS funeral(
     cpf_falecido VARCHAR(14) NOT NULL,
 
     cpf_cliente VARCHAR(14) NOT NULL,
-    pagamento DECIMAL(8,2) NOT NULL,
+    pagamento BOOLEAN NOT NULL,
 
     CONSTRAINT cpf_cliente_fk FOREIGN KEY (cpf_cliente)
         REFERENCES cliente (cpf),
@@ -111,35 +111,115 @@ VALUES ('90123456789', 'Ricardo', 'Gomes', '13571000', 'Avenida Trabalhador São
 INSERT INTO cliente ( cpf, nome_primeiro, nome_sobrenome, endereco_CEP, endereco_rua, endereco_cidade, endereco_bairro, endereco_numero, contato_email, contato_telefone, data_nascimento) 
 VALUES ('01234567890', 'Camila', 'Martins', '13572000', 'Rua Episcopal', 'São Carlos', 'Centro', 180, 'camila.martins@email.com', '16999990010', '1992-02-28');
 
-INSERT INTO funeral ( duracao, data_evento, local, nome_falecido, data_nascimento_falecido, data_morte_falecido, cpf_falecido, cpf_cliente, pagamento) 
-VALUES (4, '2026-09-10', 'Cemitério Nossa Senhora do Carmo', 'José da Silva', '1950-05-12', '2026-09-08', '11122233344', '12345678901', 2500.00);
+INSERT INTO funeral (
+    duracao, data_evento, local, nome_falecido,
+    data_nascimento_falecido, data_morte_falecido,
+    cpf_falecido, cpf_cliente, pagamento
+)
+VALUES (
+    4, '2026-09-10', 'Cemitério Nossa Senhora do Carmo',
+    'José da Silva', '1950-05-12', '2026-09-08',
+    '11122233344', '12345678901', TRUE
+);
 
-INSERT INTO funeral ( duracao, data_evento, local, nome_falecido, data_nascimento_falecido, data_morte_falecido, cpf_falecido, cpf_cliente, pagamento) 
-VALUES (3, '2026-09-12', 'Cemitério Municipal', 'Antônio Oliveira', '1948-11-20', '2026-09-10', '22233344455', '23456789012', 3200.00);
+INSERT INTO funeral (
+    duracao, data_evento, local, nome_falecido,
+    data_nascimento_falecido, data_morte_falecido,
+    cpf_falecido, cpf_cliente, pagamento
+)
+VALUES (
+    3, '2026-09-12', 'Cemitério Municipal',
+    'Antônio Oliveira', '1948-11-20', '2026-09-10',
+    '22233344455', '23456789012', FALSE
+);
 
-INSERT INTO funeral ( duracao, data_evento, local, nome_falecido, data_nascimento_falecido, data_morte_falecido, cpf_falecido, cpf_cliente, pagamento) 
-VALUES (5, '2026-09-15', 'Cemitério Santo Antônio', 'Maria dos Santos', '1960-03-08', '2026-09-13', '33344455566', '34567890123', 2800.00);
+INSERT INTO funeral (
+    duracao, data_evento, local, nome_falecido,
+    data_nascimento_falecido, data_morte_falecido,
+    cpf_falecido, cpf_cliente, pagamento
+)
+VALUES (
+    5, '2026-09-15', 'Cemitério Santo Antônio',
+    'Maria dos Santos', '1960-03-08', '2026-09-13',
+    '33344455566', '34567890123', TRUE
+);
 
-INSERT INTO funeral ( duracao, data_evento, local, nome_falecido, data_nascimento_falecido, data_morte_falecido, cpf_falecido, cpf_cliente, pagamento)  
-VALUES (4, '2026-09-18', 'Cemitério Municipal', 'Francisco Souza', '1955-07-25', '2026-09-16', '44455566677', '45678901234', 3500.00);
+INSERT INTO funeral (
+    duracao, data_evento, local, nome_falecido,
+    data_nascimento_falecido, data_morte_falecido,
+    cpf_falecido, cpf_cliente, pagamento
+)
+VALUES (
+    4, '2026-09-18', 'Cemitério Municipal',
+    'Francisco Souza', '1955-07-25', '2026-09-16',
+    '44455566677', '45678901234', FALSE
+);
 
-INSERT INTO funeral ( duracao, data_evento, local, nome_falecido, data_nascimento_falecido, data_morte_falecido, cpf_falecido, cpf_cliente, pagamento) 
-VALUES (3, '2026-09-20', 'Cemitério Parque da Paz', 'Helena Costa', '1945-02-14', '2026-09-18', '55566677788', '56789012345', 2700.00);
+INSERT INTO funeral (
+    duracao, data_evento, local, nome_falecido,
+    data_nascimento_falecido, data_morte_falecido,
+    cpf_falecido, cpf_cliente, pagamento
+)
+VALUES (
+    3, '2026-09-20', 'Cemitério Parque da Paz',
+    'Helena Costa', '1945-02-14', '2026-09-18',
+    '55566677788', '56789012345', TRUE
+);
 
-INSERT INTO funeral ( duracao, data_evento, local, nome_falecido, data_nascimento_falecido, data_morte_falecido, cpf_falecido, cpf_cliente, pagamento) 
-VALUES (6, '2026-09-22', 'Cemitério Municipal', 'Roberto Ferreira', '1952-09-30', '2026-09-20', '66677788899', '67890123456', 4000.00);
+INSERT INTO funeral (
+    duracao, data_evento, local, nome_falecido,
+    data_nascimento_falecido, data_morte_falecido,
+    cpf_falecido, cpf_cliente, pagamento
+)
+VALUES (
+    6, '2026-09-22', 'Cemitério Municipal',
+    'Roberto Ferreira', '1952-09-30', '2026-09-20',
+    '66677788899', '67890123456', FALSE
+);
 
-INSERT INTO funeral ( duracao, data_evento, local, nome_falecido, data_nascimento_falecido, data_morte_falecido, cpf_falecido, cpf_cliente, pagamento)  
-VALUES (4, '2026-09-25', 'Cemitério Jardim da Saudade', 'Beatriz Rodrigues', '1965-04-18', '2026-09-23', '77788899900', '78901234567', 3100.00);
+INSERT INTO funeral (
+    duracao, data_evento, local, nome_falecido,
+    data_nascimento_falecido, data_morte_falecido,
+    cpf_falecido, cpf_cliente, pagamento
+)
+VALUES (
+    4, '2026-09-25', 'Cemitério Jardim da Saudade',
+    'Beatriz Rodrigues', '1965-04-18', '2026-09-23',
+    '77788899900', '78901234567', TRUE
+);
 
-INSERT INTO funeral ( duracao, data_evento, local, nome_falecido, data_nascimento_falecido, data_morte_falecido, cpf_falecido, cpf_cliente, pagamento) 
-VALUES (5, '2026-09-27', 'Cemitério Municipal', 'Paulo Almeida', '1958-12-10', '2026-09-25', '88899900011', '89012345678', 2900.00);
+INSERT INTO funeral (
+    duracao, data_evento, local, nome_falecido,
+    data_nascimento_falecido, data_morte_falecido,
+    cpf_falecido, cpf_cliente, pagamento
+)
+VALUES (
+    5, '2026-09-27', 'Cemitério Municipal',
+    'Paulo Almeida', '1958-12-10', '2026-09-25',
+    '88899900011', '89012345678', FALSE
+);
 
-INSERT INTO funeral ( duracao, data_evento, local, nome_falecido, data_nascimento_falecido, data_morte_falecido, cpf_falecido, cpf_cliente, pagamento) 
-VALUES (3, '2026-09-29', 'Cemitério Parque das Acácias', 'Lúcia Gomes', '1962-06-22', '2026-09-27', '99900011122', '90123456789', 3300.00);
+INSERT INTO funeral (
+    duracao, data_evento, local, nome_falecido,
+    data_nascimento_falecido, data_morte_falecido,
+    cpf_falecido, cpf_cliente, pagamento
+)
+VALUES (
+    3, '2026-09-29', 'Cemitério Parque das Acácias',
+    'Lúcia Gomes', '1962-06-22', '2026-09-27',
+    '99900011122', '90123456789', TRUE
+);
 
-INSERT INTO funeral ( duracao, data_evento, local, nome_falecido, data_nascimento_falecido, data_morte_falecido, cpf_falecido, cpf_cliente, pagamento) 
-VALUES (4, '2026-10-01', 'Cemitério Municipal', 'Carlos Martins', '1957-08-05', '2026-09-29', '00011122233', '01234567890', 3000.00);
+INSERT INTO funeral (
+    duracao, data_evento, local, nome_falecido,
+    data_nascimento_falecido, data_morte_falecido,
+    cpf_falecido, cpf_cliente, pagamento
+)
+VALUES (
+    4, '2026-10-01', 'Cemitério Municipal',
+    'Carlos Martins', '1957-08-05', '2026-09-29',
+    '00011122233', '01234567890', FALSE
+);
 
 INSERT INTO servico (valor, descricao, nome) VALUES
 (500.00, 'Preparação e conservação do corpo para o velório.', 'Tanatopraxia');
