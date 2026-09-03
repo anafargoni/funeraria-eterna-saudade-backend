@@ -69,6 +69,13 @@ router.get("/funerais/:cpf", async (req, res, next) => {
     }
 });
 
+
+// Associações
+
+// associar = UPDATE funeral SET cpf_cliente = cpf
+// desassociar = UPDATE funeral SET cpf_cliente = NULL
+
+// GET pelo CPF
 // GET pelo CPF
 router.get("/:cpf", async (req, res, next) => {
     try {

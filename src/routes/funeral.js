@@ -96,6 +96,8 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
     try {
         const { duraçao } = req.body || {};
+    } catch (error) {
+        
     }
 
 });
