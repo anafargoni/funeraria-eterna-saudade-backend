@@ -69,13 +69,12 @@ router.get("/funerais/:cpf", async (req, res, next) => {
     }
 });
 
-
 // Associações
 
-// associar = UPDATE funeral SET cpf_cliente = cpf
-// desassociar = UPDATE funeral SET cpf_cliente = NULL
+// associar --> Acontece ao criar o funeral, onde se tem a cpf_cliente no funeral, pode-se editar esse campo (editar funeral)
 
-// GET pelo CPF
+// desassociar 
+
 // GET pelo CPF
 router.get("/:cpf", async (req, res, next) => {
     try {
