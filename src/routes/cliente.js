@@ -76,7 +76,6 @@ router.get("/funerais/:cpf", async (req, res, next) => {
 // desassociar = UPDATE funeral SET cpf_cliente = NULL
 
 // GET pelo CPF
-// GET pelo CPF
 router.get("/:cpf", async (req, res, next) => {
     try {
         const r = await db.query("SELECT * FROM cliente WHERE cpf = $1", [req.params.cpf]);
