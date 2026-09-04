@@ -116,6 +116,11 @@ router.post("/servico", async (req, res, next) => {
     }
 });
 
+
+
+
+
+
 // GET /funeral - Buscar todos os funerais 
 router.get("/", async (req, res, next) => {
     try {
@@ -131,11 +136,6 @@ router.get("/", async (req, res, next) => {
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }
-});
-
-// GET /funeral/:id - Buscar funeral por id
-router.get("/:id", async (req, res, next) => {
-
 });
 
 // Operação Exclusiva - Buscar os serviços de um funeral
@@ -190,15 +190,62 @@ router.get("/servicos/:id", async (req, res, next) => {
     }
 });
 
+// Operação Exclusiva - Buscar funerais em determinado periodo 
 
-<<<<<<< HEAD
-=======
+router.get("/funeral/periodo", async(req, res, next) => {
+    try {
+        const { inicio, fim } = req.query;
+
+        if (inicio > fim) {
+            throw new Error("A data inicial não pode ser menor que a data final!!");
+        }
+        if(!inicio) {
+            throw new Error("Informe a data inicial!");
+        }
+        if(!final) {
+            throw new Error("Informe a data final!");
+        }
+
+        const r = await db.query(
+            `SELECT
+                f.id,
+                f.nome_falecido,
+                f.data_evento,
+                f.local,
+                f.pagamento,
+
+                c.nome_primeiro,
+                c.nome_sobrenome
+
+            FROM funeral f
+
+            JOIN cliente c
+                ON f.cpf_cliente = c.cpf
+
+            WHERE f.data_evento BETWEEN $1 AND $2`,
+
+            [inicio, fim]
+        );
+
+        if (r.rowCount) {
+            throw new Error("Nenhum funeral foi encontrado nesse determinado período!")
+        }
+
+        return res.status(200).json({
+            msg: "Funerais encontrados com sucesso!",
+            data: r.rows
+        });
+    } catch (error) {
+        return resizeBy.status(400).json({
+            msg: error.message
+        });
+    }
+
+});
+
+// Operação exclusiva - Buscar os serviços mais utilizados
 
 
-
-<<<<<<< HEAD
-=======
->>>>>>> f2dec67eb6f0a1141e64be0350568928e33f8e06
 // GET /funeral/:id - Buscar funeral por id
 router.get("/:id", async (req, res, next) => {
     try {
@@ -218,7 +265,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // POST /funerais - Cadastra um novo funeral e associa o cliente
-router.post("/", async (req, res, next) => {
+router.post("/funerais", async (req, res, next) => {
     try {
         const { duracao,
             data_evento,
@@ -263,7 +310,7 @@ router.post("/", async (req, res, next) => {
             `INSERT INTO funeral 
             ( duracao, data_evento, local, nome_falecido, data_nascimento_falecido, data_morte_falecido, cpf_falecido, cpf_cliente, pagamento)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING*`,
-            [   duraçao,
+            [   duracao,
                 data_evento,
                 local,
                 nome_falecido,
@@ -285,6 +332,29 @@ router.post("/", async (req, res, next) => {
     }
 
 });
+
+// DELETE /funerais/ :id 
+router.delete("/funerais/:id", async (req, res, next) => {
+    try {
+        const id = Number(req.params.id)
+
+        if (!Number.isInteger(id) || id <= 0) {
+            return res.status(400).json({ msg : "ID inválido!"})
+        }
+        const r = await db.query("DELETE FROM Funeral WHERE id = $1 RETURNING*", [id]);
+        
+        if (!r.rowCount) {
+            return res.status(400).json({ msg: "Funeral não econtrado!" });
+        }
+
+        return res.status(200).json({ msg: "Funeral deletado", data: r.rows[0] });
+    } catch (error) {
+        return res.status(400).json({ msg: error.message });
+    }
+});
+
+//PUT /funerais/:id
+
 
 
 module.exports = router;
