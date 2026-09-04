@@ -152,8 +152,6 @@ router.get("/funeral/:id_funeral/servico/:id_servico", async (req, res, next) =>
     }
 }); // OK
 
-// GET - Buscar UMA associação de acordo com o ID da associação
-
 // POST - Associação de Serviço com Funeral
 router.post("/funeral/:id_funeral/servico", async (req, res) => {
     try {
@@ -202,7 +200,7 @@ router.post("/funeral/:id_funeral/servico", async (req, res) => {
         console.error("Erro de servidor");
         return res.status(400).json({msg: error.message});
     }
-}); 
+});  // OK
 
 // DELETE - Associação de Serviço com Funeral
 router.delete("/funeral/:id_funeral/servico/:id_servico", async (req, res, next) => {
@@ -228,7 +226,7 @@ router.delete("/funeral/:id_funeral/servico/:id_servico", async (req, res, next)
         if (!r.rowCount) {
             throw new Error("Esta associação não existe!");
         }
-        
+
         const funeral = await db.query(`SELECT id, nome_falecido AS defunto FROM funeral WHERE id = $1`,[idFuneral]);
 
         if (!funeral.rowCount) {
@@ -254,6 +252,6 @@ router.delete("/funeral/:id_funeral/servico/:id_servico", async (req, res, next)
         console.log(error);
         return res.status(400).json({ msg: "Erro interno do servidor!" });
     }
-}); // aqui precisa aparecer o nome
+}); // OK
 
 module.exports = router;
