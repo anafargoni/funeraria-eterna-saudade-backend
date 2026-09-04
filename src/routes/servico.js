@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
         }
         return res.status(200).json(r.rows);
     } catch (error) {
-        return res.status(400).json({ msg: error });
+        return res.status(500).json({ msg: error.message });
     }
 });
 
@@ -141,6 +141,30 @@ router.get("/cliente/:nome", async (req, res, next) => {
     }
 });
 
+// Operação Excluisva - Quantos Funerais tal serviço já "participou"
+router.get("/:id_servico/funerais/quantidade", async (req, res) => {
+    try {
+        const idServico = Number(req.params.id_servico);
+
+        if (!Number.isInteger(idServico) || idServico <= 0) {
+            return res.status(400).json({msg: "Informe um ID de serviço válido!"});
+        }
+
+        const servico = await db.query(`SELECT id FROM servico WHERE id = $1`,[idServico]);
+
+        if (!servico.rowCount) {
+            return res.status(404).json({msg: "Serviço não encontrado!"});
+        }
+
+        const r = await db.query(`SELECT COUNT(*) AS quantidade_funerais FROM servico_funeral WHERE id_servico = $1`,[idServico]);
+
+        return res.status(200).json({msg: "Quantidade de funerais encontrada!", data: {id_servico: idServico,quantidade_funerais: Number(r.rows[0].quantidade_funerais)}});
+
+    } catch (error) {
+        return res.status(500).json({msg: error.message});
+    }
+});
+
 // GET pelo ID
 router.get("/:id", async (req, res, next) => {
     try {
@@ -167,7 +191,7 @@ router.post("/", async (req, res, next) => {
         const { nome, valor } = req.body || {};
         let { descricao } = req.body || {};
 
-        if (!nome || !nome.trim()) {
+        if (!nome || !nome.trim() || typeof nome != "string") {
             throw new Error("Nome do serviço é obrigatório!");
         } else {
             const servicoEncontrado = await db.query("SELECT * FROM servico WHERE LOWER(nome) = LOWER($1)", [nome]);
@@ -200,23 +224,39 @@ router.post("/", async (req, res, next) => {
 });
 
 // DELETE 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", async (req, res) => {
     try {
-        const id = Number(req.params.id)
+        const id = Number(req.params.id);
 
         if (!Number.isInteger(id) || id <= 0) {
-            return res.status(400).json({ msg : "ID inválido!"})
+            return res.status(400).json({msg: "ID inválido!"});
         }
 
-        const r = await db.query("DELETE FROM servico WHERE id = $1 RETURNING*", [id]);
-        
-        if (!r.rowCount) {
-            return res.status(400).json({ msg: "Serviço não econtrado!" });
+        const servico = await db.query("SELECT * FROM servico WHERE id = $1",[id]);
+
+        if (!servico.rowCount) {
+            return res.status(404).json({msg: "Serviço não encontrado!"});
         }
 
-        return res.status(200).json({ msg: "Serviço deletado", data: r.rows[0] });
+        const associacao = await db.query("SELECT f.id, f.nome_falecido FROM servico_funeral sf JOIN funeral f ON f.id = sf.id_funeral WHERE sf.id_servico = $1",[id]);
+
+        console.log("ASSOCIAÇÕES:", associacao.rows);
+
+        if (associacao.rowCount > 0) {
+            return res.status(400).json({
+                msg: "Não é possível excluir este serviço, pois ele está associado a um funeral!",
+                quantidade_funerais : associacao.rowCount,
+                funerais: associacao.rows
+            });
+        }
+
+        const r = await db.query("DELETE FROM servico WHERE id = $1 RETURNING *",[id]);
+
+        return res.status(200).json({ msg: "Serviço deletado com sucesso!", data: r.rows[0]});
+
     } catch (error) {
-        return res.status(400).json({ msg: error.message });
+        console.log("ERRO NO DELETE:", error);
+        return res.status(500).json({msg: "Erro ao excluir serviço!"});
     }
 });
 
