@@ -2,6 +2,64 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
+// Função para tratar CPF
+function tratarCpf(cpf) {
+    if (!cpf || typeof cpf !== "string") {
+        throw new Error("CPF é obrigatório e deve ser informado como texto!");
+    }
+
+    const cpfTratado = cpf
+        .replaceAll(".", "")
+        .replaceAll("-", "");
+
+    if (cpfTratado.length != 11 || isNaN(cpfTratado)) {
+        throw new Error("Informe um CPF válido!");
+    }
+
+    return cpfTratado;
+}
+
+// Função para tratar telefone
+function tratarTelefone(telefone) {
+    if (!telefone || typeof telefone !== "string") {
+        throw new Error("Telefone é obrigatório e deve ser informado como texto!");
+    }
+
+    const telefoneTratado = telefone
+        .replaceAll("(", "")
+        .replaceAll(")", "")
+        .replaceAll("-", "")
+        .replaceAll(" ", "");
+
+    if (
+        (telefoneTratado.length != 10 && telefoneTratado.length != 11) ||
+        isNaN(telefoneTratado)
+    ) {
+        throw new Error("Informe um telefone válido!");
+    }
+
+    return telefoneTratado;
+}
+
+// Função para tratar CEP
+function tratarCep(cep) {
+    if (!cep) {
+        return null;
+    }
+    
+    if (typeof cep !== "string") {
+        throw new Error("Informe um CEP válido!");
+    }
+    
+    const cepTratado = cep.replaceAll("-", "").trim();
+
+    if (cepTratado.length != 8 || isNaN(cepTratado)) {
+        throw new Error("Informe um CEP válido!");
+    }
+
+    return cepTratado;
+}
+
 // GET
 router.get("/", async (req, res, next) => {
     try {
@@ -21,7 +79,7 @@ router.get("/", async (req, res, next) => {
 // Operação Exclusiva - Buscar todos os funerais de um cliente
 router.get("/funerais/:cpf", async (req, res, next) => {
     try {
-        const cpf = req.params.cpf;
+        const cpf = tratarCpf(req.params.cpf);
 
         const cliente = await db.query(
             "SELECT * FROM cliente WHERE cpf = $1",
@@ -69,16 +127,20 @@ router.get("/funerais/:cpf", async (req, res, next) => {
     }
 });
 
-// Associações
+// Associação Cliente → Funeral
+// A associação acontece ao criar um funeral, pois o funeral possui o campo cpf_cliente.
+// A associação também pode ser alterada ao editar o funeral, trocando o cpf_cliente.
 
-// associar --> Acontece ao criar o funeral, onde se tem a cpf_cliente no funeral, pode-se editar esse campo (editar funeral)
-
-// desassociar 
+// Desassociação Cliente → Funeral
+// Não é permitida a existência de um funeral sem cliente associado.
+// Portanto, não existe uma rota específica para desassociação.
+// Caso o cliente seja removido, os funerais associados também devem ser removidos conforme a regra definida no banco.
 
 // GET pelo CPF
 router.get("/:cpf", async (req, res, next) => {
     try {
-        const r = await db.query("SELECT * FROM cliente WHERE cpf = $1", [req.params.cpf]);
+        const cpf = tratarCpf(req.params.cpf);
+        const r = await db.query("SELECT * FROM cliente WHERE cpf = $1", [cpf]);
 
         if (!r.rowCount) {
             return res.status(400).json({ msg: "Cliente não encontrado!" });
@@ -108,33 +170,85 @@ router.post("/", async (req, res, next) => {
             data_nascimento
         } = req.body || {};
 
-        if (!cpf) {
-            throw new Error("CPF é obrigatório!");
-        } else {
-            const clienteEncontrado = await db.query(
-                "SELECT * FROM cliente WHERE cpf = $1",
-                [cpf]
-            );
-
-            if (clienteEncontrado.rowCount) {
-                throw new Error("CPF já cadastrado!");
-            }
+        const cpfTratado = tratarCpf(cpf);
+        
+        const clienteEncontrado = await db.query(
+            "SELECT * FROM cliente WHERE cpf = $1", [cpfTratado]
+        );
+        
+        if (clienteEncontrado.rowCount) {
+            throw new Error("CPF já cadastrado!");
         }
 
-        if (!nome_primeiro) {
+        if (!nome_primeiro || !nome_primeiro.trim()) {
             throw new Error("Nome é obrigatório!");
         }
-
-        if (!nome_sobrenome) {
+        
+        if (!nome_sobrenome || !nome_sobrenome.trim()) {
             throw new Error("Sobrenome é obrigatório!");
         }
-
-        if (!contato_email) {
+        
+        if (!contato_email || !contato_email.trim()) {
             throw new Error("Email é obrigatório!");
         }
+        
+        if (
+            !emailTratado.includes("@") ||
+            !emailTratado.includes(".") ||
+            emailTratado.startsWith("@") ||
+            emailTratado.endsWith("@")
+        ) {
+            throw new Error("Informe um email válido!");
+        }
+        
+        const nomeTratado = nome_primeiro.trim();
+        if (nomeTratado.length > 20) {
+            throw new Error("Nome deve ter no máximo 20 caracteres!");
+        }
 
-        if (!contato_telefone) {
-            throw new Error("Telefone é obrigatório!");
+        const sobrenomeTratado = nome_sobrenome.trim();
+        if (sobrenomeTratado.length > 30) {
+            throw new Error("Sobrenome deve ter no máximo 30 caracteres!");
+        }
+
+        const emailTratado = contato_email.trim();
+        if (emailTratado.length > 40) {
+            throw new Error("Email deve ter no máximo 40 caracteres!");
+        }
+        
+        const telefoneTratado = tratarTelefone(contato_telefone);
+
+        if (data_nascimento && data_nascimento < "1900-01-01") {
+            throw new Error("Informe uma data de nascimento válida!");
+        }
+        
+        const hoje = new Date().toISOString().split("T")[0];
+        
+        if (data_nascimento && data_nascimento > hoje) {
+            throw new Error("A data de nascimento não pode estar no futuro!");
+        }
+
+        const cepTratado = tratarCep(endereco_CEP);
+
+        const ruaTratada = endereco_rua ? endereco_rua.trim() : null;
+        if (ruaTratada && ruaTratada.length > 40) {
+            throw new Error("Rua deve ter no máximo 40 caracteres!");
+        }
+        
+        const cidadeTratada = endereco_cidade ? endereco_cidade.trim() : null;
+        if (cidadeTratada && cidadeTratada.length > 30) {
+            throw new Error("Cidade deve ter no máximo 30 caracteres!");
+        }
+        
+        const bairroTratado = endereco_bairro ? endereco_bairro.trim() : null;
+        if (bairroTratado && bairroTratado.length > 30) {
+            throw new Error("Bairro deve ter no máximo 30 caracteres!");
+        }
+        
+        if (endereco_numero !== undefined && endereco_numero !== null && endereco_numero !== "") {
+            if (isNaN(endereco_numero) || !Number.isInteger(Number(endereco_numero)) || Number(endereco_numero) <= 0) {
+                throw new Error("Informe um número de endereço válido!");
+            }
         }
 
         const r = await db.query(
@@ -142,16 +256,16 @@ router.post("/", async (req, res, next) => {
             (cpf, nome_primeiro, nome_sobrenome, endereco_CEP, endereco_rua, endereco_cidade, endereco_bairro, endereco_numero, contato_email, contato_telefone, data_nascimento)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`,
             [
-                cpf,
-                nome_primeiro,
-                nome_sobrenome,
-                endereco_CEP,
-                endereco_rua,
-                endereco_cidade,
-                endereco_bairro,
+                cpfTratado,
+                nomeTratado,
+                sobrenomeTratado,
+                cepTratado,
+                ruaTratada,
+                cidadeTratada,
+                bairroTratado,
                 endereco_numero,
-                contato_email,
-                contato_telefone,
+                emailTratado,
+                telefoneTratado,
                 data_nascimento
             ]
         );
@@ -173,9 +287,10 @@ router.post("/", async (req, res, next) => {
 // DELETE
 router.delete("/:cpf", async (req, res, next) => {
     try {
+        const cpf = tratarCpf(req.params.cpf);
+
         const r = await db.query(
-            "DELETE FROM cliente WHERE cpf = $1 RETURNING *",
-            [req.params.cpf]
+            "DELETE FROM cliente WHERE cpf = $1 RETURNING *", [cpf]
         );
 
         if (!r.rowCount) {
@@ -195,6 +310,8 @@ router.delete("/:cpf", async (req, res, next) => {
 // PUT
 router.put("/:cpf", async (req, res, next) => {
     try {
+        const cpf = tratarCpf(req.params.cpf);
+
         const {
             nome_primeiro,
             nome_sobrenome,
@@ -208,20 +325,75 @@ router.put("/:cpf", async (req, res, next) => {
             data_nascimento
         } = req.body || {};
 
-        if (!nome_primeiro) {
+        if (!nome_primeiro || !nome_primeiro.trim()) {
             throw new Error("Nome é obrigatório!");
         }
-
-        if (!nome_sobrenome) {
+        
+        if (!nome_sobrenome || !nome_sobrenome.trim()) {
             throw new Error("Sobrenome é obrigatório!");
         }
-
-        if (!contato_email) {
+        
+        if (!contato_email || !contato_email.trim()) {
             throw new Error("Email é obrigatório!");
         }
+        
+        if (
+            !emailTratado.includes("@") ||
+            !emailTratado.includes(".") ||
+            emailTratado.startsWith("@") ||
+            emailTratado.endsWith("@")
+        ) {
+            throw new Error("Informe um email válido!");
+        }
+        
+        const nomeTratado = nome_primeiro.trim();
+        if (nomeTratado.length > 20) {
+            throw new Error("Nome deve ter no máximo 20 caracteres!");
+        }
 
-        if (!contato_telefone) {
-            throw new Error("Telefone é obrigatório!");
+        const sobrenomeTratado = nome_sobrenome.trim();
+        if (sobrenomeTratado.length > 30) {
+            throw new Error("Sobrenome deve ter no máximo 30 caracteres!");
+        }
+
+        const emailTratado = contato_email.trim();
+        if (emailTratado.length > 40) {
+            throw new Error("Email deve ter no máximo 40 caracteres!");
+        }
+
+        const telefoneTratado = tratarTelefone(contato_telefone);
+
+        if (data_nascimento && data_nascimento < "1900-01-01") {
+            throw new Error("Informe uma data de nascimento válida!");
+        }
+        
+        const hoje = new Date().toISOString().split("T")[0];
+        
+        if (data_nascimento && data_nascimento > hoje) {
+            throw new Error("A data de nascimento não pode estar no futuro!");
+        }
+
+        const cepTratado = tratarCep(endereco_CEP);
+
+        const ruaTratada = endereco_rua ? endereco_rua.trim() : null;
+        if (ruaTratada && ruaTratada.length > 40) {
+            throw new Error("Rua deve ter no máximo 40 caracteres!");
+        }
+        
+        const cidadeTratada = endereco_cidade ? endereco_cidade.trim() : null;
+        if (cidadeTratada && cidadeTratada.length > 30) {
+            throw new Error("Cidade deve ter no máximo 30 caracteres!");
+        }
+        
+        const bairroTratado = endereco_bairro ? endereco_bairro.trim() : null;
+        if (bairroTratado && bairroTratado.length > 30) {
+            throw new Error("Bairro deve ter no máximo 30 caracteres!");
+        }
+
+        if (endereco_numero !== undefined && endereco_numero !== null && endereco_numero !== "") {
+            if (isNaN(endereco_numero) || !Number.isInteger(Number(endereco_numero)) || Number(endereco_numero) <= 0) {
+                throw new Error("Informe um número de endereço válido!");
+            }
         }
 
         const r = await db.query(
@@ -239,25 +411,25 @@ router.put("/:cpf", async (req, res, next) => {
 
             WHERE cpf = $11 RETURNING *`,
             [
-                nome_primeiro,
-                nome_sobrenome,
-                endereco_CEP,
-                endereco_rua,
-                endereco_cidade,
-                endereco_bairro,
+                nomeTratado,
+                sobrenomeTratado,
+                cepTratado,
+                ruaTratada,
+                cidadeTratada,
+                bairroTratado,
                 endereco_numero,
-                contato_email,
-                contato_telefone,
+                emailTratado,
+                telefoneTratado,
                 data_nascimento,
-                req.params.cpf
+                cpf
             ]
         );
 
         if (!r.rowCount) {
-            throw new Error("Cliente não foi editado!");
+            throw new Error("Cliente não encontrado!");
         }
 
-        return res.status(201).json({
+        return res.status(200).json({
             msg: "Cliente editado",
             data: r.rows[0]
         });
