@@ -6,16 +6,17 @@ const db = require("../db");
 // GET - Associação de Serviço com Funeral
 router.get("/servico", async (req, res, next) => { 
     try {
-        const r = await db.query("SELECT * FROM servico_funeral");
+        const r = await db.query(`SELECT f.id as id_funeral, f.nome_falecido as defunto, s.id as id_servico, s.nome as nome_servico FROM servico_funeral sf JOIN servico s ON s.id = sf.id_servico JOIN funeral f ON f.id = sf.id_funeral`);
         if (!r.rowCount) {
-            return res.status(400).json({ msg: "Não foi encontrado nenhum serviço!" });
+            return res.status(400).json({ msg: "Não foi encontrado nenhum serviço!", data: r.rows });
         }
         return res.status(200).json({msg: "Lista de Funerais com seus Serviços!", data: r.rows});
     } catch (error) {   
-        return res.status(400).json({ msg: error.message });
+        return res.status(500).json({ msg: error.message });
     }
 });
 
+// GET pelo ID - Associação de Serviço com Funeral
 router.get("/:id_funeral/servico/:id_servico", async (req, res, next) => {
     try {
         const idFuneral = Number(req.params.id_funeral);
@@ -78,8 +79,7 @@ router.delete("/:id_funeral/servico/:id_servico", async (req, res, next) => {
 // POST - Associação de Serviço com Funeral
 router.post("/servico", async (req, res, next) => {
     try{
-        const {id_funeral} = req.body || {};
-        const {id_servico} = req.body || {};
+        const {id_funeral, id_servico} = req.body || {};
 
         if (!Number.isInteger(id_funeral) || id_funeral <= 0) {
             throw new Error("Informe um ID de funeral válido!");
@@ -116,6 +116,7 @@ router.post("/servico", async (req, res, next) => {
     }
 });
 
+// TABELA FUNERAL
 // GET /funeral - Buscar todos os funerais 
 router.get("/", async (req, res, next) => {
     try {
@@ -190,15 +191,6 @@ router.get("/servicos/:id", async (req, res, next) => {
     }
 });
 
-
-<<<<<<< HEAD
-=======
-
-
-
-<<<<<<< HEAD
-=======
->>>>>>> f2dec67eb6f0a1141e64be0350568928e33f8e06
 // GET /funeral/:id - Buscar funeral por id
 router.get("/:id", async (req, res, next) => {
     try {
