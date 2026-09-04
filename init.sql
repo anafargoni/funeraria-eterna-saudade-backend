@@ -127,7 +127,7 @@ INSERT INTO funeral (
 )
 VALUES (
     4, '2026-09-10', 'Cemitério Nossa Senhora do Carmo',
-    'José da Silva', '1950-05-12', '2026-09-08',
+    'José Otavio', '1950-05-12', '2026-09-08',
     '11122233344', '12345678901', TRUE
 );
 

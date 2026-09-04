@@ -146,6 +146,10 @@
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
+                        <a class="nav-link" href="#funeral">Funeral</a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" href="#servicos">Serviços</a>
                     </li>
 
@@ -283,7 +287,7 @@
 
                             <div class="d-flex justify-content-between">
                                 <span class="metodo post">POST</span>
-                                <span class="rota">/funeral/funerais</span>
+                                <span class="rota">/funeral</span>
                             </div>
 
                             <h5 class="mt-4">Adicionar funeral</h5>
@@ -346,7 +350,7 @@
 
                             <div class="d-flex justify-content-between">
                                 <span class="metodo put">PUT</span>
-                                <span class="rota">/funeral/funerais/:id</span>
+                                <span class="rota">/funeral/:id</span>
                             </div>
 
                             <h5 class="mt-4">Editar funeral</h5>
@@ -372,7 +376,7 @@
                             <strong>Restrições:</strong>
 
                             <ul>
-                                <li>O ID deve ser válido.</li>
+                                <li>O ID deve ser um número inteiro maior que zero.</li>
                                 <li>O funeral deve existir.</li>
                                 <li>A duração deve ser maior que zero.</li>
                                 <li>O CPF do falecido deve possuir 11 números.</li>
@@ -411,7 +415,7 @@
 
                             <div class="d-flex justify-content-between">
                                 <span class="metodo delete">DELETE</span>
-                                <span class="rota">/funeral/funerais/:id</span>
+                                <span class="rota">/funeral/:id</span>
                             </div>
 
                             <h5 class="mt-4">Deletar funeral</h5>
@@ -452,6 +456,7 @@
             </div>
 
         </section>
+
         <!-- SERVIÇOS -->
         <main class="container mt-5">
 
@@ -1214,6 +1219,188 @@
                                     }
                                     ]
                                     } </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SERVIÇOS MAIS UTILIZADOS -->
+                    <div class="col-md-6 rota-card">
+                        <div class="card route-card h-100">
+                            <div class="card-body">
+
+                                <div class="d-flex justify-content-between">
+                                    <span class="metodo get">GET</span>
+                                    <span class="rota">/funeral/servicos/mais-utilizados</span>
+                                </div>
+
+                                <h5 class="mt-4">Buscar serviços mais utilizados</h5>
+
+                                <p>
+                                    Retorna os serviços utilizados nos funerais,
+                                    ordenados pela quantidade de vezes em que foram contratados.
+                                </p>
+
+                                <hr>
+
+                                <strong>Parâmetros:</strong>
+                                <p>Não possui.</p>
+
+                                <strong>Retorna:</strong>
+
+                                <ul>
+                                    <li>ID do serviço.</li>
+                                    <li>Nome do serviço.</li>
+                                    <li>Descrição.</li>
+                                    <li>Valor.</li>
+                                    <li>Quantidade de vezes em que foi utilizado.</li>
+                                </ul>
+
+                                <strong>Exemplo de retorno:</strong>
+
+                                <div class="json mt-2">{
+                                    "msg": "Serviços mais utilizados encontrados com sucesso!",
+                                    "data": [
+                                    {
+                                    "id": 1,
+                                    "nome": "Tanatopraxia",
+                                    "descricao": "Preparação e conservação do corpo para o velório.",
+                                    "valor": "500.00",
+                                    "quantidade_utilizada": "6"
+                                    }
+                                    ]
+                                    }</div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- FUNERAIS POR PERÍODO -->
+                    <div class="col-md-6 rota-card">
+                        <div class="card route-card h-100">
+                            <div class="card-body">
+
+                                <div class="d-flex justify-content-between">
+                                    <span class="metodo get">GET</span>
+                                    <span class="rota">/funeral/periodo</span>
+                                </div>
+
+                                <h5 class="mt-4">Buscar funerais por período</h5>
+
+                                <p>
+                                    Busca os funerais realizados entre duas datas informadas.
+                                </p>
+
+                                <hr>
+
+                                <strong>Parâmetros de consulta:</strong>
+
+                                <ul>
+                                    <li>inicio - data inicial.</li>
+                                    <li>fim - data final.</li>
+                                </ul>
+
+                                <strong>Exemplo de requisição:</strong>
+
+                                <div class="rota mt-2 mb-3">
+                                    /funeral/periodo?inicio=2026-09-10&fim=2026-09-20
+                                </div>
+
+                                <strong>Restrições:</strong>
+
+                                <ul>
+                                    <li>A data inicial deve ser informada.</li>
+                                    <li>A data final deve ser informada.</li>
+                                    <li>A data inicial não pode ser maior que a data final.</li>
+                                </ul>
+
+                                <strong>Exemplo de retorno:</strong>
+
+                                <div class="json mt-2">{
+                                    "msg": "Funerais encontrados com sucesso!",
+                                    "data": [
+                                    {
+                                    "id": 1,
+                                    "nome_falecido": "José da Silva",
+                                    "data_evento": "2026-09-10",
+                                    "local": "Cemitério Nossa Senhora do Carmo",
+                                    "pagamento": true,
+                                    "nome_primeiro": "João",
+                                    "nome_sobrenome": "Silva"
+                                    }
+                                    ]
+                                    }</div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- SERVIÇOS DE UM FUNERAL -->
+                    <div class="col-md-6 rota-card">
+                        <div class="card route-card h-100">
+                            <div class="card-body">
+
+                                <div class="d-flex justify-content-between">
+                                    <span class="metodo get">GET</span>
+                                    <span class="rota">/funeral/servicos/:id</span>
+                                </div>
+
+                                <h5 class="mt-4">Buscar serviços de um funeral</h5>
+
+                                <p>
+                                    Busca todos os serviços associados a um funeral através do ID.
+                                </p>
+
+                                <hr>
+
+                                <strong>Parâmetro:</strong>
+
+                                <ul>
+                                    <li>ID do funeral.</li>
+                                </ul>
+
+                                <strong>Restrições:</strong>
+
+                                <ul>
+                                    <li>O ID deve ser um número inteiro maior que zero.</li>
+                                    <li>O funeral deve existir.</li>
+                                    <li>O funeral deve possuir serviços associados.</li>
+                                </ul>
+
+                                <strong>Exemplo de retorno:</strong>
+
+                                <div class="json mt-2">{
+                                    "msg": "Serviços encontrados com sucesso!",
+                                    "falecido": "José Otavio",
+                                    "servicos": [
+                                    {
+                                    "id": 1,
+                                    "nome": "Tanatopraxia",
+                                    "descricao": "Preparação e conservação do corpo para o velório.",
+                                    "valor": "500.00"
+                                    },
+                                    {
+                                    "id": 4,
+                                    "nome": "Urna funerária",
+                                    "descricao": "Fornecimento de urna funerária para o sepultamento.",
+                                    "valor": "1500.00"
+                                    },
+                                    {
+                                    "id": 5,
+                                    "nome": "Ornamentação",
+                                    "descricao": "Decoração e ornamentação do ambiente do velório.",
+                                    "valor": "400.00"
+                                    },
+                                    {
+                                    "id": 7,
+                                    "nome": "Sala de velório",
+                                    "descricao": "Locação da sala para realização do velório.",
+                                    "valor": "350.00"
+                                    }
+                                    ]
+                                    }</div>
 
                             </div>
                         </div>
