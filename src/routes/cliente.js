@@ -192,15 +192,6 @@ router.post("/", async (req, res, next) => {
             throw new Error("Email é obrigatório!");
         }
         
-        if (
-            !emailTratado.includes("@") ||
-            !emailTratado.includes(".") ||
-            emailTratado.startsWith("@") ||
-            emailTratado.endsWith("@")
-        ) {
-            throw new Error("Informe um email válido!");
-        }
-        
         const nomeTratado = nome_primeiro.trim();
         if (nomeTratado.length > 20) {
             throw new Error("Nome deve ter no máximo 20 caracteres!");
@@ -212,6 +203,16 @@ router.post("/", async (req, res, next) => {
         }
 
         const emailTratado = contato_email.trim();
+        
+        if (
+            !emailTratado.includes("@") ||
+            !emailTratado.includes(".") ||
+            emailTratado.startsWith("@") ||
+            emailTratado.endsWith("@")
+        ) {
+            throw new Error("Informe um email válido!");
+        }
+        
         if (emailTratado.length > 40) {
             throw new Error("Email deve ter no máximo 40 caracteres!");
         }
@@ -337,15 +338,6 @@ router.put("/:cpf", async (req, res, next) => {
             throw new Error("Email é obrigatório!");
         }
         
-        if (
-            !emailTratado.includes("@") ||
-            !emailTratado.includes(".") ||
-            emailTratado.startsWith("@") ||
-            emailTratado.endsWith("@")
-        ) {
-            throw new Error("Informe um email válido!");
-        }
-        
         const nomeTratado = nome_primeiro.trim();
         if (nomeTratado.length > 20) {
             throw new Error("Nome deve ter no máximo 20 caracteres!");
@@ -357,6 +349,15 @@ router.put("/:cpf", async (req, res, next) => {
         }
 
         const emailTratado = contato_email.trim();
+
+        if (
+            !emailTratado.includes("@") ||
+            !emailTratado.includes(".") ||
+            emailTratado.startsWith("@") ||
+            emailTratado.endsWith("@")
+        ) {
+            throw new Error("Informe um email válido!");
+        }
         if (emailTratado.length > 40) {
             throw new Error("Email deve ter no máximo 40 caracteres!");
         }
