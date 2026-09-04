@@ -181,7 +181,7 @@ router.get("/periodo", async(req, res, next) => {
         const { inicio, fim } = req.query;
 
         if (inicio > fim) {
-            throw new Error("A data inicial não pode ser menor que a data final!!");
+            throw new Error("A data inicial não pode ser maior que a data final!!");
         }
         if(!inicio) {
             throw new Error("Informe a data inicial!");
@@ -211,7 +211,7 @@ router.get("/periodo", async(req, res, next) => {
             [inicio, fim]
         );
 
-        if (r.rowCount) {
+        if (!r.rowCount) {
             throw new Error("Nenhum funeral foi encontrado nesse determinado período!")
         }
 
@@ -220,7 +220,7 @@ router.get("/periodo", async(req, res, next) => {
             data: r.rows
         });
     } catch (error) {
-        return resizeBy.status(400).json({
+        return res.status(400).json({
             msg: error.message
         });
     }
