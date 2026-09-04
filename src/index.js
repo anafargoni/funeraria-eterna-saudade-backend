@@ -9,6 +9,7 @@ app.use(cors());
 app.use("/cliente", require("./routes/cliente"));
 app.use("/servico", require("./routes/servico"));
 app.use("/funeral", require("./routes/funeral"));
+app.use("/servico_funeral", require("./routes/servico_funeral"));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "static", "index.html"));

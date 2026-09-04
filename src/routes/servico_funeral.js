@@ -2,16 +2,13 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-function validarId(id){
-
-}
 // TABELA SERVICO_FUNERAL
 // GET - Listar TODAS as associações
-router.get("/servico", async (req, res, next) => { 
+router.get("/", async (req, res, next) => { 
     try {
         const r = await db.query(`SELECT f.id as id_funeral, f.nome_falecido as defunto, s.id as id_servico, s.nome as nome_servico 
-            FROM servico_funeral sf J
-            OIN funeral f ON f.id = sf.id_funeral 
+            FROM servico_funeral sf 
+            JOIN funeral f ON f.id = sf.id_funeral 
             JOIN servico s ON s.id = sf.id_servico 
             ORDER BY f.id, s.id`);
 
@@ -24,15 +21,15 @@ router.get("/servico", async (req, res, next) => {
         console.log(error)
         return res.status(500).json({ msg: "Erro interno do servidor!"});
     }
-});
+}); // OK
 
 // GET - Quantos e quais SERVIÇOS existem em um FUNERAL
 router.get("/funeral/:id_funeral", async (req, res) => {
     try{
-        const idFuneral = validarId(req.params.id_funeral);
-        
-        if (!idFuneral) {
-            return res.status(400).json({msg: "Informe um ID de funeral válido!"});
+        const idFuneral = Number(req.params.id_funeral);
+
+        if (!Number.isInteger(idFuneral) || idFuneral <= 0) {
+            throw new Error("Informe um ID de funeral válido!");
         }
 
         const funeral = await db.query(`SELECT id, nome_falecido FROM funeral WHERE id = $1`,[idFuneral]);
@@ -57,18 +54,18 @@ router.get("/funeral/:id_funeral", async (req, res) => {
         });
 
     } catch (error) {
-
+        console.error("Erro de servidor");
+        return res.status(400).json({msg: error.message});
     }
-});
+}); // OK
 
 // GET - Quantos e quais FUNERAIS possuem determinado SERVIÇO
 router.get("/servico/:id_servico", async (req, res) => {
     try {
+        const idServico = Number(req.params.id_servico);
 
-        const idServico = validarId(req.params.id_servico);
-
-        if (!idServico) {
-            return res.status(400).json({msg: "Informe um ID de serviço válido!"});
+        if (!Number.isInteger(idServico) || idServico <= 0) {
+            throw new Error("Informe um ID de serviço válido!");
         }
 
         const servico = await db.query(
@@ -99,26 +96,40 @@ router.get("/servico/:id_servico", async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
-
-        return res.status(500).json({
-            msg: "Erro interno do servidor!"
-        });
+        console.error("Erro de servidor");
+        return res.status(400).json({msg: error.message});
     }
-});
+}); // OK
+
+// GET - Caso o usuário não informar o ID do serviço
+router.get("/funeral/:id_funeral/servico", async (req, res) => {
+    return res.status(400).json({msg: "Informe o ID do serviço!"});
+}); // OK
 
 // GET - Buscar UMA associação específica
 router.get("/funeral/:id_funeral/servico/:id_servico", async (req, res, next) => {
     try {
-        const idFuneral = validarId(req.params.id_funeral);
-        const idServico = validarId(req.params.id_servico);
+        const idFuneral = Number(req.params.id_funeral);
+        const idServico = Number(req.params.id_servico);
 
-        if (!idFuneral) {
-            return res.status(400).json({ msg: "Informe um ID de funeral válido" });
+        if (!Number.isInteger(idFuneral) || idFuneral <= 0) {
+            throw new Error("Informe um ID de funeral válido!");
         }
 
-        if (!idServico) {
-            return res.status(400).json({ msg: "Informe um ID de serviço válido" });
+        if (!Number.isInteger(idServico) || idServico <= 0) {
+            throw new Error("Informe um ID de serviço válido!");
+        }
+
+        const funeral = await db.query( `SELECT * FROM funeral WHERE id = $1`, [idFuneral]);
+
+        if (!funeral.rowCount) {
+            return res.status(404).json({msg: "Funeral não encontrado!"});
+        }
+
+        const servico = await db.query(`SELECT * FROM servico WHERE id = $1`,[idServico] );
+
+        if (!servico.rowCount) {
+            return res.status(404).json({msg: "Serviço não encontrado!" });
         }
 
         const r = await db.query(`SELECT f.id as id_funeral, f.nome_falecido as defunto, s.id as id_servico, s.nome as nome_servico 
@@ -136,31 +147,34 @@ router.get("/funeral/:id_funeral/servico/:id_servico", async (req, res, next) =>
         return res.status(200).json({msg: "Associação encontrada com sucesso!", data: r.rows[0]});
 
     } catch (error) {
-        return res.status(400).json({ msg: error.message });
+        console.error("Erro de servidor");
+        return res.status(400).json({msg: error.message});
     }
-});
+}); // OK
+
+// GET - Buscar UMA associação de acordo com o ID da associação
 
 // POST - Associação de Serviço com Funeral
-router.post("/:id_funeral/servico", async (req, res) => {
+router.post("/funeral/:id_funeral/servico", async (req, res) => {
     try {
         const idFuneral = Number(req.params.id_funeral);
         const idServico = Number(req.body?.id_servico);
 
         if (!Number.isInteger(idFuneral) || idFuneral <= 0) {
-            return res.status(400).json({ msg: "Informe um ID de funeral válido!"});
+            throw new Error("Informe um ID de funeral válido!");
         }
 
         if (!Number.isInteger(idServico) || idServico <= 0) {
-            return res.status(400).json({msg: "Informe um ID de serviço válido!"});
+            throw new Error("Informe um ID de serviço válido!");
         }
 
-        const funeral = await db.query(`SELECT id FROM funeral WHERE id = $1`,[idFuneral]);
+        const funeral = await db.query(`SELECT id, nome_falecido AS defunto FROM funeral WHERE id = $1`,[idFuneral]);
 
         if (!funeral.rowCount) {
             return res.status(404).json({msg: "Funeral não encontrado!"});
         }
 
-        const servico = await db.query(`SELECT id FROM servico WHERE id = $1`,[idServico]);
+        const servico = await db.query(`SELECT id, nome AS nome_servico FROM servico WHERE id = $1`,[idServico]);
 
         if (!servico.rowCount) {
             return res.status(404).json({msg: "Serviço não encontrado!"});
@@ -174,15 +188,24 @@ router.post("/:id_funeral/servico", async (req, res) => {
 
         const r = await db.query(`INSERT INTO servico_funeral (id_funeral, id_servico) VALUES ($1, $2) RETURNING *`, [idFuneral, idServico]);
 
-        return res.status(201).json({msg: "Serviço associado ao funeral com sucesso!",data: r.rows[0]});
+        return res.status(201).json({ msg: "Serviço associado ao funeral com sucesso!",
+            data: {
+                id_funeral: r.rows[0].id_funeral,
+                nome_falecido: funeral.rows[0].defunto,
+
+                id_servico: r.rows[0].id_servico,
+                nome_servico: servico.rows[0].nome_servico
+            }}
+            );
 
     } catch (error) {
-        return res.status(500).json({msg: error.message});
+        console.error("Erro de servidor");
+        return res.status(400).json({msg: error.message});
     }
-});
+}); 
 
 // DELETE - Associação de Serviço com Funeral
-router.delete("/:id_funeral/servico/:id_servico", async (req, res, next) => {
+router.delete("/funeral/:id_funeral/servico/:id_servico", async (req, res, next) => {
     try{
         const idFuneral = Number(req.params.id_funeral);
         const idServico = Number(req.params.id_servico);
@@ -205,12 +228,32 @@ router.delete("/:id_funeral/servico/:id_servico", async (req, res, next) => {
         if (!r.rowCount) {
             throw new Error("Esta associação não existe!");
         }
+        
+        const funeral = await db.query(`SELECT id, nome_falecido AS defunto FROM funeral WHERE id = $1`,[idFuneral]);
 
-        return res.status(200).json({ msg: "Serviço desassociado do funeral com sucesso!", data: r.rows[0]});
+        if (!funeral.rowCount) {
+            return res.status(404).json({msg: "Funeral não encontrado!"});
+        }
+
+        const servico = await db.query(`SELECT id, nome AS nome_servico FROM servico WHERE id = $1`,[idServico]);
+
+        if (!servico.rowCount) {
+            return res.status(404).json({msg: "Serviço não encontrado!"});
+        }
+
+        return res.status(200).json({ 
+            msg: "Serviço desassociado do funeral com sucesso!", data: {
+            id_funeral: r.rows[0].id_funeral,
+            nome_falecido: funeral.rows[0].defunto,
+
+            id_servico: r.rows[0].id_servico,
+            nome_servico: servico.rows[0].nome_servico
+        }});
 
     } catch (error) {
-        return res.status(400).json({ msg: error.message });
+        console.log(error);
+        return res.status(400).json({ msg: "Erro interno do servidor!" });
     }
-});
+}); // aqui precisa aparecer o nome
 
 module.exports = router;

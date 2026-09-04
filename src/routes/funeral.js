@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-<<<<<<< HEAD
 // TABELA SERVICO_FUNERAL
 // GET - Associação de Serviço com Funeral
 router.get("/servico", async (req, res, next) => { 
@@ -118,8 +117,6 @@ router.post("/servico", async (req, res, next) => {
 });
 
 
-=======
->>>>>>> 288db2f4fabb4bc097887949580d75df0667e0f4
 // TABELA FUNERAL
 // GET /funeral - Buscar todos os funerais 
 router.get("/", async (req, res, next) => {
