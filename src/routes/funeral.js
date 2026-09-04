@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
+<<<<<<< HEAD
 // TABELA SERVICO_FUNERAL
 // GET - Associação de Serviço com Funeral
 router.get("/servico", async (req, res, next) => { 
@@ -118,6 +119,8 @@ router.post("/servico", async (req, res, next) => {
 
 
 // TABELA FUNERAL
+=======
+>>>>>>> 82e0b9c5a25b65592891ed1777ca3c473936f7e2
 // GET /funeral - Buscar todos os funerais 
 router.get("/", async (req, res, next) => {
     try {
@@ -181,7 +184,7 @@ router.get("/periodo", async(req, res, next) => {
         const { inicio, fim } = req.query;
 
         if (inicio > fim) {
-            throw new Error("A data inicial não pode ser menor que a data final!!");
+            throw new Error("A data inicial não pode ser maior que a data final!!");
         }
         if(!inicio) {
             throw new Error("Informe a data inicial!");
@@ -211,7 +214,7 @@ router.get("/periodo", async(req, res, next) => {
             [inicio, fim]
         );
 
-        if (r.rowCount) {
+        if (!r.rowCount) {
             throw new Error("Nenhum funeral foi encontrado nesse determinado período!")
         }
 
@@ -220,7 +223,7 @@ router.get("/periodo", async(req, res, next) => {
             data: r.rows
         });
     } catch (error) {
-        return resizeBy.status(400).json({
+        return res.status(400).json({
             msg: error.message
         });
     }
@@ -298,8 +301,8 @@ router.get("/:id", async (req, res, next) => {
     }
 });
 
-// POST /funerais - Cadastra um novo funeral e associa o cliente
-router.post("/funerais", async (req, res, next) => {
+// POST /cadastro - Cadastra um novo funeral e associa o cliente
+router.post("/", async (req, res, next) => {
     try {
         const { duracao,
             data_evento,
@@ -368,7 +371,7 @@ router.post("/funerais", async (req, res, next) => {
 });
 
 //PUT /funerais/:id
-router.put("/funerais/:id", async(req, res, next) => {
+router.put("/:id", async(req, res, next) => {
     try{
         const id = Number(req.params.id);
 
@@ -467,7 +470,7 @@ router.put("/funerais/:id", async(req, res, next) => {
 });
 
 // DELETE /funerais/ :id 
-router.delete("/funerais/:id", async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
     try {
         const id = Number(req.params.id)
 

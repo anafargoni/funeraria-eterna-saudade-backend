@@ -22,12 +22,15 @@ CREATE TABLE IF NOT EXISTS cliente(
         CHECK ( contato_telefone IS NULL OR contato_telefone ~ '^[0-9]{10,11}$' ),
 
     CONSTRAINT chk_cliente_data_nascimento
-        CHECK (data_nascimento >= DATE '1900-01-01')
+        CHECK (data_nascimento >= DATE '1900-01-01'),
+
+    CONSTRAINT chk_endereco_numero
+        CHECK (endereco_numero IS NULL OR endereco_numero > 0)
 );
 
 CREATE TABLE IF NOT EXISTS funeral(
     id SERIAL PRIMARY KEY,
-    duracao INTEGER,
+    duracao INTEGER NOT NULL,
     data_evento DATE NOT NULL,
     local VARCHAR(60) NOT NULL,
 
@@ -36,11 +39,15 @@ CREATE TABLE IF NOT EXISTS funeral(
     data_morte_falecido DATE NOT NULL,
     cpf_falecido VARCHAR(14) NOT NULL,
 
-    cpf_cliente VARCHAR(14),
+    cpf_cliente VARCHAR(14) NOT NULL,
     pagamento BOOLEAN NOT NULL,
 
     CONSTRAINT cpf_cliente_fk FOREIGN KEY (cpf_cliente)
-        REFERENCES cliente (cpf),
+        REFERENCES cliente (cpf)
+        ON DELETE CASCADE,
+
+    CONSTRAINT chk_duracao
+        CHECK (duracao > 0),
 
     CONSTRAINT chk_cliente_cpf
         CHECK (cpf_cliente ~ '^[0-9]{11}$'),
@@ -75,10 +82,12 @@ CREATE TABLE IF NOT EXISTS servico_funeral (
     CONSTRAINT pk_id_funeral_servico PRIMARY KEY (id_funeral, id_servico),
 
     CONSTRAINT fk_id_funeral FOREIGN KEY (id_funeral)
-        REFERENCES funeral(id),
+        REFERENCES funeral(id)
+        ON DELETE CASCADE,
 
     CONSTRAINT fk_id_servico FOREIGN KEY (id_servico)
         REFERENCES servico(id)
+        ON DELETE CASCADE
 );
 
 INSERT INTO cliente ( cpf, nome_primeiro, nome_sobrenome, endereco_CEP, endereco_rua, endereco_cidade, endereco_bairro, endereco_numero, contato_email, contato_telefone, data_nascimento) 
@@ -118,7 +127,7 @@ INSERT INTO funeral (
 )
 VALUES (
     4, '2026-09-10', 'Cemitério Nossa Senhora do Carmo',
-    'José da Silva', '1950-05-12', '2026-09-08',
+    'José Otavio', '1950-05-12', '2026-09-08',
     '11122233344', '12345678901', TRUE
 );
 
