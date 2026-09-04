@@ -6,16 +6,17 @@ const db = require("../db");
 // GET - Associação de Serviço com Funeral
 router.get("/servico", async (req, res, next) => { 
     try {
-        const r = await db.query("SELECT * FROM servico_funeral");
+        const r = await db.query(`SELECT f.id as id_funeral, f.nome_falecido as defunto, s.id as id_servico, s.nome as nome_servico FROM servico_funeral sf JOIN servico s ON s.id = sf.id_servico JOIN funeral f ON f.id = sf.id_funeral`);
         if (!r.rowCount) {
-            return res.status(400).json({ msg: "Não foi encontrado nenhum serviço!" });
+            return res.status(400).json({ msg: "Não foi encontrado nenhum serviço!", data: r.rows });
         }
         return res.status(200).json({msg: "Lista de Funerais com seus Serviços!", data: r.rows});
     } catch (error) {   
-        return res.status(400).json({ msg: error.message });
+        return res.status(500).json({ msg: error.message });
     }
 });
 
+// GET pelo ID - Associação de Serviço com Funeral
 router.get("/:id_funeral/servico/:id_servico", async (req, res, next) => {
     try {
         const idFuneral = Number(req.params.id_funeral);
@@ -78,8 +79,7 @@ router.delete("/:id_funeral/servico/:id_servico", async (req, res, next) => {
 // POST - Associação de Serviço com Funeral
 router.post("/servico", async (req, res, next) => {
     try{
-        const {id_funeral} = req.body || {};
-        const {id_servico} = req.body || {};
+        const {id_funeral, id_servico} = req.body || {};
 
         if (!Number.isInteger(id_funeral) || id_funeral <= 0) {
             throw new Error("Informe um ID de funeral válido!");
@@ -117,10 +117,7 @@ router.post("/servico", async (req, res, next) => {
 });
 
 
-
-
-
-
+// TABELA FUNERAL
 // GET /funeral - Buscar todos os funerais 
 router.get("/", async (req, res, next) => {
     try {
@@ -136,6 +133,98 @@ router.get("/", async (req, res, next) => {
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }
+});
+
+// Operação Exclusiva - Buscar os serviços mais utilizados
+router.get("/servicos/mais-utilizados", async (req, res, next) => {
+    try {
+        const r = await db.query(
+            `SELECT
+                s.id,
+                s.nome,
+                s.descricao,
+                s.valor,
+                COUNT(sf.id_servico) AS quantidade_utilizada
+
+            FROM servico s
+
+            JOIN servico_funeral sf
+                ON s.id = sf.id_servico
+
+            GROUP BY
+                s.id,
+                s.nome,
+                s.descricao,
+                s.valor
+
+            ORDER BY quantidade_utilizada DESC`);
+
+            if (!r.rowCount) {
+                throw new Error("Nenhum serviço utilizado foi encontrado!");
+            }
+    
+            return res.status(200).json({
+                msg: "Serviços mais utilizados encontrados com sucesso!",
+                data: r.rows
+            });
+    
+        } catch (error) {
+            return res.status(400).json({
+                msg: error.message
+            });
+        }
+});
+
+// Operação Exclusiva - Buscar funerais em determinado periodo 
+router.get("/periodo", async(req, res, next) => {
+    try {
+        const { inicio, fim } = req.query;
+
+        if (inicio > fim) {
+            throw new Error("A data inicial não pode ser menor que a data final!!");
+        }
+        if(!inicio) {
+            throw new Error("Informe a data inicial!");
+        }
+        if(!fim) {
+            throw new Error("Informe a data final!");
+        }
+
+        const r = await db.query(
+            `SELECT
+                f.id,
+                f.nome_falecido,
+                f.data_evento,
+                f.local,
+                f.pagamento,
+
+                c.nome_primeiro,
+                c.nome_sobrenome
+
+            FROM funeral f
+
+            JOIN cliente c
+                ON f.cpf_cliente = c.cpf
+
+            WHERE f.data_evento BETWEEN $1 AND $2`,
+
+            [inicio, fim]
+        );
+
+        if (r.rowCount) {
+            throw new Error("Nenhum funeral foi encontrado nesse determinado período!")
+        }
+
+        return res.status(200).json({
+            msg: "Funerais encontrados com sucesso!",
+            data: r.rows
+        });
+    } catch (error) {
+        return resizeBy.status(400).json({
+            msg: error.message
+        });
+    }
+
 });
 
 // Operação Exclusiva - Buscar os serviços de um funeral
@@ -189,61 +278,6 @@ router.get("/servicos/:id", async (req, res, next) => {
         return res.status(400).json({ msg: error.message });
     }
 });
-
-// Operação Exclusiva - Buscar funerais em determinado periodo 
-
-router.get("/funeral/periodo", async(req, res, next) => {
-    try {
-        const { inicio, fim } = req.query;
-
-        if (inicio > fim) {
-            throw new Error("A data inicial não pode ser menor que a data final!!");
-        }
-        if(!inicio) {
-            throw new Error("Informe a data inicial!");
-        }
-        if(!final) {
-            throw new Error("Informe a data final!");
-        }
-
-        const r = await db.query(
-            `SELECT
-                f.id,
-                f.nome_falecido,
-                f.data_evento,
-                f.local,
-                f.pagamento,
-
-                c.nome_primeiro,
-                c.nome_sobrenome
-
-            FROM funeral f
-
-            JOIN cliente c
-                ON f.cpf_cliente = c.cpf
-
-            WHERE f.data_evento BETWEEN $1 AND $2`,
-
-            [inicio, fim]
-        );
-
-        if (r.rowCount) {
-            throw new Error("Nenhum funeral foi encontrado nesse determinado período!")
-        }
-
-        return res.status(200).json({
-            msg: "Funerais encontrados com sucesso!",
-            data: r.rows
-        });
-    } catch (error) {
-        return resizeBy.status(400).json({
-            msg: error.message
-        });
-    }
-
-});
-
-// Operação exclusiva - Buscar os serviços mais utilizados
 
 
 // GET /funeral/:id - Buscar funeral por id
@@ -333,6 +367,105 @@ router.post("/funerais", async (req, res, next) => {
 
 });
 
+//PUT /funerais/:id
+router.put("/funerais/:id", async(req, res, next) => {
+    try{
+        const id = Number(req.params.id);
+
+        if (!Number.isInteger(id) || id <= 0 ) {
+            throw new Error("Informe um ID válido!");
+        }
+
+        const {
+            duracao,
+            data_evento,
+            local,
+            nome_falecido,
+            data_nascimento_falecido,
+            data_morte_falecido,
+            cpf_falecido,
+            cpf_cliente,
+            pagamento} = req.body || {};
+
+            if (!duracao) {
+                throw new Error("A duração é obrigatória!");
+            }
+            
+            if (!data_evento) {
+                throw new Error("A data do evento é obrigatória!");
+            }
+            
+            if (!local) {
+                throw new Error("O local é obrigatório!");
+            }
+            
+            if (!nome_falecido) {
+                throw new Error("O nome do falecido é obrigatório!");
+            }
+            
+            if (!data_nascimento_falecido) {
+                throw new Error("A data de nascimento do falecido é obrigatória!");
+            }
+            
+            if (!data_morte_falecido) {
+                throw new Error("A data de morte do falecido é obrigatória!");
+            }
+            
+            if (!cpf_falecido) {
+                throw new Error("O CPF do falecido é obrigatório!");
+            }
+            
+            if (!cpf_cliente) {
+                throw new Error("O CPF do cliente é obrigatório!");
+            }
+            
+            if (pagamento === undefined) {
+                throw new Error("O pagamento é obrigatório!");
+            }
+
+            const r = await db.query(
+                `UPDATE funeral
+                SET
+                    duracao = $1,
+                    data_evento = $2,
+                    local = $3,
+                    nome_falecido = $4,
+                    data_nascimento_falecido = $5,
+                    data_morte_falecido = $6,
+                    cpf_falecido = $7,
+                    cpf_cliente = $8,
+                    pagamento = $9
+            
+                WHERE id = $10
+                RETURNING *`,
+                [
+                    duracao,
+                    data_evento,
+                    local,
+                    nome_falecido,
+                    data_nascimento_falecido,
+                    data_morte_falecido,
+                    cpf_falecido,
+                    cpf_cliente,
+                    pagamento,
+                    id
+                ]
+            );
+
+            if (!r.rowCount) {
+                throw new Error("Funeral não encontrado!");
+            } return res.status(200).json({
+                msg: "Funeral Atualizado!",
+                data: r.rows[0]
+            });
+            
+        } catch (error) {
+            return res.status(400).json({
+                msg: error.message
+            });
+        }
+});
+
 // DELETE /funerais/ :id 
 router.delete("/funerais/:id", async (req, res, next) => {
     try {
@@ -352,9 +485,5 @@ router.delete("/funerais/:id", async (req, res, next) => {
         return res.status(400).json({ msg: error.message });
     }
 });
-
-//PUT /funerais/:id
-
-
 
 module.exports = router;
