@@ -55,29 +55,7 @@ router.get("/valor-total/:id", async (req, res, next) => {
             [id]
         );
 
-        const dadosFuneral = await db.query(
-            `SELECT
-                f.nome_falecido,
-                c.nome_primeiro,
-                c.nome_sobrenome,
-                s.nome AS nome_servico,
-                s.valor
-
-            FROM funeral f
-
-            JOIN cliente c
-                ON f.cpf_cliente = c.cpf
-
-            JOIN servico_funeral sf
-                ON f.id = sf.id_funeral
-
-            JOIN servico s
-                ON sf.id_servico = s.id
-
-            WHERE f.id = $1`, [id]
-        );
-
-        if (!dadosFuneral.rowCount) {
+        if (!servicos.rowCount) {
             throw new Error("Este funeral não possui serviços associados!");
         }
         const valorTotal = await db.query(
@@ -168,7 +146,7 @@ router.get("/cliente/:nome", async (req, res, next) => {
 
         
         if (!clientes.rowCount) {
-            throw new Error("Nenhum cliente foi encontrado para essse serviço!");
+            throw new Error("Nenhum cliente foi encontrado para esse serviço!");
         }
 
         return res.status(200).json({ msg: "Clientes encontrados com sucesso!",
@@ -192,7 +170,7 @@ router.get("/:id_servico/funerais/quantidade", async (req, res) => {
             return res.status(400).json({msg: "Informe um ID de serviço válido!"});
         }
 
-        const servico = await db.query(`SELECT id FROM servico WHERE id = $1`,[idServico]);
+        const servico = await db.query(`SELECT id, nome FROM servico WHERE id = $1`,[idServico]);
 
         if (!servico.rowCount) {
             return res.status(404).json({msg: "Serviço não encontrado!"});
@@ -245,7 +223,7 @@ router.get("/:id", async (req, res, next) => {
 
         const r = await db.query("SELECT * FROM servico WHERE id = $1", [id]);
         if (!r.rowCount ) {
-            return res.status(404).json({ msg: "Serviço não econtrado!" });
+            return res.status(404).json({ msg: "Serviço não encontrado!" });
         }
         return res.status(200).json( {msg: "Serviço encontrado!",
             data: r.rows[0]});
@@ -259,6 +237,7 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
     try {
         const { nome, valor } = req.body || {};
+
         let { descricao } = req.body || {};
 
         if (typeof nome !== "string" || !nome.trim()) {
@@ -267,12 +246,23 @@ router.post("/", async (req, res, next) => {
 
         const nomeTratado = nome.trim();
 
+        if (nomeTratado.length > 35) {
+            throw new Error("O nome do serviço deve ter no máximo 35 caracteres!");
+        }
+
         if ( typeof valor !== "number" && typeof valor !== "string") {
             return res.status(400).json({ msg: "Informe um valor válido!"});
         }
 
-        if ( isNaN(Number(valor)) ||!isFinite(Number(valor)) || Number(valor) <= 0) {
-            return res.status(400).json({ msg: "Informe um valor válido maior que 0!"});
+        if (
+            isNaN(Number(valor)) ||
+            !isFinite(Number(valor)) ||
+            Number(valor) <= 0 ||
+            Number(valor) > 999999.99
+        ) {
+            return res.status(400).json({
+                msg: "Informe um valor válido entre 0,01 e 999999,99!"
+            });
         }
 
         if (descricao !== undefined && descricao !== null) {
@@ -282,6 +272,10 @@ router.post("/", async (req, res, next) => {
             }
 
             descricao = descricao.trim();
+
+            if (descricao && descricao.length > 100) {
+                throw new Error("A descrição deve ter no máximo 100 caracteres!");
+            }
 
             if (!descricao) {
                 descricao = null;
@@ -302,7 +296,7 @@ router.post("/", async (req, res, next) => {
             throw new Error("Serviço não foi adicionado");
         }
 
-        return res.status(201).json({ msg: "Serviço adicionado", data: r.rows[0] });
+        return res.status(201).json({ msg: "Serviço adicionado com sucesso!", data: r.rows[0] });
 
     } catch (error) {
         return res.status(400).json({ msg: error.message });
@@ -332,7 +326,7 @@ router.delete("/:id", async (req, res) => {
         }
 
         if (associacao.rowCount  > 1) {
-            return res.status(400).json({ msg: "Este serviço está associado a vários funeral!" });
+            return res.status(400).json({ msg: "Este serviço está associado a vários funerais!" });
         }
 
         const r = await db.query(  `DELETE FROM servico WHERE id = $1 RETURNING *`,[id] );
@@ -372,6 +366,7 @@ router.put("/:id", async (req, res, next) => {
         }
 
         const { nome, valor } = req.body || {};
+
         let { descricao } = req.body || {};
 
         if (typeof nome !== "string" || !nome.trim()) {
@@ -380,6 +375,10 @@ router.put("/:id", async (req, res, next) => {
 
         const nomeTratado = nome.trim();
 
+        if (nomeTratado.length > 35) {
+            throw new Error("O nome do serviço deve ter no máximo 35 caracteres!");
+        }
+
         if (
             typeof valor !== "number" &&
             typeof valor !== "string"
@@ -387,8 +386,15 @@ router.put("/:id", async (req, res, next) => {
             return res.status(400).json({msg: "Informe um valor válido!"});
         }
 
-        if (isNaN(Number(valor)) || !isFinite(Number(valor)) || Number(valor) <= 0) {
-            return res.status(400).json({ msg: "Informe um valor válido maior que 0!"});
+        if (
+            isNaN(Number(valor)) ||
+            !isFinite(Number(valor)) ||
+            Number(valor) <= 0 ||
+            Number(valor) > 999999.99
+        ) {
+            return res.status(400).json({
+                msg: "Informe um valor válido entre 0,01 e 999999,99!"
+            });
         }
 
         if (descricao !== undefined && descricao !== null) {
@@ -399,6 +405,10 @@ router.put("/:id", async (req, res, next) => {
 
             descricao = descricao.trim();
 
+            if (descricao && descricao.length > 100) {
+                throw new Error("A descrição deve ter no máximo 100 caracteres!");
+            }
+
             if (!descricao) {
                 descricao = null;
             }
@@ -407,23 +417,18 @@ router.put("/:id", async (req, res, next) => {
             descricao = null;
         }
 
-        const servicoEncontrado = await db.query(
-            `SELECT *
-             FROM servico
-
-             WHERE LOWER(nome) = LOWER($1)
-             AND id != $2`, [nomeTratado, id]);
+        const servicoEncontrado = await db.query(`SELECT * FROM servico WHERE LOWER(nome) = LOWER($1) AND id != $2`, [nomeTratado, id]);
 
         if (servicoEncontrado.rowCount) {
             return res.status(409).json({ msg: "Nome do serviço já existe!"});
         }
 
-        const r = await db.query("UPDATE servico SET valor = $1, descricao = $2, nome = $3 WHERE id = $4 RETURNING*", [valor, descricao, nome, id]);
+        const r = await db.query("UPDATE servico SET valor = $1, descricao = $2, nome = $3 WHERE id = $4 RETURNING*", [Number(valor), descricao, nomeTratado, id]);
 
         if (!r.rowCount) {
             throw new Error("Serviço não foi editado!");
         }
-        return res.status(200).json({ msg: "Serviço editado", data: r.rows[0] });
+        return res.status(200).json({ msg: "Serviço editado com sucesso", data: r.rows[0] });
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }

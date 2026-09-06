@@ -180,16 +180,16 @@ router.post("/", async (req, res, next) => {
             throw new Error("CPF já cadastrado!");
         }
 
-        if (!nome_primeiro || !nome_primeiro.trim()) {
-            throw new Error("Nome é obrigatório!");
+        if (typeof nome_primeiro !== "string" || !nome_primeiro.trim()) {
+            throw new Error("Nome é obrigatório e deve ser informado como texto!");
         }
-        
-        if (!nome_sobrenome || !nome_sobrenome.trim()) {
-            throw new Error("Sobrenome é obrigatório!");
+
+        if (typeof nome_sobrenome !== "string" || !nome_sobrenome.trim()) {
+            throw new Error("Sobrenome é obrigatório e deve ser informado como texto!");
         }
-        
-        if (!contato_email || !contato_email.trim()) {
-            throw new Error("Email é obrigatório!");
+
+        if (typeof contato_email !== "string" || !contato_email.trim()) {
+            throw new Error("Email é obrigatório e deve ser informado como texto!");
         }
         
         const nomeTratado = nome_primeiro.trim();
@@ -216,6 +216,15 @@ router.post("/", async (req, res, next) => {
         if (emailTratado.length > 40) {
             throw new Error("Email deve ter no máximo 40 caracteres!");
         }
+
+        const emailEncontrado = await db.query(
+            "SELECT * FROM cliente WHERE contato_email = $1",
+            [emailTratado]
+        );
+
+        if (emailEncontrado.rowCount) {
+            throw new Error("Email já cadastrado!");
+        }
         
         const telefoneTratado = tratarTelefone(contato_telefone);
 
@@ -231,17 +240,59 @@ router.post("/", async (req, res, next) => {
 
         const cepTratado = tratarCep(endereco_CEP);
 
-        const ruaTratada = endereco_rua ? endereco_rua.trim() : null;
+        let ruaTratada = null;
+
+        if (endereco_rua !== undefined && endereco_rua !== null) {
+
+            if (typeof endereco_rua !== "string") {
+                throw new Error("Informe uma rua válida!");
+            }
+
+            ruaTratada = endereco_rua.trim();
+
+            if (!ruaTratada) {
+                ruaTratada = null;
+            }
+        }
+
         if (ruaTratada && ruaTratada.length > 40) {
             throw new Error("Rua deve ter no máximo 40 caracteres!");
         }
+
+        let cidadeTratada = null;
+
+        if (endereco_cidade !== undefined && endereco_cidade !== null) {
+
+            if (typeof endereco_cidade !== "string") {
+                throw new Error("Informe uma cidade válida!");
+            }
+
+            cidadeTratada = endereco_cidade.trim();
+
+            if (!cidadeTratada) {
+                cidadeTratada = null;
+            }
+        }
         
-        const cidadeTratada = endereco_cidade ? endereco_cidade.trim() : null;
         if (cidadeTratada && cidadeTratada.length > 30) {
             throw new Error("Cidade deve ter no máximo 30 caracteres!");
         }
         
-        const bairroTratado = endereco_bairro ? endereco_bairro.trim() : null;
+        let bairroTratado = null;
+
+        if (endereco_bairro !== undefined && endereco_bairro !== null) {
+
+            if (typeof endereco_bairro !== "string") {
+                throw new Error("Informe um bairro válido!");
+            }
+
+            bairroTratado = endereco_bairro.trim();
+
+            if (!bairroTratado) {
+                bairroTratado = null;
+            }
+        }
+
         if (bairroTratado && bairroTratado.length > 30) {
             throw new Error("Bairro deve ter no máximo 30 caracteres!");
         }
@@ -276,7 +327,7 @@ router.post("/", async (req, res, next) => {
         }
 
         return res.status(201).json({
-            msg: "Cliente adicionado",
+            msg: "Cliente adicionado com sucesso!",
             data: r.rows[0]
         });
 
@@ -299,7 +350,7 @@ router.delete("/:cpf", async (req, res, next) => {
         }
 
         return res.status(200).json({
-            msg: "Cliente deletado",
+            msg: "Cliente deletado com sucesso!",
             data: r.rows[0]
         });
 
@@ -326,16 +377,16 @@ router.put("/:cpf", async (req, res, next) => {
             data_nascimento
         } = req.body || {};
 
-        if (!nome_primeiro || !nome_primeiro.trim()) {
-            throw new Error("Nome é obrigatório!");
+        if (typeof nome_primeiro !== "string" || !nome_primeiro.trim()) {
+            throw new Error("Nome é obrigatório e deve ser informado como texto!");
         }
-        
-        if (!nome_sobrenome || !nome_sobrenome.trim()) {
-            throw new Error("Sobrenome é obrigatório!");
+
+        if (typeof nome_sobrenome !== "string" || !nome_sobrenome.trim()) {
+            throw new Error("Sobrenome é obrigatório e deve ser informado como texto!");
         }
-        
-        if (!contato_email || !contato_email.trim()) {
-            throw new Error("Email é obrigatório!");
+
+        if (typeof contato_email !== "string" || !contato_email.trim()) {
+            throw new Error("Email é obrigatório e deve ser informado como texto!");
         }
         
         const nomeTratado = nome_primeiro.trim();
@@ -362,6 +413,13 @@ router.put("/:cpf", async (req, res, next) => {
             throw new Error("Email deve ter no máximo 40 caracteres!");
         }
 
+        const emailEncontrado = await db.query(
+            "SELECT * FROM cliente WHERE contato_email = $1 AND cpf != $2", [emailTratado, cpf]);
+
+        if (emailEncontrado.rowCount) {
+            throw new Error("Email já cadastrado!");
+        }
+
         const telefoneTratado = tratarTelefone(contato_telefone);
 
         if (data_nascimento && data_nascimento < "1900-01-01") {
@@ -376,17 +434,58 @@ router.put("/:cpf", async (req, res, next) => {
 
         const cepTratado = tratarCep(endereco_CEP);
 
-        const ruaTratada = endereco_rua ? endereco_rua.trim() : null;
+        let ruaTratada = null;
+
+        if (endereco_rua !== undefined && endereco_rua !== null) {
+
+            if (typeof endereco_rua !== "string") {
+                throw new Error("Informe uma rua válida!");
+            }
+
+            ruaTratada = endereco_rua.trim();
+
+            if (!ruaTratada) {
+                ruaTratada = null;
+            }
+        }
         if (ruaTratada && ruaTratada.length > 40) {
             throw new Error("Rua deve ter no máximo 40 caracteres!");
         }
         
-        const cidadeTratada = endereco_cidade ? endereco_cidade.trim() : null;
+        let cidadeTratada = null;
+
+        if (endereco_cidade !== undefined && endereco_cidade !== null) {
+
+            if (typeof endereco_cidade !== "string") {
+                throw new Error("Informe uma cidade válida!");
+            }
+
+            cidadeTratada = endereco_cidade.trim();
+
+            if (!cidadeTratada) {
+                cidadeTratada = null;
+            }
+        }
+
         if (cidadeTratada && cidadeTratada.length > 30) {
             throw new Error("Cidade deve ter no máximo 30 caracteres!");
         }
         
-        const bairroTratado = endereco_bairro ? endereco_bairro.trim() : null;
+        let bairroTratado = null;
+
+        if (endereco_bairro !== undefined && endereco_bairro !== null) {
+
+            if (typeof endereco_bairro !== "string") {
+                throw new Error("Informe um bairro válido!");
+            }
+
+            bairroTratado = endereco_bairro.trim();
+
+            if (!bairroTratado) {
+                bairroTratado = null;
+            }
+        }
+
         if (bairroTratado && bairroTratado.length > 30) {
             throw new Error("Bairro deve ter no máximo 30 caracteres!");
         }
@@ -431,7 +530,7 @@ router.put("/:cpf", async (req, res, next) => {
         }
 
         return res.status(200).json({
-            msg: "Cliente editado",
+            msg: "Cliente editado com sucesso!",
             data: r.rows[0]
         });
 

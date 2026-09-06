@@ -2,6 +2,23 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
+// Função para tratar CPF
+function tratarCpf(cpf) {
+    if (!cpf || typeof cpf !== "string") {
+        throw new Error("CPF é obrigatório e deve ser informado como texto!");
+    }
+
+    const cpfTratado = cpf
+        .replaceAll(".", "")
+        .replaceAll("-", "");
+
+    if (cpfTratado.length != 11 || isNaN(cpfTratado)) {
+        throw new Error("Informe um CPF válido!");
+    }
+
+    return cpfTratado;
+}
+
 // GET /funeral - Buscar todos os funerais 
 router.get("/", async (req, res, next) => {
     try {
@@ -65,7 +82,7 @@ router.get("/periodo", async(req, res, next) => {
         const { inicio, fim } = req.query;
 
         if (inicio > fim) {
-            throw new Error("A data inicial não pode ser maior que a data final!!");
+            throw new Error("A data inicial não pode ser maior que a data final!");
         }
         if(!inicio) {
             throw new Error("Informe a data inicial!");
@@ -96,7 +113,7 @@ router.get("/periodo", async(req, res, next) => {
         );
 
         if (!r.rowCount) {
-            throw new Error("Nenhum funeral foi encontrado nesse determinado período!")
+            throw new Error("Nenhum funeral foi encontrado nesse período!")
         }
 
         return res.status(200).json({
@@ -196,53 +213,97 @@ router.post("/", async (req, res, next) => {
             pagamento 
         } = req.body || {};
 
-        if (!duracao) {
-            throw new Error("A duração é obrigatória!");
+        if (!Number.isInteger(Number(duracao)) || Number(duracao) <= 0) {
+            throw new Error("Informe uma duração válida!");
         }
+
         if (!data_evento) {
             throw new Error("A data do evento é obrigatória!");
         }
-        if (!local) {
-            throw new Error("O local é obrigatória!");
+
+        if (typeof local !== "string" || !local.trim()) {
+            throw new Error("O local é obrigatório e deve ser informado como texto!");
         }
-        if (!nome_falecido) {
-            throw new Error("O nome do falecido é obrigatória!");
+
+        if (typeof nome_falecido !== "string" || !nome_falecido.trim()) {
+            throw new Error("O nome do falecido é obrigatório e deve ser informado como texto!");
         }
+
+        const localTratado = local.trim();
+        const nomeFalecidoTratado = nome_falecido.trim();
+
+        if (localTratado.length > 60) {
+            throw new Error("O local deve ter no máximo 60 caracteres!");
+        }
+
+        if (nomeFalecidoTratado.length > 30) {
+            throw new Error("O nome do falecido deve ter no máximo 30 caracteres!");
+        }
+
         if (!data_nascimento_falecido) {
             throw new Error("A data de nascimento do falecido é obrigatória!");
         }
+
         if (!data_morte_falecido) {
             throw new Error("A data da morte do falecido é obrigatória!");
         }
+
+        // Valida a ordem das datas
+        if (data_nascimento_falecido > data_morte_falecido) {
+            throw new Error(
+                "A data de nascimento não pode ser posterior à data da morte!"
+            );
+        }
+
+        if (data_morte_falecido > data_evento) {
+            throw new Error(
+                "A data da morte não pode ser posterior à data do funeral!"
+            );
+        }
+
         if (!cpf_falecido) {
-            throw new Error("O CPF do falecido é obrigatória!");
+            throw new Error("O CPF do falecido é obrigatório!");
         }
+
         if (!cpf_cliente) {
-            throw new Error("O CPF do cliente é obrigatória!");
+            throw new Error("O CPF do cliente é obrigatório!");
         }
-        if(pagamento === undefined) {
-            throw new Error("O pagamento é obrigatório!")
+
+        const cpfFalecidoTratado = tratarCpf(cpf_falecido);
+        const cpfClienteTratado = tratarCpf(cpf_cliente);
+
+        const cliente = await db.query(
+            "SELECT cpf FROM cliente WHERE cpf = $1",
+            [cpfClienteTratado]
+        );
+
+        if (!cliente.rowCount) {
+            throw new Error("Cliente não encontrado!");
+        }
+
+        if (typeof pagamento !== "boolean") {
+            throw new Error("O pagamento deve ser verdadeiro ou falso!");
         }
 
         const r = await db.query(
-            `INSERT INTO funeral 
+            `INSERT INTO funeral
             ( duracao, data_evento, local, nome_falecido, data_nascimento_falecido, data_morte_falecido, cpf_falecido, cpf_cliente, pagamento)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING*`,
-            [   duracao,
+            [   Number(duracao),
                 data_evento,
-                local,
-                nome_falecido,
+                localTratado,
+                nomeFalecidoTratado,
                 data_nascimento_falecido,
                 data_morte_falecido,
-                cpf_falecido,
-                cpf_cliente,
+                cpfFalecidoTratado,
+                cpfClienteTratado,
                 pagamento 
             ]
         );
 
         if(!r.rowCount) {
             throw new Error("Funeral não adicionado!");
-        } return res.status(201).json({ msg: "Funeral adicionado!", data: r.rows[0]});
+        } return res.status(201).json({ msg: "Funeral adicionado com sucesso!", data: r.rows[0]});
         
 
     } catch (error) {
@@ -271,20 +332,31 @@ router.put("/:id", async(req, res, next) => {
             cpf_cliente,
             pagamento} = req.body || {};
 
-            if (!duracao) {
-                throw new Error("A duração é obrigatória!");
+            if (!Number.isInteger(Number(duracao)) || Number(duracao) <= 0) {
+                throw new Error("Informe uma duração válida!");
             }
             
             if (!data_evento) {
                 throw new Error("A data do evento é obrigatória!");
             }
             
-            if (!local) {
-                throw new Error("O local é obrigatório!");
+            if (typeof local !== "string" || !local.trim()) {
+                throw new Error("O local é obrigatório e deve ser informado como texto!");
             }
-            
-            if (!nome_falecido) {
-                throw new Error("O nome do falecido é obrigatório!");
+
+            if (typeof nome_falecido !== "string" || !nome_falecido.trim()) {
+                throw new Error("O nome do falecido é obrigatório e deve ser informado como texto!");
+            }
+
+            const localTratado = local.trim();
+            const nomeFalecidoTratado = nome_falecido.trim();
+
+            if (localTratado.length > 60) {
+                throw new Error("O local deve ter no máximo 60 caracteres!");
+            }
+
+            if (nomeFalecidoTratado.length > 30) {
+                throw new Error("O nome do falecido deve ter no máximo 30 caracteres!");
             }
             
             if (!data_nascimento_falecido) {
@@ -295,6 +367,19 @@ router.put("/:id", async(req, res, next) => {
                 throw new Error("A data de morte do falecido é obrigatória!");
             }
             
+            // Valida a ordem das datas
+            if (data_nascimento_falecido > data_morte_falecido) {
+                throw new Error(
+                    "A data de nascimento não pode ser posterior à data da morte!"
+                );
+            }
+
+            if (data_morte_falecido > data_evento) {
+                throw new Error(
+                    "A data da morte não pode ser posterior à data do funeral!"
+                );
+            }
+
             if (!cpf_falecido) {
                 throw new Error("O CPF do falecido é obrigatório!");
             }
@@ -303,8 +388,20 @@ router.put("/:id", async(req, res, next) => {
                 throw new Error("O CPF do cliente é obrigatório!");
             }
             
-            if (pagamento === undefined) {
-                throw new Error("O pagamento é obrigatório!");
+            const cpfFalecidoTratado = tratarCpf(cpf_falecido);
+            const cpfClienteTratado = tratarCpf(cpf_cliente);
+
+            const cliente = await db.query(
+                "SELECT cpf FROM cliente WHERE cpf = $1",
+                [cpfClienteTratado]
+            );
+
+            if (!cliente.rowCount) {
+                throw new Error("Cliente não encontrado!");
+            }
+
+            if (typeof pagamento !== "boolean") {
+                throw new Error("O pagamento deve ser verdadeiro ou falso!");
             }
 
             const r = await db.query(
@@ -323,14 +420,14 @@ router.put("/:id", async(req, res, next) => {
                 WHERE id = $10
                 RETURNING *`,
                 [
-                    duracao,
+                    Number(duracao),
                     data_evento,
-                    local,
-                    nome_falecido,
+                    localTratado,
+                    nomeFalecidoTratado,
                     data_nascimento_falecido,
                     data_morte_falecido,
-                    cpf_falecido,
-                    cpf_cliente,
+                    cpfFalecidoTratado,
+                    cpfClienteTratado,
                     pagamento,
                     id
                 ]
@@ -339,7 +436,7 @@ router.put("/:id", async(req, res, next) => {
             if (!r.rowCount) {
                 throw new Error("Funeral não encontrado!");
             } return res.status(200).json({
-                msg: "Funeral Atualizado!",
+                msg: "Funeral editado com sucesso!",
                 data: r.rows[0]
             });
             
@@ -361,10 +458,10 @@ router.delete("/:id", async (req, res, next) => {
         const r = await db.query("DELETE FROM Funeral WHERE id = $1 RETURNING*", [id]);
         
         if (!r.rowCount) {
-            return res.status(400).json({ msg: "Funeral não econtrado!" });
+            return res.status(404).json({ msg: "Funeral não encontrado!" });
         }
 
-        return res.status(200).json({ msg: "Funeral deletado", data: r.rows[0] });
+        return res.status(200).json({ msg: "Funeral deletado com sucesso!", data: r.rows[0] });
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }

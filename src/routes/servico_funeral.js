@@ -13,10 +13,10 @@ router.get("/", async (req, res, next) => {
             ORDER BY f.id, s.id`);
 
         if (!r.rowCount) {
-            return res.status(400).json({ msg: "Não foi encontrado nenhum serviço!", data: r.rows });
+            return res.status(400).json({ msg: "Nenhuma associação foi encontrada!", data: r.rows });
         }
 
-        return res.status(200).json({msg: "Associações encontradas", quantidade: r.rowCount, data: r.rows});
+        return res.status(200).json({msg: "Associações encontradas com sucesso!", quantidade: r.rowCount, data: r.rows});
     } catch (error) {   
         console.log(error)
         return res.status(500).json({ msg: "Erro interno do servidor!"});
@@ -250,8 +250,10 @@ router.delete("/funeral/:id_funeral/servico/:id_servico", async (req, res, next)
 
     } catch (error) {
         console.log(error);
-        return res.status(400).json({ msg: "Erro interno do servidor!" });
+        return res.status(400).json({
+            msg: error.message
+        });
     }
-}); // OK
+});
 
 module.exports = router;

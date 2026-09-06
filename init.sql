@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS cliente(
     endereco_bairro VARCHAR(30),
     endereco_numero INTEGER,
 
-    contato_email VARCHAR(40) NOT NULL,
+    contato_email VARCHAR(40) NOT NULL UNIQUE,
     contato_telefone VARCHAR(14) NOT NULL,
     
     data_nascimento DATE,
