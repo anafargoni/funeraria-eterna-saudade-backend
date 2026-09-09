@@ -69,12 +69,12 @@ router.get("/", async (req, res, next) => {
             return res.status(400).json({ msg: "Não foi encontrado nenhum cliente!" });
         }
 
-        return res.status(200).json(r.rows);
+        return res.status(200).json({ msg: "Clientes encontrados!", Clientes: r.rows});
 
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }
-});
+}); // OK
 
 // Operação Exclusiva - Buscar todos os funerais de um cliente
 router.get("/funerais/:cpf", async (req, res, next) => {
@@ -125,7 +125,7 @@ router.get("/funerais/:cpf", async (req, res, next) => {
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }
-});
+}); // OK
 
 // Associação Cliente → Funeral
 // A associação acontece ao criar um funeral, pois o funeral possui o campo cpf_cliente.
@@ -146,12 +146,12 @@ router.get("/:cpf", async (req, res, next) => {
             return res.status(400).json({ msg: "Cliente não encontrado!" });
         }
 
-        return res.status(200).json(r.rows[0]);
+        return res.status(200).json({ msg: "Cliente encontrado!", Cliente: r.rows[0]});
 
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }
-});
+}); // OK
 
 // POST
 router.post("/", async (req, res, next) => {
@@ -334,7 +334,7 @@ router.post("/", async (req, res, next) => {
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }
-});
+}); // OK
 
 // DELETE
 router.delete("/:cpf", async (req, res, next) => {
@@ -357,7 +357,7 @@ router.delete("/:cpf", async (req, res, next) => {
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }
-});
+}); // OK
 
 // PUT
 router.put("/:cpf", async (req, res, next) => {
@@ -537,6 +537,6 @@ router.put("/:cpf", async (req, res, next) => {
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }
-});
+}); // OK
 
 module.exports = router;
