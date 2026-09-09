@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
     } catch (error) {
         return res.status(500).json({ msg: error.message });
     }
-});
+}); // OK
 
 // Operação Exclusiva - Calcular o valor total de um funeral.
 router.get("/valor-total/:id", async (req, res, next) => {
@@ -95,12 +95,12 @@ router.get("/valor-total/:id", async (req, res, next) => {
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }
-});
+}); // OK
 
 // Operação Exclusiva - Buscar clientes - Quando não informar nome
 router.get("/cliente", async (req, res) => {
     return res.status(400).json({ msg: "Informe o nome do serviço!"});
-});
+}); // OK
 
 // Operação Exclusiva - Buscar clientes que contrataram determinado serviço através do nome do serviço.
 router.get("/cliente/:nome", async (req, res, next) => {
@@ -159,7 +159,7 @@ router.get("/cliente/:nome", async (req, res, next) => {
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }
-});
+}); // OK
 
 // Operação Excluisva - Quantos Funerais tal serviço já "participou"
 router.get("/:id_servico/funerais/quantidade", async (req, res) => {
@@ -193,7 +193,7 @@ router.get("/:id_servico/funerais/quantidade", async (req, res) => {
         );
 
         return res.status(200).json({
-            msg: "Funerais encontrados!",
+            msg: "Consulta realizada com sucesso!",
 
             servico: {
                 id: servico.rows[0].id,
@@ -210,7 +210,7 @@ router.get("/:id_servico/funerais/quantidade", async (req, res) => {
     } catch (error) {
         return res.status(500).json({msg: error.message});
     }
-});
+}); // OK
 
 // GET pelo ID
 router.get("/:id", async (req, res, next) => {
@@ -231,8 +231,8 @@ router.get("/:id", async (req, res, next) => {
     } catch (error) {
         return res.status(500).json({ msg: error.message });
     }
-});
-
+}); // OK
+ 
 // POST
 router.post("/", async (req, res, next) => {
     try {
@@ -247,22 +247,21 @@ router.post("/", async (req, res, next) => {
         const nomeTratado = nome.trim();
 
         if (nomeTratado.length > 35) {
-            throw new Error("O nome do serviço deve ter no máximo 35 caracteres!");
+            return res.status(400).json({msg : "O nome do serviço deve ter no máximo 35 caracteres!"});
         }
 
         if ( typeof valor !== "number" && typeof valor !== "string") {
             return res.status(400).json({ msg: "Informe um valor válido!"});
         }
 
+        const valorNumerico = Number(valor)
         if (
-            isNaN(Number(valor)) ||
-            !isFinite(Number(valor)) ||
-            Number(valor) <= 0 ||
-            Number(valor) > 999999.99
+            isNaN(valorNumerico) ||
+            !isFinite(valorNumerico) ||
+            valorNumerico <= 0 ||
+            valorNumerico > 999999.99
         ) {
-            return res.status(400).json({
-                msg: "Informe um valor válido entre 0,01 e 999999,99!"
-            });
+            return res.status(400).json({ msg: "Informe um valor válido entre 0,01 e 999999,99!"});
         }
 
         if (descricao !== undefined && descricao !== null) {
@@ -299,9 +298,9 @@ router.post("/", async (req, res, next) => {
         return res.status(201).json({ msg: "Serviço adicionado com sucesso!", data: r.rows[0] });
 
     } catch (error) {
-        return res.status(400).json({ msg: error.message });
+        return res.status(500).json({ msg: error.message });
     }
-});
+}); // OK
 
 // DELETE 
 router.delete("/:id", async (req, res) => {
@@ -341,7 +340,7 @@ router.delete("/:id", async (req, res) => {
 
         return res.status(500).json({ msg: "Erro interno do servidor!" });
     }
-});
+}); // OK
 
 // PUT 
 router.put("/:id", async (req, res, next) => {
@@ -386,11 +385,12 @@ router.put("/:id", async (req, res, next) => {
             return res.status(400).json({msg: "Informe um valor válido!"});
         }
 
+        const valorNumerico = Number(valor);
         if (
-            isNaN(Number(valor)) ||
-            !isFinite(Number(valor)) ||
-            Number(valor) <= 0 ||
-            Number(valor) > 999999.99
+            isNaN(valorNumerico) ||
+            !isFinite(valorNumerico) ||
+            valorNumerico <= 0 ||
+            valorNumerico > 999999.99
         ) {
             return res.status(400).json({
                 msg: "Informe um valor válido entre 0,01 e 999999,99!"
@@ -432,6 +432,6 @@ router.put("/:id", async (req, res, next) => {
     } catch (error) {
         return res.status(400).json({ msg: error.message });
     }
-});
+}); // OK
 
 module.exports = router;
