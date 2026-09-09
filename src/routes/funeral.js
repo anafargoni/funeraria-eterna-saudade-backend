@@ -25,6 +25,38 @@ function tratarCpf(cpf, pessoa) {
 
     return cpfTratado;
 }
+
+// Validar data
+function validarData(data, campo) {
+    if (!data) {
+        throw new Error(`${campo} é obrigatória!`);
+    }
+
+    if (
+        typeof data !== "string" ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(data)
+    ) {
+        throw new Error(`Informe uma data válida para ${campo.toLowerCase()}!`);
+    }
+
+    const [ano, mes, dia] = data.split("-").map(Number);
+
+    const dataObj = new Date(ano, mes - 1, dia);
+
+    if (
+        dataObj.getFullYear() !== ano ||
+        dataObj.getMonth() !== mes - 1 ||
+        dataObj.getDate() !== dia
+    ) {
+        throw new Error(`Informe uma data válida para ${campo.toLowerCase()}!`);
+    }
+
+    if (ano < 1900) {
+        throw new Error(`${campo} não pode ser anterior a 1900!`);
+    }
+
+    return data;
+}
 // GET /funeral - Buscar todos os funerais 
 router.get("/", async (req, res, next) => {
     try {
@@ -221,26 +253,24 @@ router.post("/", async (req, res, next) => {
             pagamento
         } = req.body || {};
 
-        if (
-            !Number.isInteger(Number(duracao)) ||
-            Number(duracao) <= 0
-        ) {
+        if (!Number.isInteger(Number(duracao)) || Number(duracao) <= 0) {
             throw new Error("Informe uma duração válida!");
         }
 
-        if (!data_evento) {
-            throw new Error(
-                "A data do evento é obrigatória!"
-            );
-        }
+        validarData(data_evento, "A data do evento");
 
-        if (
-            typeof local !== "string" ||
-            !local.trim()
-        ) {
-            throw new Error(
-                "O local é obrigatório e deve ser informado como texto!"
-            );
+        validarData(
+            data_nascimento_falecido,
+            "A data de nascimento do falecido"
+        );
+
+        validarData(
+            data_morte_falecido,
+            "A data da morte do falecido"
+        );
+
+        if (typeof local !== "string" || !local.trim()) {
+            throw new Error("O local é obrigatório e deve ser informado como texto!");
         }
 
         const localTratado = local.trim();
@@ -299,7 +329,7 @@ router.post("/", async (req, res, next) => {
             );
         }
 
-        const cpfFalecidoTratado = tratarCpf( cpf_falecido, "falecido");
+        const cpfFalecidoTratado = tratarCpf(cpf_falecido, "falecido");
         const cpfClienteTratado = tratarCpf(cpf_cliente, "cliente");
 
         const funeralEncontrado =
@@ -375,7 +405,7 @@ router.post("/", async (req, res, next) => {
         });
 
     } catch (error) {
-        return res.status(400).json({msg: error.message});
+        return res.status(400).json({ msg: error.message });
     }
 
 }); // OK
@@ -414,9 +444,17 @@ router.put("/:id", async (req, res, next) => {
             throw new Error("Informe uma duração válida!");
         }
 
-        if (!data_evento) {
-            throw new Error("A data do evento é obrigatória!");
-        }
+        validarData(data_evento, "A data do evento");
+
+        validarData(
+            data_nascimento_falecido,
+            "A data de nascimento do falecido"
+        );
+
+        validarData(
+            data_morte_falecido,
+            "A data da morte do falecido"
+        );
 
         if (typeof local !== "string" || !local.trim()) {
             throw new Error("O local é obrigatório e deve ser informado como texto!");
