@@ -287,6 +287,7 @@
 <li>A data da morte não pode ser posterior à data do funeral.</li>
 <li>Os CPFs podem ser informados com ou sem pontos e hífen, mas devem resultar em exatamente 11 dígitos numéricos.</li>
 <li>O CPF do cliente deve pertencer a um cliente já cadastrado.</li>
+<li>Não é permitido cadastrar dois funerais com o mesmo CPF de falecido.</li>
 <li>Pagamento deve ser obrigatoriamente booleano.</li>
 </ul>
 <strong>Exemplo de requisição:</strong>
@@ -363,6 +364,7 @@
 <li>A data da morte não pode ser posterior à data do funeral.</li>
 <li>Os CPFs podem ser informados com ou sem pontos e hífen, mas devem resultar em exatamente 11 dígitos numéricos.</li>
 <li>O CPF do cliente deve pertencer a um cliente já cadastrado.</li>
+<li>O CPF do falecido não pode estar associado a outro funeral.</li>
 <li>Pagamento deve ser obrigatoriamente booleano.</li>
 </ul>
 <strong>Exemplo de requisição:</strong>
@@ -379,7 +381,7 @@
 }</div>
 <strong>Exemplo de retorno em caso de sucesso:</strong>
 <div class="json mt-2">{
-  "msg": "Funeral editado com sucesso!",
+  "msg": "Funeral atualizado com sucesso!",
   "data": {
     "id": 1,
     "duracao": 4,
@@ -680,24 +682,21 @@
 <li>É necessário existir pelo menos um cliente cadastrado.</li>
 </ul>
 <strong>Exemplo de retorno em caso de sucesso:</strong>
-<div class="json mt-2">{
-  "msg": "Clientes encontrados!",
-  "Clientes": [
-    {
-      "cpf": "12345678901",
-      "nome_primeiro": "João",
-      "nome_sobrenome": "Silva",
-      "endereco_cep": "13560000",
-      "endereco_rua": "Rua das Flores",
-      "endereco_cidade": "São Carlos",
-      "endereco_bairro": "Centro",
-      "endereco_numero": 120,
-      "contato_email": "joao.silva@email.com",
-      "contato_telefone": "16999990001",
-      "data_nascimento": "1985-03-15"
-    }
-  ]
-}</div>
+<div class="json mt-2">[
+  {
+    "cpf": "12345678901",
+    "nome_primeiro": "João",
+    "nome_sobrenome": "Silva",
+    "endereco_cep": "13560000",
+    "endereco_rua": "Rua das Flores",
+    "endereco_cidade": "São Carlos",
+    "endereco_bairro": "Centro",
+    "endereco_numero": 120,
+    "contato_email": "joao.silva@email.com",
+    "contato_telefone": "16999990001",
+    "data_nascimento": "1985-03-15"
+  }
+]</div>
 </div>
 </div>
 </div>
@@ -723,20 +722,17 @@
 </ul>
 <strong>Exemplo de retorno em caso de sucesso:</strong>
 <div class="json mt-2">{
-  "msg": "Cliente encontrado!",
-  "Cliente": {
-    "cpf": "12345678901",
-    "nome_primeiro": "João",
-    "nome_sobrenome": "Silva",
-    "endereco_cep": "13560000",
-    "endereco_rua": "Rua das Flores",
-    "endereco_cidade": "São Carlos",
-    "endereco_bairro": "Centro",
-    "endereco_numero": 120,
-    "contato_email": "joao.silva@email.com",
-    "contato_telefone": "16999990001",
-    "data_nascimento": "1985-03-15"
-  }
+  "cpf": "12345678901",
+  "nome_primeiro": "João",
+  "nome_sobrenome": "Silva",
+  "endereco_cep": "13560000",
+  "endereco_rua": "Rua das Flores",
+  "endereco_cidade": "São Carlos",
+  "endereco_bairro": "Centro",
+  "endereco_numero": 120,
+  "contato_email": "joao.silva@email.com",
+  "contato_telefone": "16999990001",
+  "data_nascimento": "1985-03-15"
 }</div>
 </div>
 </div>
@@ -1044,8 +1040,8 @@
 <hr/>
 <strong>Parâmetros:</strong>
 <ul>
-<li>inicio : data inicial enviada na query string.</li>
-<li>fim : data final enviada na query string.</li>
+<li>inicio : data inicial informada na própria rota, no formato YYYY-MM-DD.</li>
+<li>fim : data final informada na própria rota, no formato YYYY-MM-DD.</li>
 </ul>
 <strong>Restrições:</strong>
 <ul>
@@ -1059,6 +1055,7 @@
 <strong>Exemplo de retorno em caso de sucesso:</strong>
 <div class="json mt-2">{
   "msg": "Funerais encontrados com sucesso!",
+  "quantidade_funerais": 2,
   "data": [
     {
       "id": 1,
