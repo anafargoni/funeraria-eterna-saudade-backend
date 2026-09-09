@@ -254,6 +254,6 @@ router.delete("/funeral/:id_funeral/servico/:id_servico", async (req, res, next)
             msg: error.message
         });
     }
-});
+}); // OK
 
 module.exports = router;
