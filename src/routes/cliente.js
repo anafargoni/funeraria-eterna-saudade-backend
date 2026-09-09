@@ -335,7 +335,7 @@ router.post("/", async (req, res, next) => {
         return res.status(400).json({ msg: error.message });
     }
 }); // OK
-
+ 
 // DELETE
 router.delete("/:cpf", async (req, res, next) => {
     try {
