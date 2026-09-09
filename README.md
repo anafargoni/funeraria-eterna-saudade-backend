@@ -115,4 +115,4 @@ A documentação apresenta informações sobre:
 
 ## 👥 Autores
 
-Projeto desenvolvido pelos alunos responsáveis pelo Trabalho Prático 3 da disciplina de Desenvolvimento We
+Projeto desenvolvido pelos alunos responsáveis pelo Trabalho Prático 3 da disciplina de Desenvolvimento Web - GRUPO F
