@@ -32,27 +32,24 @@ function validarData(data, campo) {
         throw new Error(`${campo} é obrigatória!`);
     }
 
-    if (
-        typeof data !== "string" ||
-        !/^\d{4}-\d{2}-\d{2}$/.test(data)
-    ) {
+    const partes = data.split("-");
+
+    if (partes.length !== 3) {
         throw new Error(`Informe uma data válida para ${campo.toLowerCase()}!`);
     }
 
-    const [ano, mes, dia] = data.split("-").map(Number);
+    const ano = Number(partes[0]);
+    const mes = Number(partes[1]);
+    const dia = Number(partes[2]);
 
-    const dataObj = new Date(ano, mes - 1, dia);
-
-    if (
-        dataObj.getFullYear() !== ano ||
-        dataObj.getMonth() !== mes - 1 ||
-        dataObj.getDate() !== dia
-    ) {
+    if ( ano < 1900 || mes < 1 || mes > 12 || dia < 1 || dia > 31) {
         throw new Error(`Informe uma data válida para ${campo.toLowerCase()}!`);
     }
 
-    if (ano < 1900) {
-        throw new Error(`${campo} não pode ser anterior a 1900!`);
+    const dataVerificada = new Date(ano, mes - 1, dia);
+
+    if (dataVerificada.getFullYear() !== ano || dataVerificada.getMonth() !== mes - 1 ||  dataVerificada.getDate() !== dia) {
+        throw new Error(`Informe uma data válida para ${campo.toLowerCase()}!`);
     }
 
     return data;
