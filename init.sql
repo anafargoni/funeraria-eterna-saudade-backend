@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS funeral(
     nome_falecido VARCHAR(30) NOT NULL, 
     data_nascimento_falecido DATE NOT NULL,
     data_morte_falecido DATE NOT NULL,
-    cpf_falecido VARCHAR(14) NOT NULL,
+    cpf_falecido VARCHAR(14) NOT NULL UNIQUE,
 
     cpf_cliente VARCHAR(14) NOT NULL,
     pagamento BOOLEAN NOT NULL,
