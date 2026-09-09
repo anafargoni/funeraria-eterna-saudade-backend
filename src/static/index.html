@@ -1,19 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="pt-BR">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Funerária Eterna Saudade - API</title>
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Ícones -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Funerária Eterna Saudade - API</title>
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<!-- Ícones -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<style>
         body {
             background-color: #f4fafa;
         }
@@ -128,102 +124,119 @@
         }
     </style>
 </head>
-
 <body>
-
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="bi bi-flower1"></i>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+<div class="container">
+<a class="navbar-brand" href="#">
+<i class="bi bi-flower1"></i>
                 Eterna Saudade API
             </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="menu">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#funerais">Funerais</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#servicos">Serviços</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#clientes">Clientes</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#operacoes">Operações Exclusivas</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#associacoes">Associações</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- CABEÇALHO -->
-    <section class="hero">
-        <div class="container">
-            <i class="bi bi-flower1 display-1"></i>
-            <h1 class="mt-3">Funerária Eterna Saudade</h1>
-            <p>Documentação da API do sistema.</p>
-        </div>
-    </section>
-
-    <main class="container mt-5">
-
-        <!-- FUNERAIS -->
-        <section id="funerais">
-
-            <h2 class="titulo">
-                <i class="bi bi-calendar-event"></i>
+<button class="navbar-toggler" data-bs-target="#menu" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="menu">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item">
+<a class="nav-link" href="#funerais">Funerais</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="#servicos">Serviços</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="#clientes">Clientes</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="#operacoes">Operações Exclusivas</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="#associacoes">Associações</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<!-- CABEÇALHO -->
+<section class="hero">
+<div class="container">
+<i class="bi bi-flower1 display-1"></i>
+<h1 class="mt-3">Funerária Eterna Saudade</h1>
+<p>Documentação completa das rotas e operações da API.</p>
+</div>
+</section>
+<main class="container mt-5">
+<!-- FUNERAIS -->
+<section id="funerais">
+<h2 class="titulo">
+<i class="bi bi-calendar-event"></i>
                 Funerais
             </h2>
-
-            <p class="text-muted">
+<p class="text-muted">
                 Rotas responsáveis pelo gerenciamento dos funerais.
             </p>
-
-            <div class="row g-4">
-
-                <!-- LISTAR FUNERAIS -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/funeral</span>
-                            </div>
-
-                            <h5 class="mt-4">Listar funerais</h5>
-
-                            <p>Retorna todos os funerais cadastrados.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <p>Não possui.</p>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>É necessário existir pelo menos um funeral cadastrado.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">[
-  {
+<div class="row g-4">
+<!-- LISTAR FUNERAIS -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/funeral</span>
+</div>
+<h5 class="mt-4">Listar funerais</h5>
+<p>Retorna todos os funerais cadastrados.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<p>Não possui.</p>
+<strong>Restrições:</strong>
+<ul>
+<li>É necessário existir pelo menos um funeral cadastrado.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
+  "msg": "Funerais encontrados!",
+  "Funerais": [
+    {
+      "id": 1,
+      "duracao": 4,
+      "data_evento": "2026-09-10",
+      "local": "Cemitério Nossa Senhora do Carmo",
+      "nome_falecido": "José Otavio",
+      "data_nascimento_falecido": "1950-05-12",
+      "data_morte_falecido": "2026-09-08",
+      "cpf_falecido": "11122233344",
+      "cpf_cliente": "12345678901",
+      "pagamento": true
+    }
+  ]
+}</div>
+</div>
+</div>
+</div>
+<!-- BUSCAR FUNERAL POR ID -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/funeral/:id</span>
+</div>
+<h5 class="mt-4">Buscar funeral por ID</h5>
+<p>Retorna um funeral específico através do ID.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id : ID do funeral na própria rota.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O ID deve ser um número inteiro maior que zero.</li>
+<li>O funeral informado deve existir.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
+  "msg": "Funeral encontrado!",
+  "data": {
     "id": 1,
     "duracao": 4,
     "data_evento": "2026-09-10",
@@ -235,113 +248,49 @@
     "cpf_cliente": "12345678901",
     "pagamento": true
   }
-]</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- BUSCAR FUNERAL POR ID -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/funeral/:id</span>
-                            </div>
-
-                            <h5 class="mt-4">Buscar funeral por ID</h5>
-
-                            <p>Retorna um funeral específico através do ID.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id : ID do funeral na própria rota.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O ID deve ser um número inteiro maior que zero.</li>
-                                <li>O funeral informado deve existir.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
-  "id": 1,
-  "duracao": 4,
-  "data_evento": "2026-09-10",
-  "local": "Cemitério Nossa Senhora do Carmo",
-  "nome_falecido": "José Otavio",
-  "data_nascimento_falecido": "1950-05-12",
-  "data_morte_falecido": "2026-09-08",
-  "cpf_falecido": "11122233344",
-  "cpf_cliente": "12345678901",
-  "pagamento": true
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- ADICIONAR FUNERAL -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo post">POST</span>
-                                <span class="rota">/funeral</span>
-                            </div>
-
-                            <h5 class="mt-4">Adicionar funeral</h5>
-
-                            <p>Cadastra um novo funeral e associa o funeral a um cliente através do cpf_cliente .</p>
-
-                            <hr>
-
-                            <strong>Parâmetros do corpo obrigatórios:</strong>
-
-                            <ul>
-                                <li>duracao : duração do funeral; deve representar um número inteiro maior que zero.</li>
-                                <li>data_evento : data do funeral.</li>
-                                <li>local : local do funeral.</li>
-                                <li>nome_falecido : nome do falecido.</li>
-                                <li>data_nascimento_falecido : data de nascimento do falecido.</li>
-                                <li>data_morte_falecido : data da morte do falecido.</li>
-                                <li>cpf_falecido : CPF do falecido.</li>
-                                <li>cpf_cliente : CPF do cliente responsável pelo funeral.</li>
-                                <li>pagamento : valor booleano ( true ou false ).</li>
-                            </ul>
-
-                            <strong>Parâmetros do corpo opcionais:</strong>
-
-                            <p>Não possui.</p>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>A duração deve ser um número inteiro maior que zero.</li>
-                                <li>O local deve ser texto não vazio e ter no máximo 60 caracteres.</li>
-                                <li>O nome do falecido deve ser texto não vazio e ter no máximo 30 caracteres.</li>
-                                <li>As datas devem ser válidas; no banco, não podem ser anteriores a 01/01/1900.</li>
-                                <li>A data de nascimento do falecido não pode ser posterior à data da morte.</li>
-                                <li>A data da morte não pode ser posterior à data do funeral.</li>
-                                <li>Os CPFs podem ser informados com ou sem pontos e hífen, mas devem resultar em exatamente 11 dígitos numéricos.</li>
-                                <li>O CPF do cliente deve pertencer a um cliente já cadastrado.</li>
-                                <li>Pagamento deve ser obrigatoriamente booleano.</li>
-                            </ul>
-
-                            <strong>Exemplo de requisição:</strong>
-
-                            <div class="json mt-2">{
+</div>
+</div>
+</div>
+<!-- ADICIONAR FUNERAL -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo post">POST</span>
+<span class="rota">/funeral</span>
+</div>
+<h5 class="mt-4">Adicionar funeral</h5>
+<p>Cadastra um novo funeral e associa o funeral a um cliente através do cpf_cliente .</p>
+<hr/>
+<strong>Parâmetros do corpo obrigatórios:</strong>
+<ul>
+<li>duracao : duração do funeral; deve representar um número inteiro maior que zero.</li>
+<li>data_evento : data do funeral.</li>
+<li>local : local do funeral.</li>
+<li>nome_falecido : nome do falecido.</li>
+<li>data_nascimento_falecido : data de nascimento do falecido.</li>
+<li>data_morte_falecido : data da morte do falecido.</li>
+<li>cpf_falecido : CPF do falecido.</li>
+<li>cpf_cliente : CPF do cliente responsável pelo funeral.</li>
+<li>pagamento : valor booleano ( true ou false ).</li>
+</ul>
+<strong>Parâmetros do corpo opcionais:</strong>
+<p>Não possui.</p>
+<strong>Restrições:</strong>
+<ul>
+<li>A duração deve ser um número inteiro maior que zero.</li>
+<li>O local deve ser texto não vazio e ter no máximo 60 caracteres.</li>
+<li>O nome do falecido deve ser texto não vazio e ter no máximo 30 caracteres.</li>
+<li>As datas devem ser válidas; no banco, não podem ser anteriores a 01/01/1900.</li>
+<li>A data de nascimento do falecido não pode ser posterior à data da morte.</li>
+<li>A data da morte não pode ser posterior à data do funeral.</li>
+<li>Os CPFs podem ser informados com ou sem pontos e hífen, mas devem resultar em exatamente 11 dígitos numéricos.</li>
+<li>O CPF do cliente deve pertencer a um cliente já cadastrado.</li>
+<li>Pagamento deve ser obrigatoriamente booleano.</li>
+</ul>
+<strong>Exemplo de requisição:</strong>
+<div class="json mt-2">{
   "duracao": 4,
   "data_evento": "2026-10-05",
   "local": "Cemitério Municipal",
@@ -352,10 +301,8 @@
   "cpf_cliente": "123.456.789-01",
   "pagamento": true
 }</div>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Funeral adicionado com sucesso!",
   "data": {
     "id": 11,
@@ -370,73 +317,56 @@
     "pagamento": true
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- EDITAR FUNERAL -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo put">PUT</span>
-                                <span class="rota">/funeral/:id</span>
-                            </div>
-
-                            <h5 class="mt-4">Editar funeral</h5>
-
-                            <p>
+</div>
+</div>
+</div>
+<!-- EDITAR FUNERAL -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo put">PUT</span>
+<span class="rota">/funeral/:id</span>
+</div>
+<h5 class="mt-4">Editar funeral</h5>
+<p>
                                 Edita todos os dados de um funeral já cadastrado. Também permite alterar o cliente associado através do cpf_cliente .
                             </p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id : ID do funeral que será editado.</li>
-                            </ul>
-
-                            <strong>Parâmetros do corpo obrigatórios:</strong>
-
-                            <ul>
-                                <li>duracao : duração do funeral; deve representar um número inteiro maior que zero.</li>
-                                <li>data_evento : data do funeral.</li>
-                                <li>local : local do funeral.</li>
-                                <li>nome_falecido : nome do falecido.</li>
-                                <li>data_nascimento_falecido : data de nascimento do falecido.</li>
-                                <li>data_morte_falecido : data da morte do falecido.</li>
-                                <li>cpf_falecido : CPF do falecido.</li>
-                                <li>cpf_cliente : CPF do cliente responsável pelo funeral.</li>
-                                <li>pagamento : valor booleano ( true ou false ).</li>
-                            </ul>
-
-                            <strong>Parâmetros do corpo opcionais:</strong>
-
-                            <p>Não possui.</p>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O ID deve ser um número inteiro maior que zero.</li>
-                                <li>O funeral informado deve existir.</li>
-                                <li>A duração deve ser um número inteiro maior que zero.</li>
-                                <li>O local deve ser texto não vazio e ter no máximo 60 caracteres.</li>
-                                <li>O nome do falecido deve ser texto não vazio e ter no máximo 30 caracteres.</li>
-                                <li>As datas devem ser válidas; no banco, não podem ser anteriores a 01/01/1900.</li>
-                                <li>A data de nascimento do falecido não pode ser posterior à data da morte.</li>
-                                <li>A data da morte não pode ser posterior à data do funeral.</li>
-                                <li>Os CPFs podem ser informados com ou sem pontos e hífen, mas devem resultar em exatamente 11 dígitos numéricos.</li>
-                                <li>O CPF do cliente deve pertencer a um cliente já cadastrado.</li>
-                                <li>Pagamento deve ser obrigatoriamente booleano.</li>
-                            </ul>
-
-                            <strong>Exemplo de requisição:</strong>
-
-                            <div class="json mt-2">{
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id : ID do funeral que será editado.</li>
+</ul>
+<strong>Parâmetros do corpo obrigatórios:</strong>
+<ul>
+<li>duracao : duração do funeral; deve representar um número inteiro maior que zero.</li>
+<li>data_evento : data do funeral.</li>
+<li>local : local do funeral.</li>
+<li>nome_falecido : nome do falecido.</li>
+<li>data_nascimento_falecido : data de nascimento do falecido.</li>
+<li>data_morte_falecido : data da morte do falecido.</li>
+<li>cpf_falecido : CPF do falecido.</li>
+<li>cpf_cliente : CPF do cliente responsável pelo funeral.</li>
+<li>pagamento : valor booleano ( true ou false ).</li>
+</ul>
+<strong>Parâmetros do corpo opcionais:</strong>
+<p>Não possui.</p>
+<strong>Restrições:</strong>
+<ul>
+<li>O ID deve ser um número inteiro maior que zero.</li>
+<li>O funeral informado deve existir.</li>
+<li>A duração deve ser um número inteiro maior que zero.</li>
+<li>O local deve ser texto não vazio e ter no máximo 60 caracteres.</li>
+<li>O nome do falecido deve ser texto não vazio e ter no máximo 30 caracteres.</li>
+<li>As datas devem ser válidas; no banco, não podem ser anteriores a 01/01/1900.</li>
+<li>A data de nascimento do falecido não pode ser posterior à data da morte.</li>
+<li>A data da morte não pode ser posterior à data do funeral.</li>
+<li>Os CPFs podem ser informados com ou sem pontos e hífen, mas devem resultar em exatamente 11 dígitos numéricos.</li>
+<li>O CPF do cliente deve pertencer a um cliente já cadastrado.</li>
+<li>Pagamento deve ser obrigatoriamente booleano.</li>
+</ul>
+<strong>Exemplo de requisição:</strong>
+<div class="json mt-2">{
   "duracao": 4,
   "data_evento": "2026-10-05",
   "local": "Cemitério Municipal",
@@ -447,10 +377,8 @@
   "cpf_cliente": "123.456.789-01",
   "pagamento": true
 }</div>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Funeral editado com sucesso!",
   "data": {
     "id": 1,
@@ -465,45 +393,32 @@
     "pagamento": true
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- DELETAR FUNERAL -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo delete">DELETE</span>
-                                <span class="rota">/funeral/:id</span>
-                            </div>
-
-                            <h5 class="mt-4">Deletar funeral</h5>
-
-                            <p>Remove um funeral pelo ID.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id : ID do funeral que será removido.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O ID deve ser um número inteiro maior que zero.</li>
-                                <li>O funeral informado deve existir.</li>
-                                <li>Ao remover o funeral, as associações dele com serviços também são removidas pelo banco.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+</div>
+</div>
+</div>
+<!-- DELETAR FUNERAL -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo delete">DELETE</span>
+<span class="rota">/funeral/:id</span>
+</div>
+<h5 class="mt-4">Deletar funeral</h5>
+<p>Remove um funeral pelo ID.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id : ID do funeral que será removido.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O ID deve ser um número inteiro maior que zero.</li>
+<li>O funeral informado deve existir.</li>
+<li>Ao remover o funeral, as associações dele com serviços também são removidas pelo banco.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Funeral deletado com sucesso!",
   "data": {
     "id": 1,
@@ -518,59 +433,40 @@
     "pagamento": true
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-        </section>
-
-        <!-- SERVIÇOS -->
-        <section id="servicos" class="mt-5">
-
-            <h2 class="titulo">
-                <i class="bi bi-briefcase"></i>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SERVIÇOS -->
+<section class="mt-5" id="servicos">
+<h2 class="titulo">
+<i class="bi bi-briefcase"></i>
                 Serviços
             </h2>
-
-            <p class="text-muted">
+<p class="text-muted">
                 Rotas responsáveis pelo gerenciamento dos serviços.
             </p>
-
-            <div class="row g-4">
-
-                <!-- LISTAR SERVIÇOS -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/servico</span>
-                            </div>
-
-                            <h5 class="mt-4">Listar serviços</h5>
-
-                            <p>Retorna todos os serviços cadastrados, ordenados pelo ID.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <p>Não possui.</p>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>É necessário existir pelo menos um serviço cadastrado.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<div class="row g-4">
+<!-- LISTAR SERVIÇOS -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/servico</span>
+</div>
+<h5 class="mt-4">Listar serviços</h5>
+<p>Retorna todos os serviços cadastrados, ordenados pelo ID.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<p>Não possui.</p>
+<strong>Restrições:</strong>
+<ul>
+<li>É necessário existir pelo menos um serviço cadastrado.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Serviços encontrados!",
   "quantidade": 10,
   "data": [
@@ -588,44 +484,31 @@
     }
   ]
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- BUSCAR SERVIÇO POR ID -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/servico/:id</span>
-                            </div>
-
-                            <h5 class="mt-4">Buscar serviço por ID</h5>
-
-                            <p>Retorna um serviço específico através do ID.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id : ID do serviço.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O ID deve ser um número inteiro maior que zero.</li>
-                                <li>O serviço informado deve existir.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+</div>
+</div>
+</div>
+<!-- BUSCAR SERVIÇO POR ID -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/servico/:id</span>
+</div>
+<h5 class="mt-4">Buscar serviço por ID</h5>
+<p>Retorna um serviço específico através do ID.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id : ID do serviço.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O ID deve ser um número inteiro maior que zero.</li>
+<li>O serviço informado deve existir.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Serviço encontrado!",
   "data": {
     "id": 1,
@@ -634,60 +517,43 @@
     "nome": "Tanatopraxia"
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- ADICIONAR SERVIÇO -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo post">POST</span>
-                                <span class="rota">/servico</span>
-                            </div>
-
-                            <h5 class="mt-4">Adicionar serviço</h5>
-
-                            <p>Cadastra um novo serviço.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros do corpo obrigatórios:</strong>
-
-                            <ul>
-                                <li>nome : nome do serviço.</li>
-                                <li>valor : valor do serviço.</li>
-                            </ul>
-
-                            <strong>Parâmetros do corpo opcionais:</strong>
-
-                            <ul>
-                                <li>descricao : descrição do serviço; se não for informada ou ficar vazia após o tratamento, será armazenada como null .</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O nome deve ser texto não vazio, possuir no máximo 35 caracteres e não pode repetir o nome de outro serviço, desconsiderando maiúsculas e minúsculas.</li>
-                                <li>O valor pode ser informado como número ou texto numérico, mas deve estar entre 0,01 e 999999,99.</li>
-                                <li>A descrição, quando informada, deve ser texto e ter no máximo 100 caracteres.</li>
-                            </ul>
-
-                            <strong>Exemplo de requisição:</strong>
-
-                            <div class="json mt-2">{
+</div>
+</div>
+</div>
+<!-- ADICIONAR SERVIÇO -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo post">POST</span>
+<span class="rota">/servico</span>
+</div>
+<h5 class="mt-4">Adicionar serviço</h5>
+<p>Cadastra um novo serviço.</p>
+<hr/>
+<strong>Parâmetros do corpo obrigatórios:</strong>
+<ul>
+<li>nome : nome do serviço.</li>
+<li>valor : valor do serviço.</li>
+</ul>
+<strong>Parâmetros do corpo opcionais:</strong>
+<ul>
+<li>descricao : descrição do serviço; se não for informada ou ficar vazia após o tratamento, será armazenada como null .</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O nome deve ser texto não vazio, possuir no máximo 35 caracteres e não pode repetir o nome de outro serviço, desconsiderando maiúsculas e minúsculas.</li>
+<li>O valor pode ser informado como número ou texto numérico, mas deve estar entre 0,01 e 999999,99.</li>
+<li>A descrição, quando informada, deve ser texto e ter no máximo 100 caracteres.</li>
+</ul>
+<strong>Exemplo de requisição:</strong>
+<div class="json mt-2">{
   "nome": "Preparação especial",
   "valor": 750.0,
   "descricao": "Serviço especial de preparação do falecido."
 }</div>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Serviço adicionado com sucesso!",
   "data": {
     "id": 11,
@@ -696,68 +562,49 @@
     "nome": "Preparação especial"
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- EDITAR SERVIÇO -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo put">PUT</span>
-                                <span class="rota">/servico/:id</span>
-                            </div>
-
-                            <h5 class="mt-4">Editar serviço</h5>
-
-                            <p>Edita os dados de um serviço já cadastrado.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id : ID do serviço que será editado.</li>
-                            </ul>
-
-                            <strong>Parâmetros do corpo obrigatórios:</strong>
-
-                            <ul>
-                                <li>nome : nome do serviço.</li>
-                                <li>valor : valor do serviço.</li>
-                            </ul>
-
-                            <strong>Parâmetros do corpo opcionais:</strong>
-
-                            <ul>
-                                <li>descricao : descrição do serviço; se não for informada ou ficar vazia após o tratamento, será armazenada como null .</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O ID deve ser um número inteiro maior que zero.</li>
-                                <li>O serviço informado deve existir.</li>
-                                <li>O nome deve ser texto não vazio, possuir no máximo 35 caracteres e não pode repetir o nome de outro serviço, desconsiderando maiúsculas e minúsculas.</li>
-                                <li>O valor pode ser informado como número ou texto numérico, mas deve estar entre 0,01 e 999999,99.</li>
-                                <li>A descrição, quando informada, deve ser texto e ter no máximo 100 caracteres.</li>
-                            </ul>
-
-                            <strong>Exemplo de requisição:</strong>
-
-                            <div class="json mt-2">{
+</div>
+</div>
+</div>
+<!-- EDITAR SERVIÇO -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo put">PUT</span>
+<span class="rota">/servico/:id</span>
+</div>
+<h5 class="mt-4">Editar serviço</h5>
+<p>Edita os dados de um serviço já cadastrado.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id : ID do serviço que será editado.</li>
+</ul>
+<strong>Parâmetros do corpo obrigatórios:</strong>
+<ul>
+<li>nome : nome do serviço.</li>
+<li>valor : valor do serviço.</li>
+</ul>
+<strong>Parâmetros do corpo opcionais:</strong>
+<ul>
+<li>descricao : descrição do serviço; se não for informada ou ficar vazia após o tratamento, será armazenada como null .</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O ID deve ser um número inteiro maior que zero.</li>
+<li>O serviço informado deve existir.</li>
+<li>O nome deve ser texto não vazio, possuir no máximo 35 caracteres e não pode repetir o nome de outro serviço, desconsiderando maiúsculas e minúsculas.</li>
+<li>O valor pode ser informado como número ou texto numérico, mas deve estar entre 0,01 e 999999,99.</li>
+<li>A descrição, quando informada, deve ser texto e ter no máximo 100 caracteres.</li>
+</ul>
+<strong>Exemplo de requisição:</strong>
+<div class="json mt-2">{
   "nome": "Preparação especial",
   "valor": 750.0,
   "descricao": "Serviço especial de preparação do falecido."
 }</div>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Serviço editado com sucesso",
   "data": {
     "id": 1,
@@ -766,45 +613,32 @@
     "nome": "Preparação especial"
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- DELETAR SERVIÇO -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo delete">DELETE</span>
-                                <span class="rota">/servico/:id</span>
-                            </div>
-
-                            <h5 class="mt-4">Deletar serviço</h5>
-
-                            <p>Remove um serviço pelo ID.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id : ID do serviço que será removido.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O ID deve ser um número inteiro maior que zero.</li>
-                                <li>O serviço informado deve existir.</li>
-                                <li>O serviço não pode estar associado a nenhum funeral. Para removê-lo, as associações devem ser desfeitas antes.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+</div>
+</div>
+</div>
+<!-- DELETAR SERVIÇO -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo delete">DELETE</span>
+<span class="rota">/servico/:id</span>
+</div>
+<h5 class="mt-4">Deletar serviço</h5>
+<p>Remove um serviço pelo ID.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id : ID do serviço que será removido.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O ID deve ser um número inteiro maior que zero.</li>
+<li>O serviço informado deve existir.</li>
+<li>O serviço não pode estar associado a nenhum funeral. Para removê-lo, as associações devem ser desfeitas antes.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Serviço deletado com sucesso!",
   "data": {
     "id": 11,
@@ -813,60 +647,84 @@
     "nome": "Preparação especial"
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-        </section>
-
-        <!-- CLIENTES -->
-        <section id="clientes" class="mt-5">
-
-            <h2 class="titulo">
-                <i class="bi bi-person"></i>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CLIENTES -->
+<section class="mt-5" id="clientes">
+<h2 class="titulo">
+<i class="bi bi-person"></i>
                 Clientes
             </h2>
-
-            <p class="text-muted">
+<p class="text-muted">
                 Rotas responsáveis pelo gerenciamento dos clientes.
             </p>
-
-            <div class="row g-4">
-
-                <!-- LISTAR CLIENTES -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/cliente</span>
-                            </div>
-
-                            <h5 class="mt-4">Listar clientes</h5>
-
-                            <p>Retorna todos os clientes cadastrados.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <p>Não possui.</p>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>É necessário existir pelo menos um cliente cadastrado.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">[
-  {
+<div class="row g-4">
+<!-- LISTAR CLIENTES -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/cliente</span>
+</div>
+<h5 class="mt-4">Listar clientes</h5>
+<p>Retorna todos os clientes cadastrados.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<p>Não possui.</p>
+<strong>Restrições:</strong>
+<ul>
+<li>É necessário existir pelo menos um cliente cadastrado.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
+  "msg": "Clientes encontrados!",
+  "Clientes": [
+    {
+      "cpf": "12345678901",
+      "nome_primeiro": "João",
+      "nome_sobrenome": "Silva",
+      "endereco_cep": "13560000",
+      "endereco_rua": "Rua das Flores",
+      "endereco_cidade": "São Carlos",
+      "endereco_bairro": "Centro",
+      "endereco_numero": 120,
+      "contato_email": "joao.silva@email.com",
+      "contato_telefone": "16999990001",
+      "data_nascimento": "1985-03-15"
+    }
+  ]
+}</div>
+</div>
+</div>
+</div>
+<!-- BUSCAR CLIENTE POR CPF -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/cliente/:cpf</span>
+</div>
+<h5 class="mt-4">Buscar cliente por CPF</h5>
+<p>Retorna um cliente específico através do CPF.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>cpf : CPF do cliente na própria rota.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O CPF deve ser informado como texto válido e resultar em exatamente 11 dígitos após remover pontos e hífen.</li>
+<li>O cliente informado deve existir.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
+  "msg": "Cliente encontrado!",
+  "Cliente": {
     "cpf": "12345678901",
     "nome_primeiro": "João",
     "nome_sobrenome": "Silva",
@@ -879,116 +737,51 @@
     "contato_telefone": "16999990001",
     "data_nascimento": "1985-03-15"
   }
-]</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- BUSCAR CLIENTE POR CPF -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/cliente/:cpf</span>
-                            </div>
-
-                            <h5 class="mt-4">Buscar cliente por CPF</h5>
-
-                            <p>Retorna um cliente específico através do CPF.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>cpf : CPF do cliente na própria rota.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O CPF deve ser informado como texto válido e resultar em exatamente 11 dígitos após remover pontos e hífen.</li>
-                                <li>O cliente informado deve existir.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
-  "cpf": "12345678901",
-  "nome_primeiro": "João",
-  "nome_sobrenome": "Silva",
-  "endereco_cep": "13560000",
-  "endereco_rua": "Rua das Flores",
-  "endereco_cidade": "São Carlos",
-  "endereco_bairro": "Centro",
-  "endereco_numero": 120,
-  "contato_email": "joao.silva@email.com",
-  "contato_telefone": "16999990001",
-  "data_nascimento": "1985-03-15"
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- ADICIONAR CLIENTE -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo post">POST</span>
-                                <span class="rota">/cliente</span>
-                            </div>
-
-                            <h5 class="mt-4">Adicionar cliente</h5>
-
-                            <p>Cadastra um novo cliente.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros do corpo obrigatórios:</strong>
-
-                            <ul>
-                                <li>cpf : CPF do cliente.</li>
-                                <li>nome_primeiro : primeiro nome do cliente.</li>
-                                <li>nome_sobrenome : sobrenome do cliente.</li>
-                                <li>contato_email : email do cliente.</li>
-                                <li>contato_telefone : telefone do cliente.</li>
-                            </ul>
-
-                            <strong>Parâmetros do corpo opcionais:</strong>
-
-                            <ul>
-                                <li>endereco_CEP : CEP do endereço.</li>
-                                <li>endereco_rua : rua do endereço.</li>
-                                <li>endereco_cidade : cidade do endereço.</li>
-                                <li>endereco_bairro : bairro do endereço.</li>
-                                <li>endereco_numero : número do endereço.</li>
-                                <li>data_nascimento : data de nascimento do cliente.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O CPF deve ser informado como texto; pontos e hífen são removidos e o resultado deve possuir exatamente 11 dígitos. O CPF não pode estar cadastrado para outro cliente.</li>
-                                <li>Nome e sobrenome devem ser textos não vazios; nome com no máximo 20 caracteres e sobrenome com no máximo 30.</li>
-                                <li>O email deve ser texto, possuir @ e ponto, não começar ou terminar com @ , ter no máximo 40 caracteres e ser único.</li>
-                                <li>O telefone deve ser texto; parênteses, espaços e hífen são removidos e o resultado deve possuir 10 ou 11 dígitos.</li>
-                                <li>O CEP é opcional; quando informado, deve ser texto e resultar em exatamente 8 dígitos após remover o hífen.</li>
-                                <li>Rua, cidade e bairro são opcionais e devem ser textos; limites de 40, 30 e 30 caracteres, respectivamente.</li>
-                                <li>O número do endereço é opcional; quando informado, deve ser um número inteiro maior que zero.</li>
-                                <li>A data de nascimento é opcional; quando informada, não pode ser anterior a 01/01/1900 nem estar no futuro.</li>
-                            </ul>
-
-                            <strong>Exemplo de requisição:</strong>
-
-                            <div class="json mt-2">{
+</div>
+</div>
+</div>
+<!-- ADICIONAR CLIENTE -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo post">POST</span>
+<span class="rota">/cliente</span>
+</div>
+<h5 class="mt-4">Adicionar cliente</h5>
+<p>Cadastra um novo cliente.</p>
+<hr/>
+<strong>Parâmetros do corpo obrigatórios:</strong>
+<ul>
+<li>cpf : CPF do cliente.</li>
+<li>nome_primeiro : primeiro nome do cliente.</li>
+<li>nome_sobrenome : sobrenome do cliente.</li>
+<li>contato_email : email do cliente.</li>
+<li>contato_telefone : telefone do cliente.</li>
+</ul>
+<strong>Parâmetros do corpo opcionais:</strong>
+<ul>
+<li>endereco_CEP : CEP do endereço.</li>
+<li>endereco_rua : rua do endereço.</li>
+<li>endereco_cidade : cidade do endereço.</li>
+<li>endereco_bairro : bairro do endereço.</li>
+<li>endereco_numero : número do endereço.</li>
+<li>data_nascimento : data de nascimento do cliente.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O CPF deve ser informado como texto; pontos e hífen são removidos e o resultado deve possuir exatamente 11 dígitos. O CPF não pode estar cadastrado para outro cliente.</li>
+<li>Nome e sobrenome devem ser textos não vazios; nome com no máximo 20 caracteres e sobrenome com no máximo 30.</li>
+<li>O email deve ser texto, possuir @ e ponto, não começar ou terminar com @ , ter no máximo 40 caracteres e ser único.</li>
+<li>O telefone deve ser texto; parênteses, espaços e hífen são removidos e o resultado deve possuir 10 ou 11 dígitos.</li>
+<li>O CEP é opcional; quando informado, deve ser texto e resultar em exatamente 8 dígitos após remover o hífen.</li>
+<li>Rua, cidade e bairro são opcionais e devem ser textos; limites de 40, 30 e 30 caracteres, respectivamente.</li>
+<li>O número do endereço é opcional; quando informado, deve ser um número inteiro maior que zero.</li>
+<li>A data de nascimento é opcional; quando informada, não pode ser anterior a 01/01/1900 nem estar no futuro.</li>
+</ul>
+<strong>Exemplo de requisição:</strong>
+<div class="json mt-2">{
   "cpf": "111.444.777-35",
   "nome_primeiro": "Mariana",
   "nome_sobrenome": "Pereira",
@@ -1001,10 +794,8 @@
   "contato_telefone": "(16) 99999-0011",
   "data_nascimento": "1994-06-20"
 }</div>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Cliente adicionado com sucesso!",
   "data": {
     "cpf": "11144477735",
@@ -1020,72 +811,55 @@
     "data_nascimento": "1994-06-20"
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- EDITAR CLIENTE -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo put">PUT</span>
-                                <span class="rota">/cliente/:cpf</span>
-                            </div>
-
-                            <h5 class="mt-4">Editar cliente</h5>
-
-                            <p>
+</div>
+</div>
+</div>
+<!-- EDITAR CLIENTE -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo put">PUT</span>
+<span class="rota">/cliente/:cpf</span>
+</div>
+<h5 class="mt-4">Editar cliente</h5>
+<p>
                                 Edita os dados de um cliente já cadastrado. O CPF do cliente é identificado pela rota e não é alterado pelo corpo da requisição.
                             </p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>cpf : CPF do cliente que será editado.</li>
-                            </ul>
-
-                            <strong>Parâmetros do corpo obrigatórios:</strong>
-
-                            <ul>
-                                <li>nome_primeiro : primeiro nome do cliente.</li>
-                                <li>nome_sobrenome : sobrenome do cliente.</li>
-                                <li>contato_email : email do cliente.</li>
-                                <li>contato_telefone : telefone do cliente.</li>
-                            </ul>
-
-                            <strong>Parâmetros do corpo opcionais:</strong>
-
-                            <ul>
-                                <li>endereco_CEP : CEP do endereço.</li>
-                                <li>endereco_rua : rua do endereço.</li>
-                                <li>endereco_cidade : cidade do endereço.</li>
-                                <li>endereco_bairro : bairro do endereço.</li>
-                                <li>endereco_numero : número do endereço.</li>
-                                <li>data_nascimento : data de nascimento do cliente.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O CPF da rota deve ser válido e o cliente deve existir.</li>
-                                <li>Nome e sobrenome devem ser textos não vazios; nome com no máximo 20 caracteres e sobrenome com no máximo 30.</li>
-                                <li>O email deve ser texto, possuir @ e ponto, não começar ou terminar com @ , ter no máximo 40 caracteres e ser único.</li>
-                                <li>O telefone deve ser texto; parênteses, espaços e hífen são removidos e o resultado deve possuir 10 ou 11 dígitos.</li>
-                                <li>O CEP é opcional; quando informado, deve ser texto e resultar em exatamente 8 dígitos após remover o hífen.</li>
-                                <li>Rua, cidade e bairro são opcionais e devem ser textos; limites de 40, 30 e 30 caracteres, respectivamente.</li>
-                                <li>O número do endereço é opcional; quando informado, deve ser um número inteiro maior que zero.</li>
-                                <li>A data de nascimento é opcional; quando informada, não pode ser anterior a 01/01/1900 nem estar no futuro.</li>
-                            </ul>
-
-                            <strong>Exemplo de requisição:</strong>
-
-                            <div class="json mt-2">{
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>cpf : CPF do cliente que será editado.</li>
+</ul>
+<strong>Parâmetros do corpo obrigatórios:</strong>
+<ul>
+<li>nome_primeiro : primeiro nome do cliente.</li>
+<li>nome_sobrenome : sobrenome do cliente.</li>
+<li>contato_email : email do cliente.</li>
+<li>contato_telefone : telefone do cliente.</li>
+</ul>
+<strong>Parâmetros do corpo opcionais:</strong>
+<ul>
+<li>endereco_CEP : CEP do endereço.</li>
+<li>endereco_rua : rua do endereço.</li>
+<li>endereco_cidade : cidade do endereço.</li>
+<li>endereco_bairro : bairro do endereço.</li>
+<li>endereco_numero : número do endereço.</li>
+<li>data_nascimento : data de nascimento do cliente.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O CPF da rota deve ser válido e o cliente deve existir.</li>
+<li>Nome e sobrenome devem ser textos não vazios; nome com no máximo 20 caracteres e sobrenome com no máximo 30.</li>
+<li>O email deve ser texto, possuir @ e ponto, não começar ou terminar com @ , ter no máximo 40 caracteres e ser único.</li>
+<li>O telefone deve ser texto; parênteses, espaços e hífen são removidos e o resultado deve possuir 10 ou 11 dígitos.</li>
+<li>O CEP é opcional; quando informado, deve ser texto e resultar em exatamente 8 dígitos após remover o hífen.</li>
+<li>Rua, cidade e bairro são opcionais e devem ser textos; limites de 40, 30 e 30 caracteres, respectivamente.</li>
+<li>O número do endereço é opcional; quando informado, deve ser um número inteiro maior que zero.</li>
+<li>A data de nascimento é opcional; quando informada, não pode ser anterior a 01/01/1900 nem estar no futuro.</li>
+</ul>
+<strong>Exemplo de requisição:</strong>
+<div class="json mt-2">{
   "nome_primeiro": "Mariana",
   "nome_sobrenome": "Pereira",
   "endereco_CEP": "13560-000",
@@ -1097,10 +871,8 @@
   "contato_telefone": "(16) 99999-0011",
   "data_nascimento": "1994-06-20"
 }</div>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Cliente editado com sucesso!",
   "data": {
     "cpf": "12345678901",
@@ -1116,44 +888,31 @@
     "data_nascimento": "1994-06-20"
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- DELETAR CLIENTE -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo delete">DELETE</span>
-                                <span class="rota">/cliente/:cpf</span>
-                            </div>
-
-                            <h5 class="mt-4">Deletar cliente</h5>
-
-                            <p>Remove um cliente através do CPF.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>cpf : CPF do cliente que será removido.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O CPF deve ser válido e o cliente informado deve existir.</li>
-                                <li>Pela regra de ON DELETE CASCADE do banco, os funerais ligados ao cliente também são removidos.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+</div>
+</div>
+</div>
+<!-- DELETAR CLIENTE -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo delete">DELETE</span>
+<span class="rota">/cliente/:cpf</span>
+</div>
+<h5 class="mt-4">Deletar cliente</h5>
+<p>Remove um cliente através do CPF.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>cpf : CPF do cliente que será removido.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O CPF deve ser válido e o cliente informado deve existir.</li>
+<li>Pela regra de ON DELETE CASCADE do banco, os funerais ligados ao cliente também são removidos.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Cliente deletado com sucesso!",
   "data": {
     "cpf": "12345678901",
@@ -1169,65 +928,46 @@
     "data_nascimento": "1985-03-15"
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-        </section>
-
-        <!-- OPERAÇÕES EXCLUSIVAS -->
-        <section id="operacoes" class="mt-5">
-
-            <h2 class="titulo">
-                <i class="bi bi-diagram-3"></i>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- OPERAÇÕES EXCLUSIVAS -->
+<section class="mt-5" id="operacoes">
+<h2 class="titulo">
+<i class="bi bi-diagram-3"></i>
                 Operações Exclusivas
             </h2>
-
-            <p class="text-muted">
+<p class="text-muted">
                 Operações não triviais que utilizam tabelas relacionadas e JOIN.
             </p>
-
-            <div class="row g-4">
-
-                <!-- BUSCAR FUNERAIS DE UM CLIENTE -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/cliente/funerais/:cpf</span>
-                            </div>
-
-                            <h5 class="mt-4">Buscar funerais de um cliente</h5>
-
-                            <p>
+<div class="row g-4">
+<!-- BUSCAR FUNERAIS DE UM CLIENTE -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/cliente/funerais/:cpf</span>
+</div>
+<h5 class="mt-4">Buscar funerais de um cliente</h5>
+<p>
                                 Busca todos os funerais ligados a um cliente. Esta é uma operação exclusiva com JOIN entre cliente e funeral.
                             </p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>cpf : CPF do cliente.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O CPF deve ser válido.</li>
-                                <li>O cliente deve existir.</li>
-                                <li>O cliente deve possuir pelo menos um funeral associado.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>cpf : CPF do cliente.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O CPF deve ser válido.</li>
+<li>O cliente deve existir.</li>
+<li>O cliente deve possuir pelo menos um funeral associado.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Funerais encontrados com sucesso!",
   "cliente": "João Silva",
   "funerais": [
@@ -1241,47 +981,33 @@
     }
   ]
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- BUSCAR SERVIÇOS MAIS UTILIZADOS -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/funeral/servicos/mais-utilizados</span>
-                            </div>
-
-                            <h5 class="mt-4">Buscar serviços mais utilizados</h5>
-
-                            <p>
+</div>
+</div>
+</div>
+<!-- BUSCAR SERVIÇOS MAIS UTILIZADOS -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/funeral/servicos/mais-utilizados</span>
+</div>
+<h5 class="mt-4">Buscar serviços mais utilizados</h5>
+<p>
                                 Retorna os serviços utilizados em funerais, ordenando pela quantidade de vezes que cada serviço foi associado. Operação exclusiva com JOIN e GROUP BY .
                             </p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <p>Não possui.</p>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>É necessário existir pelo menos uma associação entre funeral e serviço.</li>
-                            </ul>
-
-                            <p class="text-muted mt-3">
+<hr/>
+<strong>Parâmetros:</strong>
+<p>Não possui.</p>
+<strong>Restrições:</strong>
+<ul>
+<li>É necessário existir pelo menos uma associação entre funeral e serviço.</li>
+</ul>
+<p class="text-muted mt-3">
                                 Quando dois serviços possuem a mesma quantidade de utilizações, a ordem entre eles pode variar.
                             </p>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Serviços mais utilizados encontrados com sucesso!",
   "data": [
     {
@@ -1300,53 +1026,38 @@
     }
   ]
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- BUSCAR FUNERAIS POR PERÍODO -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/funeral/periodo</span>
-                            </div>
-
-                            <h5 class="mt-4">Buscar funerais por período</h5>
-
-                            <p>
+</div>
+</div>
+</div>
+<!-- BUSCAR FUNERAIS POR PERÍODO -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/funeral/periodo/:inicio/:fim</span>
+</div>
+<h5 class="mt-4">Buscar funerais por período</h5>
+<p>
                                 Busca funerais realizados entre duas datas e retorna também o nome do cliente responsável. Operação exclusiva com JOIN .
                             </p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>inicio : data inicial enviada na query string.</li>
-                                <li>fim : data final enviada na query string.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>Os dois parâmetros são obrigatórios.</li>
-                                <li>A data inicial não pode ser maior que a data final.</li>
-                                <li>As datas devem ser válidas para consulta no banco.</li>
-                                <li>Deve existir pelo menos um funeral no período informado.</li>
-                            </ul>
-
-                            <strong>Exemplo de requisição:</strong>
-
-                            <div class="json mt-2">/funeral/periodo?inicio=2026-09-10&fim=2026-09-12</div>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>inicio : data inicial enviada na query string.</li>
+<li>fim : data final enviada na query string.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>Os dois parâmetros são obrigatórios.</li>
+<li>A data inicial não pode ser maior que a data final.</li>
+<li>As datas devem ser válidas para consulta no banco.</li>
+<li>Deve existir pelo menos um funeral no período informado.</li>
+</ul>
+<strong>Exemplo de requisição:</strong>
+<div class="json mt-2">/funeral/periodo/2026-09-10/2026-09-12</div>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Funerais encontrados com sucesso!",
   "data": [
     {
@@ -1369,47 +1080,34 @@
     }
   ]
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- BUSCAR SERVIÇOS DE UM FUNERAL -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/funeral/servicos/:id</span>
-                            </div>
-
-                            <h5 class="mt-4">Buscar serviços de um funeral</h5>
-
-                            <p>
+</div>
+</div>
+</div>
+<!-- BUSCAR SERVIÇOS DE UM FUNERAL -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/funeral/servicos/:id</span>
+</div>
+<h5 class="mt-4">Buscar serviços de um funeral</h5>
+<p>
                                 Retorna todos os serviços associados a um funeral. Operação exclusiva com JOIN entre funeral, serviço_funeral e serviço.
                             </p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id : ID do funeral.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O ID deve ser um número inteiro maior que zero.</li>
-                                <li>O funeral deve existir.</li>
-                                <li>O funeral deve possuir pelo menos um serviço associado.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id : ID do funeral.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O ID deve ser um número inteiro maior que zero.</li>
+<li>O funeral deve existir.</li>
+<li>O funeral deve possuir pelo menos um serviço associado.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Serviços encontrados com sucesso!",
   "falecido": "José Otavio",
   "servicos": [
@@ -1439,47 +1137,34 @@
     }
   ]
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- CALCULAR VALOR TOTAL DE UM FUNERAL -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/servico/valor-total/:id</span>
-                            </div>
-
-                            <h5 class="mt-4">Calcular valor total de um funeral</h5>
-
-                            <p>
+</div>
+</div>
+</div>
+<!-- CALCULAR VALOR TOTAL DE UM FUNERAL -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/servico/valor-total/:id</span>
+</div>
+<h5 class="mt-4">Calcular valor total de um funeral</h5>
+<p>
                                 Soma o valor de todos os serviços associados a um funeral e retorna também os dados principais do funeral e do contratante. Operação exclusiva com JOIN .
                             </p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id : ID do funeral.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O ID deve ser um número inteiro maior que zero.</li>
-                                <li>O funeral deve existir.</li>
-                                <li>O funeral deve possuir pelo menos um serviço associado.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id : ID do funeral.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O ID deve ser um número inteiro maior que zero.</li>
+<li>O funeral deve existir.</li>
+<li>O funeral deve possuir pelo menos um serviço associado.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Valor total calculado com sucesso!",
   "id_funeral": 1,
   "nome_falecido": "José Otavio",
@@ -1509,55 +1194,39 @@
   ],
   "valor_total": "2750.00"
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- BUSCAR CLIENTES POR SERVIÇO -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/servico/cliente/:nome</span>
-                            </div>
-
-                            <h5 class="mt-4">Buscar clientes por serviço</h5>
-
-                            <p>
+</div>
+</div>
+</div>
+<!-- BUSCAR CLIENTES POR SERVIÇO -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/servico/cliente/:nome</span>
+</div>
+<h5 class="mt-4">Buscar clientes por serviço</h5>
+<p>
                                 Busca serviços pelo nome e retorna os clientes que contrataram funerais ligados aos serviços encontrados. A busca não diferencia maiúsculas e minúsculas e aceita parte do nome. Operação exclusiva com vários JOIN .
                             </p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>nome : nome ou parte do nome do serviço.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O nome não pode ficar vazio.</li>
-                                <li>Deve existir pelo menos um serviço correspondente.</li>
-                                <li>Deve existir pelo menos um cliente ligado ao serviço encontrado.</li>
-                            </ul>
-
-                            <strong>Exemplo de requisição:</strong>
-
-                            <div class="json mt-2">/servico/cliente/Tanatopraxia</div>
-
-                            <p class="text-muted mt-3">
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>nome : nome ou parte do nome do serviço.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O nome não pode ficar vazio.</li>
+<li>Deve existir pelo menos um serviço correspondente.</li>
+<li>Deve existir pelo menos um cliente ligado ao serviço encontrado.</li>
+</ul>
+<strong>Exemplo de requisição:</strong>
+<div class="json mt-2">/servico/cliente/Tanatopraxia</div>
+<p class="text-muted mt-3">
                                 O exemplo foi reduzido para não repetir todos os seis clientes retornados pelos dados iniciais.
                             </p>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Clientes encontrados com sucesso!",
   "quantidade_servicos_encontrados": 1,
   "servicos_encontrados": [
@@ -1596,48 +1265,35 @@
     }
   ]
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- CONTAR FUNERAIS DE UM SERVIÇO -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/servico/:id_servico/funerais/quantidade</span>
-                            </div>
-
-                            <h5 class="mt-4">Contar funerais de um serviço</h5>
-
-                            <p>
+</div>
+</div>
+</div>
+<!-- CONTAR FUNERAIS DE UM SERVIÇO -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/servico/:id_servico/funerais/quantidade</span>
+</div>
+<h5 class="mt-4">Contar funerais de um serviço</h5>
+<p>
                                 Retorna quantos funerais possuem determinado serviço e lista esses funerais. Operação exclusiva com JOIN .
                             </p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id_servico : ID do serviço.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O ID deve ser um número inteiro maior que zero.</li>
-                                <li>O serviço informado deve existir.</li>
-                                <li>Se o serviço ainda não estiver associado a nenhum funeral, a rota retorna sucesso com quantidade igual a zero.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
-  "msg": "Funerais encontrados!",
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id_servico : ID do serviço.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O ID deve ser um número inteiro maior que zero.</li>
+<li>O serviço informado deve existir.</li>
+<li>Se o serviço ainda não estiver associado a nenhum funeral, a rota retorna sucesso com quantidade igual a zero.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
+  "msg": "Consulta realizada com sucesso!",
   "servico": {
     "id": 1,
     "nome": "Tanatopraxia"
@@ -1670,65 +1326,45 @@
     }
   ]
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-        </section>
-
-        <!-- ASSOCIAÇÕES -->
-        <section id="associacoes" class="mt-5">
-
-            <h2 class="titulo">
-                <i class="bi bi-link-45deg"></i>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ASSOCIAÇÕES -->
+<section class="mt-5" id="associacoes">
+<h2 class="titulo">
+<i class="bi bi-link-45deg"></i>
                 Associação Funeral × Serviço
             </h2>
-
-            <p class="text-muted">
+<p class="text-muted">
                 Rotas responsáveis pelo relacionamento N:M entre funerais e serviços.
             </p>
-
-            <div class="row g-4">
-
-                <!-- LISTAR ASSOCIAÇÕES -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/servico_funeral</span>
-                            </div>
-
-                            <h5 class="mt-4">Listar associações</h5>
-
-                            <p>
+<div class="row g-4">
+<!-- LISTAR ASSOCIAÇÕES -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/servico_funeral</span>
+</div>
+<h5 class="mt-4">Listar associações</h5>
+<p>
                                 Lista todas as associações existentes entre funerais e serviços, retornando também os nomes envolvidos através de JOIN .
                             </p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <p>Não possui.</p>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>É necessário existir pelo menos uma associação cadastrada.</li>
-                            </ul>
-
-                            <p class="text-muted mt-3">
+<hr/>
+<strong>Parâmetros:</strong>
+<p>Não possui.</p>
+<strong>Restrições:</strong>
+<ul>
+<li>É necessário existir pelo menos uma associação cadastrada.</li>
+</ul>
+<p class="text-muted mt-3">
                                 O exemplo mostra apenas as primeiras associações; com os dados iniciais existem 33.
                             </p>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Associações encontradas com sucesso!",
   "quantidade": 33,
   "data": [
@@ -1746,49 +1382,35 @@
     }
   ]
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- LISTAR SERVIÇOS DE UMA ASSOCIAÇÃO POR FUNERAL -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/servico_funeral/funeral/:id_funeral</span>
-                            </div>
-
-                            <h5 class="mt-4">Listar serviços de uma associação por funeral</h5>
-
-                            <p>Retorna quantos e quais serviços estão associados a um funeral.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id_funeral : ID do funeral.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O ID deve ser um número inteiro maior que zero.</li>
-                                <li>O funeral deve existir.</li>
-                                <li>Um funeral sem serviços associados ainda retorna sucesso, com quantidade zero e lista vazia.</li>
-                            </ul>
-
-                            <p class="text-muted mt-3">
+</div>
+</div>
+</div>
+<!-- LISTAR SERVIÇOS DE UMA ASSOCIAÇÃO POR FUNERAL -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/servico_funeral/funeral/:id_funeral</span>
+</div>
+<h5 class="mt-4">Listar serviços de um funeral</h5>
+<p>Retorna quantos e quais serviços estão associados a um funeral.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id_funeral : ID do funeral.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O ID deve ser um número inteiro maior que zero.</li>
+<li>O funeral deve existir.</li>
+<li>Um funeral sem serviços associados ainda retorna sucesso, com quantidade zero e lista vazia.</li>
+</ul>
+<p class="text-muted mt-3">
                                 O exemplo foi reduzido; o funeral 1 possui quatro serviços nos dados iniciais.
                             </p>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Serviços do funeral encontrados!",
   "funeral": {
     "id": 1,
@@ -1810,49 +1432,35 @@
     }
   ]
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- LISTAR FUNERAIS DE UMA ASSOCIAÇÃO POR SERVIÇO -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/servico_funeral/servico/:id_servico</span>
-                            </div>
-
-                            <h5 class="mt-4">Listar funerais de uma associação por serviço</h5>
-
-                            <p>Retorna quantos e quais funerais estão associados a determinado serviço.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id_servico : ID do serviço.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O ID deve ser um número inteiro maior que zero.</li>
-                                <li>O serviço deve existir.</li>
-                                <li>Um serviço sem funerais associados ainda retorna sucesso, com quantidade zero e lista vazia.</li>
-                            </ul>
-
-                            <p class="text-muted mt-3">
+</div>
+</div>
+</div>
+<!-- LISTAR FUNERAIS DE UMA ASSOCIAÇÃO POR SERVIÇO -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/servico_funeral/servico/:id_servico</span>
+</div>
+<h5 class="mt-4">Listar funerais de um serviço</h5>
+<p>Retorna quantos e quais funerais estão associados a determinado serviço.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id_servico : ID do serviço.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>O ID deve ser um número inteiro maior que zero.</li>
+<li>O serviço deve existir.</li>
+<li>Um serviço sem funerais associados ainda retorna sucesso, com quantidade zero e lista vazia.</li>
+</ul>
+<p class="text-muted mt-3">
                                 O exemplo foi reduzido; o serviço 1 está associado a seis funerais nos dados iniciais.
                             </p>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Funerais associados ao serviço encontrados!",
   "servico": {
     "id": 1,
@@ -1872,46 +1480,33 @@
     }
   ]
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- BUSCAR ASSOCIAÇÃO ESPECÍFICA -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/servico_funeral/funeral/:id_funeral/servico/:id_servico</span>
-                            </div>
-
-                            <h5 class="mt-4">Buscar associação específica</h5>
-
-                            <p>Busca uma associação específica entre um funeral e um serviço.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id_funeral : ID do funeral.</li>
-                                <li>id_servico : ID do serviço.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>Os dois IDs devem ser números inteiros maiores que zero.</li>
-                                <li>O funeral e o serviço devem existir.</li>
-                                <li>A associação entre eles deve existir.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+</div>
+</div>
+</div>
+<!-- BUSCAR ASSOCIAÇÃO ESPECÍFICA -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/servico_funeral/funeral/:id_funeral/servico/:id_servico</span>
+</div>
+<h5 class="mt-4">Buscar associação específica</h5>
+<p>Busca uma associação específica entre um funeral e um serviço.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id_funeral : ID do funeral.</li>
+<li>id_servico : ID do serviço.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>Os dois IDs devem ser números inteiros maiores que zero.</li>
+<li>O funeral e o serviço devem existir.</li>
+<li>A associação entre eles deve existir.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Associação encontrada com sucesso!",
   "data": {
     "id_funeral": 1,
@@ -1920,61 +1515,42 @@
     "nome_servico": "Tanatopraxia"
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- ASSOCIAR SERVIÇO A FUNERAL -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo post">POST</span>
-                                <span class="rota">/servico_funeral/funeral/:id_funeral/servico</span>
-                            </div>
-
-                            <h5 class="mt-4">Associar serviço a funeral</h5>
-
-                            <p>Cria uma nova associação entre um funeral e um serviço.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id_funeral : ID do funeral na própria rota.</li>
-                            </ul>
-
-                            <strong>Parâmetros do corpo obrigatórios:</strong>
-
-                            <ul>
-                                <li>id_servico : ID do serviço que será associado ao funeral.</li>
-                            </ul>
-
-                            <strong>Parâmetros do corpo opcionais:</strong>
-
-                            <p>Não possui.</p>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>O ID do funeral e o ID do serviço devem ser números inteiros maiores que zero.</li>
-                                <li>O funeral e o serviço devem existir.</li>
-                                <li>O mesmo serviço não pode ser associado duas vezes ao mesmo funeral.</li>
-                            </ul>
-
-                            <strong>Exemplo de requisição:</strong>
-
-                            <div class="json mt-2">{
+</div>
+</div>
+</div>
+<!-- ASSOCIAR SERVIÇO A FUNERAL -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo post">POST</span>
+<span class="rota">/servico_funeral/funeral/:id_funeral/servico</span>
+</div>
+<h5 class="mt-4">Associar serviço a funeral</h5>
+<p>Cria uma nova associação entre um funeral e um serviço.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id_funeral : ID do funeral na própria rota.</li>
+</ul>
+<strong>Parâmetros do corpo obrigatórios:</strong>
+<ul>
+<li>id_servico : ID do serviço que será associado ao funeral.</li>
+</ul>
+<strong>Parâmetros do corpo opcionais:</strong>
+<p>Não possui.</p>
+<strong>Restrições:</strong>
+<ul>
+<li>O ID do funeral e o ID do serviço devem ser números inteiros maiores que zero.</li>
+<li>O funeral e o serviço devem existir.</li>
+<li>O mesmo serviço não pode ser associado duas vezes ao mesmo funeral.</li>
+</ul>
+<strong>Exemplo de requisição:</strong>
+<div class="json mt-2">{
   "id_servico": 2
 }</div>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Serviço associado ao funeral com sucesso!",
   "data": {
     "id_funeral": 1,
@@ -1983,47 +1559,34 @@
     "nome_servico": "Tanatoestética"
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- DESASSOCIAR SERVIÇO DE FUNERAL -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo delete">DELETE</span>
-                                <span class="rota">/servico_funeral/funeral/:id_funeral/servico/:id_servico</span>
-                            </div>
-
-                            <h5 class="mt-4">Desassociar serviço de funeral</h5>
-
-                            <p>
+</div>
+</div>
+</div>
+<!-- DESASSOCIAR SERVIÇO DE FUNERAL -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo delete">DELETE</span>
+<span class="rota">/servico_funeral/funeral/:id_funeral/servico/:id_servico</span>
+</div>
+<h5 class="mt-4">Desassociar serviço de funeral</h5>
+<p>
                                 Remove somente a associação entre um funeral e um serviço. O funeral e o serviço continuam cadastrados.
                             </p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id_funeral : ID do funeral.</li>
-                                <li>id_servico : ID do serviço.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>Os dois IDs devem ser números inteiros maiores que zero.</li>
-                                <li>A associação informada deve existir.</li>
-                            </ul>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id_funeral : ID do funeral.</li>
+<li>id_servico : ID do serviço.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>Os dois IDs devem ser números inteiros maiores que zero.</li>
+<li>A associação informada deve existir.</li>
+</ul>
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Serviço desassociado do funeral com sucesso!",
   "data": {
     "id_funeral": 1,
@@ -2032,137 +1595,93 @@
     "nome_servico": "Tanatopraxia"
   }
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-        </section>
-
-        <!-- ROTAS AUXILIARES -->
-        <section id="auxiliares" class="mt-5">
-
-            <h2 class="titulo">
-                <i class="bi bi-exclamation-circle"></i>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ROTAS AUXILIARES -->
+<section class="mt-5" id="auxiliares">
+<h2 class="titulo">
+<i class="bi bi-exclamation-circle"></i>
                 Rotas auxiliares de validação
             </h2>
-
-            <p class="text-muted">
+<p class="text-muted">
                 Rotas usadas para informar quando algum parâmetro obrigatório não foi enviado na URL.
             </p>
-
-            <div class="row g-4">
-
-                <!-- VALIDAÇÃO DE NOME DO SERVIÇO -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/servico/cliente</span>
-                            </div>
-
-                            <h5 class="mt-4">Validação de nome do serviço</h5>
-
-                            <p>Rota auxiliar acionada quando a busca de clientes por serviço é chamada sem informar o nome.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <p>Não possui.</p>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>Esta rota não possui retorno de sucesso; ela existe apenas para informar que o nome do serviço está faltando.</li>
-                            </ul>
-
-                            <p class="text-muted mt-3">
+<div class="row g-4">
+<!-- VALIDAÇÃO DE NOME DO SERVIÇO -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/servico/cliente</span>
+</div>
+<h5 class="mt-4">Validação de nome do serviço</h5>
+<p>Rota auxiliar acionada quando a busca de clientes por serviço é chamada sem informar o nome.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<p>Não possui.</p>
+<strong>Restrições:</strong>
+<ul>
+<li>Esta rota não possui retorno de sucesso; ela existe apenas para informar que o nome do serviço está faltando.</li>
+</ul>
+<p class="text-muted mt-3">
                                 Retorno da rota: HTTP 400. Este bloco é mostrado apenas para documentar todas as rotas declaradas no backend.
                             </p>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Informe o nome do serviço!"
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- VALIDAÇÃO DE ID DO SERVIÇO -->
-                <div class="col-md-6 rota-card">
-                    <div class="card route-card h-100">
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-between">
-                                <span class="metodo get">GET</span>
-                                <span class="rota">/servico_funeral/funeral/:id_funeral/servico</span>
-                            </div>
-
-                            <h5 class="mt-4">Validação de ID do serviço</h5>
-
-                            <p>Rota auxiliar acionada quando a URL da associação é chamada sem o ID do serviço.</p>
-
-                            <hr>
-
-                            <strong>Parâmetros:</strong>
-
-                            <ul>
-                                <li>id_funeral : aparece na URL, mas esta rota é usada apenas para avisar que o ID do serviço não foi informado.</li>
-                            </ul>
-
-                            <strong>Restrições:</strong>
-
-                            <ul>
-                                <li>Esta rota não possui retorno de sucesso; ela existe apenas para informar a ausência do ID do serviço.</li>
-                            </ul>
-
-                            <p class="text-muted mt-3">
+</div>
+</div>
+</div>
+<!-- VALIDAÇÃO DE ID DO SERVIÇO -->
+<div class="col-md-6 rota-card">
+<div class="card route-card h-100">
+<div class="card-body">
+<div class="d-flex justify-content-between">
+<span class="metodo get">GET</span>
+<span class="rota">/servico_funeral/funeral/:id_funeral/servico</span>
+</div>
+<h5 class="mt-4">Validação de ID do serviço</h5>
+<p>Rota auxiliar acionada quando a URL da associação é chamada sem o ID do serviço.</p>
+<hr/>
+<strong>Parâmetros:</strong>
+<ul>
+<li>id_funeral : aparece na URL, mas esta rota é usada apenas para avisar que o ID do serviço não foi informado.</li>
+</ul>
+<strong>Restrições:</strong>
+<ul>
+<li>Esta rota não possui retorno de sucesso; ela existe apenas para informar a ausência do ID do serviço.</li>
+</ul>
+<p class="text-muted mt-3">
                                 Retorno da rota: HTTP 400. Este bloco é mostrado apenas para documentar todas as rotas declaradas no backend.
                             </p>
-
-                            <strong>Exemplo de retorno em caso de sucesso:</strong>
-
-                            <div class="json mt-2">{
+<strong>Exemplo de retorno em caso de sucesso:</strong>
+<div class="json mt-2">{
   "msg": "Informe o ID do serviço!"
 }</div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-    </main>
-
-    <!-- BOTÃO VOLTAR AO TOPO -->
-    <button id="voltarTopo">
-        <i class="bi bi-arrow-up"></i>
-    </button>
-
-    <!-- FOOTER -->
-    <footer>
-        <strong>Funerária Eterna Saudade</strong>
-        <br>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BOTÃO VOLTAR AO TOPO -->
+<button id="voltarTopo">
+<i class="bi bi-arrow-up"></i>
+</button>
+<!-- FOOTER -->
+<footer>
+<strong>Funerária Eterna Saudade</strong>
+<br/>
         Documentação da API RESTful
     </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
 
         // BOTÃO VOLTAR AO TOPO
 
@@ -2184,7 +1703,5 @@
         });
 
     </script>
-
 </body>
-
 </html>
